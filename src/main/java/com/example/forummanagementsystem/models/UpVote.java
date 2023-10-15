@@ -8,7 +8,7 @@ import java.util.Objects;
 public class UpVote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "beer_id")
+    @Column(name = "upvote_id")
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
