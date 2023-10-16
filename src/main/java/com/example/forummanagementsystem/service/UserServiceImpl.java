@@ -1,5 +1,7 @@
 package com.example.forummanagementsystem.service;
 
+import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
+import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.UserRepository;
@@ -30,6 +32,21 @@ public class UserServiceImpl implements UserService{
 
     public User get(String username){
     return  repository.get(username);
+    }
+    @Override
+    public User create(User user){
+    boolean duplicateExists=true;
+    try {
+        repository.get(user.getUsername());
+    } catch (EntityNotFoundException e) {
+        duplicateExists=false;
+    }
+
+    if (duplicateExists) {
+        throw new EntityDuplicateException("User", "username", user.getUsername());
+    }
+
+    return repository.create(user);
     }
 
 }

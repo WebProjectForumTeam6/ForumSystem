@@ -9,6 +9,7 @@ public interface UserService {
    List<User> get();
    User get(int id);
    User get(String username);
+   User create(User user);
 
 
 }

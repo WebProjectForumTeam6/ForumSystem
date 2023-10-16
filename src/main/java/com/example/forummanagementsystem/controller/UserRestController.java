@@ -1,10 +1,14 @@
 package com.example.forummanagementsystem.controller;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
+import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
+import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.dto.UserDto;
 import com.example.forummanagementsystem.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -15,10 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/users")
 public class UserRestController {
 
@@ -26,34 +29,31 @@ public class UserRestController {
 
     private final UserService userService;
     private final AuthenticationHelper authenticationHelper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserRestController(UserService userService, AuthenticationHelper authenticationHelper) {
+    public UserRestController(UserService userService, AuthenticationHelper authenticationHelper, UserMapper userMapper) {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
+        this.userMapper = userMapper;
     }
 
-@GetMapping
-    public List<User> get(@RequestHeader HttpHeaders headers) {
-        User user=new User();
-        user.setFirstName("name");
-        List<User> users= new ArrayList<>();
-        users.add(user);
-        return users;
-//            try {
-//            User user = authenticationHelper.tryGetUser(headers);
-//            user.setAdmin(true);
-//            if (!user.isAdmin()) {
-//                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
-//            }
-//            return userService.get();
-//        } catch (AuthorizationException e) {
-//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-//        }
+    @GetMapping
+    public List<User> getAll(@RequestHeader HttpHeaders headers) {
+            try {
+            User user = authenticationHelper.tryGetUser(headers);
+            user.setAdmin(true);
+            if (!user.isAdmin()) {
+                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
+            }
+            return userService.get();
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
     }
 
     @GetMapping("/{id}")
-    public User get(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public User getById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             return userService.get(id);
@@ -61,6 +61,16 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+    @PostMapping
+    public User create(@Valid @RequestBody UserDto userDto){
+        try{
+            User user=userMapper.fromDto(userDto);
+            userService.create(user);
+            return user;
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
     }
 }

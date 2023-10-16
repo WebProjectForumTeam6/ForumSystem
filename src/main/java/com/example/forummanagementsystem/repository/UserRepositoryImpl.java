@@ -42,11 +42,20 @@ public class UserRepositoryImpl implements UserRepository{
         query.setParameter("usename",username);
 
         List<User> result = query.list();
-        if (result.size()==0){
+        if (result.isEmpty()){
             throw new EntityNotFoundException("User","username",username);
         }
         return result.get(0);
     }
     }
 
+    @Override
+    public User create(User user) {
+    try (Session session= sessionFactory.openSession()){
+        session.beginTransaction();
+        session.persist(user);
+        session.getTransaction().commit();
+    }
+        return null;
+    }
 }

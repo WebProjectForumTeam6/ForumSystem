@@ -24,6 +24,8 @@ public class User {
     private String username;
     @Column(name = "password")
     private String password;
+    @Column(name = "is_blocked")
+    private boolean isBlocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
 
@@ -78,6 +80,14 @@ public class User {
         this.password = password;
     }
 
+    public boolean isBlocked() {
+        return isBlocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        isBlocked = blocked;
+    }
+
     public boolean isAdmin() {
         return isAdmin;
     }
@@ -85,6 +95,7 @@ public class User {
     public void setAdmin(boolean admin) {
         isAdmin = admin;
     }
+
 
     @Override
     public boolean equals(Object o) {
