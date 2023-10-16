@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,17 +33,23 @@ public class UserRestController {
         this.authenticationHelper = authenticationHelper;
     }
 
-    @GetMapping
+@GetMapping
     public List<User> get(@RequestHeader HttpHeaders headers) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            if (!user.isAdmin()) {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
-            }
-            return userService.get();
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
+        User user=new User();
+        user.setFirstName("name");
+        List<User> users= new ArrayList<>();
+        users.add(user);
+        return users;
+//            try {
+//            User user = authenticationHelper.tryGetUser(headers);
+//            user.setAdmin(true);
+//            if (!user.isAdmin()) {
+//                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
+//            }
+//            return userService.get();
+//        } catch (AuthorizationException e) {
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+//        }
     }
 
     @GetMapping("/{id}")
@@ -55,8 +62,5 @@ public class UserRestController {
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
-
     }
-
-
 }
