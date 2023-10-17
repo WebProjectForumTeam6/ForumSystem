@@ -60,13 +60,13 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public User block(User user) {
+    public User block(User userToBlock) {
         try (Session session= sessionFactory.openSession()){
             session.beginTransaction();
-            session.merge(user);
+            session.merge(userToBlock);
             session.getTransaction().commit();
         }
-        return user;
+        return userToBlock;
     }
 
 

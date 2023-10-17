@@ -72,15 +72,23 @@ public class UserRestController {
     }
 
     @PutMapping("/{id}")
-    public User block(@PathVariable int id, @Valid @RequestBody UserDto userDto) {
+    public User block(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
-            User user = userMapper.fromDto(id, userDto);
-            userService.block(user);
-            return user;
+            User user=authenticationHelper.tryGetUser(headers);
+            User userToBlock= userService.get(id);
+            userService.block(user, userToBlock);
+            return userToBlock;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    //updateInformation
+    //unblockUser
+    //makeAdmin
+    //getByUsername
+    //getByEmail
+    //getByFirstName
+
 }

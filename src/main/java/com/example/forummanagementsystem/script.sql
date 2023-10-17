@@ -15,6 +15,7 @@ create table users
     username            varchar(32)          not null,
     password            varchar(32)          not null,
     is_blocked          tinyint(1) default 0 not null,
+    is_admin            tinyint(1) default 0 not null,
     profile_picture_url varchar(10000)       null
 );
 

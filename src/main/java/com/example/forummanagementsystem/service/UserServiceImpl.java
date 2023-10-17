@@ -52,9 +52,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User block(User user){
+    public User block(User user, User userToBlock){
     checkModifyPermissions(user);
-    repository.block(user);
+    userToBlock.setBlocked(true);
+    repository.block(userToBlock);
     return user;
 
     }

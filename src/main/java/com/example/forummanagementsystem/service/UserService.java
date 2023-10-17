@@ -11,5 +11,5 @@ public interface UserService {
    User get(String username);
    User create(User user);
 
-   User block(User user);
+   User block(User user, User userToBlock);
 }
