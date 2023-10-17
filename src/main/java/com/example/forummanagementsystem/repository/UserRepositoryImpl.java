@@ -21,7 +21,7 @@ public class UserRepositoryImpl implements UserRepository{
 @Override
     public List<User> get(){
         try (Session session = sessionFactory.openSession()){
-            Query <User> query = session.createQuery("from User ",User.class);
+            Query <User> query = session.createQuery("from User" ,User.class);
         return query.list();
         }
     }
@@ -36,10 +36,10 @@ public class UserRepositoryImpl implements UserRepository{
     }
     }
 @Override
-    public User get(String username){
+    public User getByUsername(String username){
     try(Session session = sessionFactory.openSession()){
         Query <User> query = session.createQuery("from User where username= :usename",User.class);
-        query.setParameter("usename",username);
+        query.setParameter("username",username);
 
         List<User> result = query.list();
         if (result.isEmpty()){
@@ -67,6 +67,15 @@ public class UserRepositoryImpl implements UserRepository{
             session.getTransaction().commit();
         }
         return userToBlock;
+    }
+    @Override
+    public User makeAdmin(User userToMakeAdmin){
+    try (Session session = sessionFactory.openSession()){
+        session.beginTransaction();
+        session.merge(userToMakeAdmin);
+        session.getTransaction().commit();
+    }
+    return userToMakeAdmin;
     }
 
 

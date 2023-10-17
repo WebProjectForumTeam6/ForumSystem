@@ -36,7 +36,7 @@ public class UserRestController {
 
     @GetMapping
     public List<User> getAll(@RequestHeader HttpHeaders headers) {
-        try {
+            try {
             User user = authenticationHelper.tryGetUser(headers);
             user.setAdmin(true);
             if (!user.isAdmin()) {
@@ -84,10 +84,40 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    @PutMapping("/admin/{id}")
+     public User makeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id){
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            User userToMakeAdmin = userService.get(id);
+            userService.makeAdmin(user, userToMakeAdmin);
+            return userToMakeAdmin;
+        }catch (EntityNotFoundException e){
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
+        }catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
+        }
+    }
+
+    @GetMapping("/{username}")
+    public User getByUsername( @RequestHeader HttpHeaders headers, @PathVariable String username){
+       try {
+           User user = authenticationHelper.tryGetUser(headers);
+           return userService.getByUsername(username);
+       } catch (EntityNotFoundException e){
+           throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
+       } catch (AuthorizationException e){
+           throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
+       }
+    }
+
+
     //updateInformation
     //unblockUser
+
     //makeAdmin
     //getByUsername
+
+
     //getByEmail
     //getByFirstName
 

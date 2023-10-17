@@ -8,8 +8,10 @@ public interface UserService {
 
    List<User> get();
    User get(int id);
-   User get(String username);
+   User getByUsername(String username);
    User create(User user);
 
    User block(User user, User userToBlock);
+
+   User makeAdmin(User user,User userToMakeAdmin);
 }

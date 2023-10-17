@@ -9,8 +9,10 @@ public interface UserRepository {
     List<User> get();
 
     User get(int id);
-    User get(String username);
+    User getByUsername(String username);
     User create(User user);
 
     User block(User user);
+
+    User makeAdmin(User user);
 }
