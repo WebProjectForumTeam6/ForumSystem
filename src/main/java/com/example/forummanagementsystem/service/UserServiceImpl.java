@@ -60,7 +60,13 @@ public class UserServiceImpl implements UserService {
         userToBlock.setBlocked(true);
         repository.block(userToBlock);
         return user;
-
+    }
+    @Override
+    public User unblock(User user, User userToUnblock){
+        checkModifyPermissions(user);
+        userToUnblock.setBlocked(false);
+        repository.unblock(userToUnblock);
+        return userToUnblock;
     }
 
     public User makeAdmin(User user, User userToMakeAdmin) {

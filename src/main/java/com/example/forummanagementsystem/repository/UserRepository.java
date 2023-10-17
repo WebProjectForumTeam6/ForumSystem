@@ -12,7 +12,8 @@ public interface UserRepository {
     User getByUsername(String username);
     User create(User user);
 
-    User block(User user);
+    User block(User userToBlock);
+    User unblock(User userToUnblock);
 
     User makeAdmin(User user);
 }
