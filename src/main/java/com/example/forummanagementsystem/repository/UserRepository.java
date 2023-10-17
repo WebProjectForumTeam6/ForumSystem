@@ -16,4 +16,5 @@ public interface UserRepository {
     User unblock(User userToUnblock);
 
     User makeAdmin(User user);
+    User getByEmail(String email);
 }

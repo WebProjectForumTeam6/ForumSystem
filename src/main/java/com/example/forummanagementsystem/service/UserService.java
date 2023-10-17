@@ -14,4 +14,5 @@ public interface UserService {
 
    User block(User user, User userToBlock);
    User unblock(User user, User userToBlock);
+   User getByEmail(String email);
 }

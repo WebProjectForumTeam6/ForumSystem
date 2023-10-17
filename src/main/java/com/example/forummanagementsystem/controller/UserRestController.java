@@ -122,6 +122,23 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
+
+    @GetMapping("/byEmail/{email}")
+    public User getByEmail(@RequestHeader HttpHeaders headers, @PathVariable String email) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            User foundUser = userService.getByEmail(email);
+            return foundUser;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+
+    }
+
+
+
     //updateInformation
     //unblockUser
     //makeAdmin

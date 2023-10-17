@@ -83,5 +83,15 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
+    @Override
+    public User getByEmail(String email) {
+        User user = repository.getByEmail(email);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User", "email", email);
+        }
+
+        return user;
+    }
 
 }
