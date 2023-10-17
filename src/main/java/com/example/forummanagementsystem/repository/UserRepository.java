@@ -17,4 +17,6 @@ public interface UserRepository {
 
     User makeAdmin(User user);
     User getByEmail(String email);
+
+    User getByFirstName(String firstName);
 }

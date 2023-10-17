@@ -136,6 +136,19 @@ public class UserRestController {
         }
 
     }
+    @GetMapping("/firstName/{firstName}")
+    public User getByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            User foundUser = userService.getByFirstName(firstName);
+            return foundUser;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
 
 
 
