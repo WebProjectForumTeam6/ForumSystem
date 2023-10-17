@@ -11,4 +11,6 @@ public interface UserRepository {
     User get(int id);
     User get(String username);
     User create(User user);
+
+    User block(User user);
 }

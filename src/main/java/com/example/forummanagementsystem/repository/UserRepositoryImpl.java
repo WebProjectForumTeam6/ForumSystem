@@ -56,6 +56,18 @@ public class UserRepositoryImpl implements UserRepository{
         session.persist(user);
         session.getTransaction().commit();
     }
-        return null;
+        return user;
     }
+
+    @Override
+    public User block(User user) {
+        try (Session session= sessionFactory.openSession()){
+            session.beginTransaction();
+            session.merge(user);
+            session.getTransaction().commit();
+        }
+        return user;
+    }
+
+
 }

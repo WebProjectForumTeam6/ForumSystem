@@ -11,11 +11,7 @@ import com.example.forummanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -40,7 +36,7 @@ public class UserRestController {
 
     @GetMapping
     public List<User> getAll(@RequestHeader HttpHeaders headers) {
-            try {
+        try {
             User user = authenticationHelper.tryGetUser(headers);
             user.setAdmin(true);
             if (!user.isAdmin()) {
@@ -63,14 +59,28 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
     @PostMapping
-    public User create(@Valid @RequestBody UserDto userDto){
-        try{
-            User user=userMapper.fromDto(userDto);
+    public User create(@Valid @RequestBody UserDto userDto) {
+        try {
+            User user = userMapper.fromDto(userDto);
             userService.create(user);
             return user;
         } catch (EntityDuplicateException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
+    }
+
+    @PutMapping("/{id}")
+    public User block(@PathVariable int id, @Valid @RequestBody UserDto userDto) {
+        try {
+            User user = userMapper.fromDto(id, userDto);
+            userService.block(user);
+            return user;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 }
