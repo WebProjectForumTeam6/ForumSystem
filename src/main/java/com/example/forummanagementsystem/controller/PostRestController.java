@@ -41,24 +41,30 @@ public class PostRestController {
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {
         try {
-            return postService.get(id);
+            return postService.getById(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-//    @PostMapping
-//    public Post create(@Valid @RequestBody PostDto postDto) {
-//        try {
-//            Post post = postMapper.fromDto(postDto);
-//            postService.create(post);
-//            return post;
-//        } catch (EntityNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-//        } catch (EntityDuplicateException e) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-//        }
-//    }
+    @PostMapping
+    public Post create(@Valid @RequestBody PostDto postDto) {
+        try {
+            Post post = postMapper.fromDtoOut(postDto);
+            postService.create(post);
+            return post;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }
+    }
 
+
+    //get
+    //createPost
+    //editPost
+    //deletePost
+    //getAllPosts
 
 
 }

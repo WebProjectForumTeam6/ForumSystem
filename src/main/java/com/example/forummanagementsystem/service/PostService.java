@@ -5,7 +5,7 @@ import com.example.forummanagementsystem.models.Post;
 import java.util.List;
 
 public interface PostService {
-    Post get(int id);
+    Post getById(int id);
 
     List<Post> get(String username, String title, Integer like, String tags);
 

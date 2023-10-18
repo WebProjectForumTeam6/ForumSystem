@@ -167,14 +167,4 @@ public class UserRestController {
             throw new AuthorizationException(ERROR_MESSAGE);
         }
     }
-
-
-
-    //updateInformation
-    //unblockUser
-    //makeAdmin
-    //getByUsername
-    //getByEmail
-    //getByFirstName
-
 }

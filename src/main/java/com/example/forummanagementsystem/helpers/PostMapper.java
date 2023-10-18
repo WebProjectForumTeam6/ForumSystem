@@ -25,7 +25,7 @@ public class PostMapper {
 //        return post;
 //    }
 
-//    public Post fromDto(PostDto postDto) {
+//    public Post fromDtoOut(PostDto postDto) {
 //        Post post=new Post();
 //        post.setComments(postDto.getComments());
 //        post.setLikes(postDto.getLikes());

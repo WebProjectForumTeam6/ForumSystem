@@ -13,10 +13,6 @@ public class PostDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8193 symbols.")
     private String content;
 
-    private String comments;
-
-    private int likes;
-
     public PostDto() {
     }
 
@@ -36,19 +32,5 @@ public class PostDto {
         this.content = content;
     }
 
-    public String getComments() {
-        return comments;
-    }
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public int getLikes() {
-        return likes;
-    }
-
-    public void setLikes(int likes) {
-        this.likes = likes;
-    }
 }

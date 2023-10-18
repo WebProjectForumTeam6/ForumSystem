@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Table(name = "posts")
 public class Post {
@@ -18,6 +20,7 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
+    private Set<Comment> comments;
 
     public Post() {
     }
