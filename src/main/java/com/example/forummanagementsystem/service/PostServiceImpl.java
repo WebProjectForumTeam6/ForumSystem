@@ -16,6 +16,7 @@ public class PostServiceImpl implements PostService {
 
 
     public static final String MODIFY_THE_POST = "Only Admin or post creator can modify the post.";
+    public static final String PERMISSION_ERROR = "You don't have permission.";
     private final PostRepository repository;
 
     @Autowired
@@ -50,7 +51,7 @@ public class PostServiceImpl implements PostService {
 
     private void checkModifyPermissions(int id, User user) {
         Post post = repository.getById(id);
-        if (!(user.isAdmin() || post.getUser().equals(user))) {
+        if (!(user.isAdmin() || post.getCreatedBy().equals(user))) {
             throw new AuthorizationException(MODIFY_THE_POST);
         }
 
@@ -68,7 +69,13 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void create(Post post) {
-
+    public void create(Post post, User creator) {
+        isUserBlocked(creator);
+        repository.create(post);
+    }
+    private void isUserBlocked(User user){
+        if (user.isBlocked()){
+            throw new AuthorizationException(PERMISSION_ERROR);
+        }
     }
 }

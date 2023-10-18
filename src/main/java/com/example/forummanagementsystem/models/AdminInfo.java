@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 @Entity
 @Table(name = "admins")
-public class Admin {
+public class AdminInfo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "admin_id")
@@ -16,7 +16,7 @@ public class Admin {
     @Column(name= "phone_number")
     private String phoneNumber;
 
-    public Admin() {
+    public AdminInfo() {
     }
 
     public User getUser() {
@@ -41,7 +41,7 @@ public class Admin {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Admin admin = (Admin) o;
+        AdminInfo admin = (AdminInfo) o;
         return Objects.equals(user, admin.user) && Objects.equals(phoneNumber, admin.phoneNumber);
     }
 

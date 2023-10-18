@@ -16,8 +16,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/api/posts")
 public class PostRestController {
@@ -33,14 +31,6 @@ public class PostRestController {
         this.postMapper=postMapper;
     }
 
-    @GetMapping
-    public List<Post> get(
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) Integer like,
-            @RequestParam(required = false) String tags){
-        return postService.get(username,title,like,tags);
-    }
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {
         try {
@@ -60,19 +50,19 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
-//    @PostMapping
-//    public Post create(@Valid @RequestBody PostDto postDto) {
-//        try {
-//            Post post = postMapper.fromDto(postDto);
-//            postService.create(post);
-//            return post;
-//        } catch (EntityNotFoundException e) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-//        } catch (EntityDuplicateException e) {
-//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-//        }
-//    }
-
-
-
+    @PostMapping("/create")
+    public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
+        try {
+            User creator=authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromDtoIn(postDto, creator);
+            postService.create(post, creator);
+            return post;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        }catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
+    }
 }

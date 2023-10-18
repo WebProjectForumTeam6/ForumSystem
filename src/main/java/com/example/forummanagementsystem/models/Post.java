@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,12 +16,20 @@ public class Post {
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User createdBy;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
-    private Set<Comment> comments;
+//    @JsonIgnore
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(
+//            name = "comments",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns= @JoinColumn(name = "comment_id")
+//    )
+//    private Set<Comment> comments;
+
 
     public Post() {
     }
@@ -33,12 +42,12 @@ public class Post {
         this.id = id;
     }
 
-    public User getUser() {
-        return user;
+    public User getCreatedBy() {
+        return createdBy;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCreatedBy(User createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getTitle() {
@@ -56,6 +65,14 @@ public class Post {
     public void setContent(String content) {
         this.content = content;
     }
+
+//    public Set<Comment> getComments() {
+//        return comments;
+//    }
+//
+//    public void setComments(Set<Comment> comments) {
+//        this.comments = comments;
+//    }
 
     @Override
     public boolean equals(Object o) {

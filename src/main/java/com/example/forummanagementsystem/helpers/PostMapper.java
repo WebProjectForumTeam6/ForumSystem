@@ -3,9 +3,7 @@ package com.example.forummanagementsystem.helpers;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
-import com.example.forummanagementsystem.models.dto.UserDto;
 import com.example.forummanagementsystem.service.PostService;
-import com.example.forummanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +16,20 @@ public class PostMapper {
     }
 
 //    public Post fromDto(int id, PostDto postDto){
-//        Post post=fromDto(postDto);
+//        Post post= fromDtoIn(postDto);
 //        post.setId(id);
 //        post.setTitle(postDto.getTitle());
 //        post.setContent(postDto.getContent());
 //        return post;
 //    }
 
-//    public Post fromDtoOut(PostDto postDto) {
-//        Post post=new Post();
-//        post.setComments(postDto.getComments());
-//        post.setLikes(postDto.getLikes());
-//        return post;
-//    }
+    public Post fromDtoIn(PostDto postDto, User creator) {
+        Post post=new Post();
+        post.setTitle(postDto.getTitle());
+        post.setContent(postDto.getContent());
+        post.setCreatedBy(creator);
+        return post;
+    }
 }
 
 

@@ -1,8 +1,11 @@
 package com.example.forummanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Table(name= "users")
 public class User {
@@ -28,6 +31,8 @@ public class User {
     private boolean isBlocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @Transient
+    private Set<Post> usersPosts;
 
     public User() {
     }

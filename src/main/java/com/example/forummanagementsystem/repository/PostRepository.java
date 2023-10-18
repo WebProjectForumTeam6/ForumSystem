@@ -7,8 +7,9 @@ public interface PostRepository {
     Post getById(int id);
 
     Post get(String title);
+    void create(Post post);
 
-    public void delete(int id);
+    void delete(int id);
 
     void update(Post post);
 }

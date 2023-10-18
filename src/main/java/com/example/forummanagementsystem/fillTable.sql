@@ -11,9 +11,9 @@ INSERT INTO admins_info (user_id, phone_number)
 VALUES (1, '1234567890'),
        (2, '9876543210');
 
-INSERT INTO posts (title, content, user_id, likes)
-VALUES ('Post 1', 'Content of Post 1', 1, 10),
-       ('Post 2', 'Content of Post 2', 2, 5);
+INSERT INTO posts (title, content, user_id)
+VALUES ('Post 1', 'Content of Post 1', 1),
+       ('Post 2', 'Content of Post 2', 2);
 
 INSERT INTO comments (user_id, post_id, content)
 VALUES (1, 1, 'Comment on Post 1'),

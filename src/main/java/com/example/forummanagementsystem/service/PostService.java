@@ -10,7 +10,7 @@ public interface PostService {
 
     List<Post> get(String username, String title, Integer like, String tags);
 
-    void create(Post post);
+    void create(Post post, User creator);
     void delete(int id, User user);
 
     void update(Post post,User user);
