@@ -11,7 +11,7 @@ import java.util.Set;
 public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "comment_id")
+    @Column(name = "post_id")
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
