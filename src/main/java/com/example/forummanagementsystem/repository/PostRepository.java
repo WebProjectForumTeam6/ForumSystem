@@ -4,7 +4,7 @@ import com.example.forummanagementsystem.models.Post;
 
 public interface PostRepository {
 
-    Post get(int id);
+    Post getById(int id);
 
     Post get(String title);
 

@@ -22,7 +22,7 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public Post get(int id) {
+    public Post getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             Post post = session.get(Post.class, id);
             if (post == null) {
@@ -48,7 +48,7 @@ public class PostRepositoryImpl implements PostRepository {
 
     @Override
     public void delete(int id) {
-        Post postToDelete = get(id);
+        Post postToDelete = getById(id);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.remove(postToDelete);
@@ -64,8 +64,6 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
-
-
 }
 
 

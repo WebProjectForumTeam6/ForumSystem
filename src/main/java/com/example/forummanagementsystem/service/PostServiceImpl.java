@@ -49,7 +49,7 @@ public class PostServiceImpl implements PostService {
     }
 
     private void checkModifyPermissions(int id, User user) {
-        Post post = repository.get(id);
+        Post post = repository.getById(id);
         if (!(user.isAdmin() || post.getUser().equals(user))) {
             throw new AuthorizationException(MODIFY_THE_POST);
         }
@@ -58,8 +58,8 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Post get(int id) {
-        return null;
+    public Post getById(int id) {
+        return repository.getById(id);
     }
 
     @Override

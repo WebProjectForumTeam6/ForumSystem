@@ -44,7 +44,7 @@ public class PostRestController {
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {
         try {
-            return postService.get(id);
+            return postService.getById(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
