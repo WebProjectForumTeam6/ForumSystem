@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -31,6 +32,8 @@ public class User {
     private boolean isBlocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
+    @Transient
+    private Set<Comment> comments;
     @Transient
     private Set<Post> usersPosts;
 
@@ -101,6 +104,21 @@ public class User {
         isAdmin = admin;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Set<Post> getUsersPosts() {
+        return usersPosts;
+    }
+
+    public void setUsersPosts(Set<Post> usersPosts) {
+        this.usersPosts = usersPosts;
+    }
 
     @Override
     public boolean equals(Object o) {
