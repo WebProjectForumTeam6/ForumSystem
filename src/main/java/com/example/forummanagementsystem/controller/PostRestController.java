@@ -11,10 +11,13 @@ import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.PostService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
@@ -24,12 +27,13 @@ public class PostRestController {
     private final PostMapper postMapper;
     private final AuthenticationHelper authenticationHelper;
 
-
+    @Autowired
     public PostRestController(PostService postService, AuthenticationHelper authenticationHelper,PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper=postMapper;
     }
+
 
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {

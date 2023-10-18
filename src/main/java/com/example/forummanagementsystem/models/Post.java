@@ -21,14 +21,8 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-//    @JsonIgnore
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "comments",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns= @JoinColumn(name = "comment_id")
-//    )
-//    private Set<Comment> comments;
+    @Transient
+    private Set<Comment> comments;
 
 
     public Post() {
@@ -66,13 +60,13 @@ public class Post {
         this.content = content;
     }
 
-//    public Set<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(Set<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
+    }
 
     @Override
     public boolean equals(Object o) {

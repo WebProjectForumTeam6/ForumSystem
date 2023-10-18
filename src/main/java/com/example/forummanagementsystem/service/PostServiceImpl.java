@@ -64,7 +64,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public List<Post> get(String username, String title, Integer like, String tags) {
+    public List<Post> get() {
         return null;
     }
 

@@ -8,7 +8,7 @@ import java.util.List;
 public interface PostService {
     Post getById(int id);
 
-    List<Post> get(String username, String title, Integer like, String tags);
+    List<Post> get();
 
     void create(Post post, User creator);
     void delete(int id, User user);
