@@ -12,8 +12,9 @@ public interface UserService {
    User create(User user);
    User makeAdmin(User user, User userToMakeAdmin);
 
-   User block(User user, User userToBlock);
-   User unblock(User user, User userToBlock);
+   void block(User user, User userToBlock);
+   void unblock(User user, User userToBlock);
    User getByEmail(String email);
    User getByFirstName(String firstName);
+   void updateUser(User user, User updatedUser);
 }

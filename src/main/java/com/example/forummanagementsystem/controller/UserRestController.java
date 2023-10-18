@@ -7,6 +7,7 @@ import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDto;
+import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -148,7 +149,24 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-
+    @PutMapping("/update")
+    public User updateUserInfo(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDtoUpdate userDtoUpdate){
+        try {
+            User user= authenticationHelper.tryGetUser(headers);
+            User updatedUser=userMapper.fromDtoUpdate(user.getId(), userDtoUpdate);
+            userService.updateUser(user, updatedUser);
+            return updatedUser;
+        }catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+    private static void checkAccessPermissions(int targetUserId, User executingUser) {
+        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
 
 
 

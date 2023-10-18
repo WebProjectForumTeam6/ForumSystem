@@ -19,4 +19,5 @@ public interface UserRepository {
     User getByEmail(String email);
 
     User getByFirstName(String firstName);
+    void updateUser(User userToUpdate);
 }

@@ -55,18 +55,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User block(User user, User userToBlock) {
+    public void block(User user, User userToBlock) {
         checkModifyPermissions(user);
         userToBlock.setBlocked(true);
         repository.block(userToBlock);
-        return user;
     }
     @Override
-    public User unblock(User user, User userToUnblock){
+    public void unblock(User user, User userToUnblock){
         checkModifyPermissions(user);
         userToUnblock.setBlocked(false);
         repository.unblock(userToUnblock);
-        return userToUnblock;
     }
 
     public User makeAdmin(User user, User userToMakeAdmin) {
@@ -77,12 +75,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    private void checkModifyPermissions(User user) {
-        User user1 = repository.get(user.getId());
-        if (!(user.isAdmin())) {
-            throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
-        }
-    }
+
     @Override
     public User getByEmail(String email) {
         User user = repository.getByEmail(email);
@@ -104,6 +97,17 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
-
-
+    @Override
+    public void updateUser(User user, User updatedUser){
+        if (user.getId()!=updatedUser.getId()){
+            throw new AuthorizationException("You can't update other users information");
+        }
+        repository.updateUser(updatedUser);
+    }
+    private void checkModifyPermissions(User user) {
+        User user1 = repository.get(user.getId());
+        if (!(user.isAdmin())) {
+            throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
+        }
+    }
 }
