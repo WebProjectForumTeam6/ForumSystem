@@ -1,6 +1,9 @@
 package com.example.forummanagementsystem.repository;
 
+import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
+
+import java.util.List;
 
 public interface PostRepository {
 
@@ -12,6 +15,9 @@ public interface PostRepository {
     void delete(int id);
 
     void update(Post post);
+    List<Post>getAll(FilterOptions filterOptions);
+
+    String generateOrderBy(FilterOptions filterOptions);
 }
 
 
