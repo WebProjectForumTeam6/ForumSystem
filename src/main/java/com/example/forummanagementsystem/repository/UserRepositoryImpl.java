@@ -120,10 +120,17 @@ public class UserRepositoryImpl implements UserRepository{
             session.getTransaction().commit();
         }
     }
-    public void addPhoneNumber(String phoneNumber){
-    try( Session session = sessionFactory.openSession()){
 
-    }
-
+    @Override
+    public void updatePhoneNumber(int userId, String phoneNumber) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            User user = session.get(User.class, userId);
+            if (user != null) {
+                user.getAdminInfo().setPhoneNumber(phoneNumber);
+                session.merge(user);
+                session.getTransaction().commit();
+            }
+        }
     }
 }
