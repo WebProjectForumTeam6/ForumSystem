@@ -39,9 +39,9 @@ public class User {
     @JsonIgnore
     private Set<Post> usersPosts;
 
-
     public User() {
     }
+
     public int getId() {
         return id;
     }
