@@ -15,18 +15,29 @@ public class Post {
     @Column(name = "post_id")
     private int id;
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     private User createdBy;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
+
+    @JsonIgnore
     @Transient
     private Set<Comment> comments;
 
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @JoinTable(name = "likes",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private Set<User> likes;
+
     public Post() {
     }
+
 
     public int getId() {
         return id;
@@ -67,6 +78,18 @@ public class Post {
     public void setComments(Set<Comment> comments) {
         this.comments = comments;
     }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
+    }
+    public int getLikesCount(){
+        return likes.size();
+    }
+
 
     @Override
     public boolean equals(Object o) {

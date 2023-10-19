@@ -1,3 +1,4 @@
+use forum;
 create table tags
 (
     tag_id  int auto_increment
@@ -36,7 +37,7 @@ create table posts
     title   varchar(64)   not null,
     content varchar(8192) not null,
     user_id int           not null,
-    likes   int default 0 not null,
+
     constraint posts_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
@@ -54,23 +55,11 @@ create table comments
         foreign key (user_id) references users (user_id)
 );
 
-create table downvote
-(
-    downvote_id int auto_increment
-        primary key,
-    post_id     int not null,
-    user_id     int not null,
-    constraint downvote_posts_post_id_fk
-        foreign key (post_id) references posts (post_id),
-    constraint downvote_users_user_id_fk
-        foreign key (user_id) references users (user_id)
-);
-
 create table posts_tags
 (
     id      int auto_increment
         primary key,
-    post_id int not null,
+    post_id int ,
     tag_id  int not null,
     constraint posts_tags_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
@@ -78,15 +67,15 @@ create table posts_tags
         foreign key (tag_id) references tags (tag_id)
 );
 
-create table upvote
+create table likes
 (
-    upvote_id int auto_increment
+    id int auto_increment
         primary key,
     post_id   int not null,
     user_id   int null,
-    constraint upvote_posts_post_id_fk
+    constraint likes_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
-    constraint upvote_users_user_id_fk
+    constraint likes_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
 
