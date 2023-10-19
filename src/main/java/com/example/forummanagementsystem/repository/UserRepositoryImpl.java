@@ -120,4 +120,10 @@ public class UserRepositoryImpl implements UserRepository{
             session.getTransaction().commit();
         }
     }
+    public void addPhoneNumber(String phoneNumber){
+    try( Session session = sessionFactory.openSession()){
+
+    }
+
+    }
 }

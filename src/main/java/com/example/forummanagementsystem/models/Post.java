@@ -33,6 +33,7 @@ public class Post {
     @JoinTable(name = "likes",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
+
     private Set<User> likes;
 
     public Post() {
