@@ -11,5 +11,8 @@ public interface CommentRepository {
     List<Comment> getAllComments();
     List<Comment> getUserComments(User user);
     List<Comment> getPostComments(Post post);
+    Comment getCommentById(int commentId);
     Comment create(Comment comment);
+    Comment update(Comment comment);
+    Comment delete(Comment comment);
 }

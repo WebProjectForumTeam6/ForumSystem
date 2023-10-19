@@ -16,6 +16,10 @@ public class Tag {
     public Tag() {
     }
 
+    public Tag(String content){
+        this.content = content;
+    }
+
     public int getId() {
         return id;
     }

@@ -72,7 +72,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
-
+//TODO
     @PostMapping("/create")
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
@@ -150,6 +150,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    //TODO
     @PutMapping("/update")
     public User updateUserInfo(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDtoUpdate userDtoUpdate){
         try {
