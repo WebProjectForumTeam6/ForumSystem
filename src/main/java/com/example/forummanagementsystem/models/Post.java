@@ -13,18 +13,19 @@ public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "post_id")
+    @JsonIgnore
     private int id;
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User createdBy;
     @Column(name = "title")
     private String title;
     @Column(name = "content")
     private String content;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @JsonIgnore
-    @Transient
     private Set<Comment> comments;
 
 

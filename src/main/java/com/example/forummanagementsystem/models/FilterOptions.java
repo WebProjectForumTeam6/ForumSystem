@@ -8,7 +8,7 @@ public class FilterOptions {
     private Optional<User> createdBy;
     private Optional<String> title;
     private Optional<String> content;
-    private Optional<String> sortBy;  // Use Optional<List<String>> for optional sorting options
+    private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
     public FilterOptions(

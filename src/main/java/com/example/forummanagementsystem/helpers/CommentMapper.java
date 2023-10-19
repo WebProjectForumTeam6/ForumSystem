@@ -25,4 +25,9 @@ public class CommentMapper {
         comment.setUser(creator);
         return comment;
     }
+    public Comment fromDtoUpdate(CommentDto commentDto, int commentId) {
+        Comment comment = commentService.getCommentById(commentId);
+        comment.setContent(commentDto.getContent());
+        return comment;
+    }
 }
