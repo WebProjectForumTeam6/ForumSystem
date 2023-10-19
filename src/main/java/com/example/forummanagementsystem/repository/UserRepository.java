@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.repository;
 
+import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 
 import java.util.List;
@@ -21,5 +22,5 @@ public interface UserRepository {
     User getByFirstName(String firstName);
     void updateUser(User userToUpdate);
 
-    void updatePhoneNumber(int userId, String phoneNumber);
+    void updatePhoneNumber(AdminInfo adminInfo);
 }

@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.service;
 
+import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 
 import java.util.List;
@@ -17,6 +18,5 @@ public interface UserService {
    User getByEmail(String email);
    User getByFirstName(String firstName);
    void updateUser(User user, User updatedUser);
-
-   User addPhoneNumberToAdmin(int userId, String phoneNumber);
+   AdminInfo addPhoneNumberToAdmin(User user, String phoneNumber);
 }

@@ -150,35 +150,14 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    //TODO
-    @PutMapping("/update")
-    public User updateUserInfo(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDtoUpdate userDtoUpdate){
-        try {
-            User user= authenticationHelper.tryGetUser(headers);
-            User updatedUser=userMapper.fromDtoUpdate(user.getId(), userDtoUpdate);
-            userService.updateUser(user, updatedUser);
-            return updatedUser;
-        }catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }
-    private static void checkAccessPermissions(int targetUserId, User executingUser) {
-        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
-            throw new AuthorizationException(ERROR_MESSAGE);
-        }
-    }
 
-    @PutMapping("/phoneNumber/{userId}")
-    public User updatePhoneNumber(@RequestHeader HttpHeaders headers, @PathVariable int userId, @Valid @RequestBody String phoneNumber) {
+    @PutMapping("/phoneNumber")
+    public User updatePhoneNumber(@RequestHeader HttpHeaders headers, @Valid @RequestBody String phoneNumber) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             if (user.isAdmin()) {
-                User userToUpdate = userService.get(userId);
-                userToUpdate.getAdminInfo().setPhoneNumber(phoneNumber);
-                userService.updateUser(user, userToUpdate);
-                return userToUpdate;
+                userService.addPhoneNumberToAdmin(user, phoneNumber);
+                return user;
             } else {
                 throw new AuthorizationException("You are not authorized to update phone numbers.");
             }
@@ -188,4 +167,5 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
 }

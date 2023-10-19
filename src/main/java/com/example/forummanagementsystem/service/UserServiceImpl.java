@@ -111,26 +111,18 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
+
     @Override
-    public User addPhoneNumberToAdmin(int userId, String phoneNumber) {
-        User user = repository.get(userId);
-
-        if (user == null) {
-            throw new EntityNotFoundException("User", userId);
-        }
-
-        if (user.isAdmin()) {
-            AdminInfo adminInfo = user.getAdminInfo();
-            if (adminInfo == null) {
-                adminInfo = new AdminInfo();
-                adminInfo.setUser(user);
-            }
-            adminInfo.setPhoneNumber(phoneNumber);
-            repository.updateUser(user);
-            return user;
-        } else {
+    public AdminInfo addPhoneNumberToAdmin(User user, String phoneNumber) {
+        if (!user.isAdmin()) {
             throw new AuthorizationException("Only admins can add a phone number.");
         }
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setUser(user);
+        adminInfo.setPhoneNumber(phoneNumber);
+        repository.updatePhoneNumber(adminInfo);
+        return adminInfo;
     }
+
 
 }

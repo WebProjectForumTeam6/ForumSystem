@@ -1,6 +1,7 @@
 package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -122,15 +123,12 @@ public class UserRepositoryImpl implements UserRepository{
     }
 
     @Override
-    public void updatePhoneNumber(int userId, String phoneNumber) {
-        try (Session session = sessionFactory.openSession()) {
+    public void updatePhoneNumber(AdminInfo adminInfo) {
+        try (Session session= sessionFactory.openSession()){
             session.beginTransaction();
-            User user = session.get(User.class, userId);
-            if (user != null) {
-                user.getAdminInfo().setPhoneNumber(phoneNumber);
-                session.merge(user);
-                session.getTransaction().commit();
-            }
+            session.persist(adminInfo);
+            session.getTransaction().commit();
         }
     }
 }
+
