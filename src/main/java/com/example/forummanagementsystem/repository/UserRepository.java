@@ -20,4 +20,6 @@ public interface UserRepository {
 
     User getByFirstName(String firstName);
     void updateUser(User userToUpdate);
+
+    void updatePhoneNumber(int userId, String phoneNumber);
 }

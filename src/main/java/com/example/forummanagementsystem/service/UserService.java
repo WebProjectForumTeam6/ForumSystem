@@ -17,4 +17,6 @@ public interface UserService {
    User getByEmail(String email);
    User getByFirstName(String firstName);
    void updateUser(User user, User updatedUser);
+
+   User addPhoneNumberToAdmin(int userId, String phoneNumber);
 }

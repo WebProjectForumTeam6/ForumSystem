@@ -39,7 +39,19 @@ public class User {
     @JsonIgnore
     private Set<Post> usersPosts;
 
+    @OneToOne(mappedBy = "user")
+    private AdminInfo adminInfo;
+
+
     public User() {
+    }
+
+    public AdminInfo getAdminInfo() {
+        return adminInfo;
+    }
+
+    public void setAdminInfo(AdminInfo adminInfo) {
+        this.adminInfo = adminInfo;
     }
 
     public int getId() {
@@ -134,4 +146,6 @@ public class User {
     public int hashCode() {
         return Objects.hash(id);
     }
+
+
 }

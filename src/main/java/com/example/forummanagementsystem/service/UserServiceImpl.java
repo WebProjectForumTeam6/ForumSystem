@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.service;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.UserRepository;
@@ -110,4 +111,26 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
+    @Override
+    public User addPhoneNumberToAdmin(int userId, String phoneNumber) {
+        User user = repository.get(userId);
+
+        if (user == null) {
+            throw new EntityNotFoundException("User", userId);
+        }
+
+        if (user.isAdmin()) {
+            AdminInfo adminInfo = user.getAdminInfo();
+            if (adminInfo == null) {
+                adminInfo = new AdminInfo();
+                adminInfo.setUser(user);
+            }
+            adminInfo.setPhoneNumber(phoneNumber);
+            repository.updateUser(user);
+            return user;
+        } else {
+            throw new AuthorizationException("Only admins can add a phone number.");
+        }
+    }
+
 }

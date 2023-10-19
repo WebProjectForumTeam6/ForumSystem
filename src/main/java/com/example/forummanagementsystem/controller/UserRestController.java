@@ -12,6 +12,7 @@ import com.example.forummanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.server.ResponseStatusException;
@@ -165,6 +166,25 @@ public class UserRestController {
     private static void checkAccessPermissions(int targetUserId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
             throw new AuthorizationException(ERROR_MESSAGE);
+        }
+    }
+
+    @PutMapping("/phoneNumber/{userId}")
+    public User updatePhoneNumber(@RequestHeader HttpHeaders headers, @PathVariable int userId, @Valid @RequestBody String phoneNumber) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            if (user.isAdmin()) {
+                User userToUpdate = userService.get(userId);
+                userToUpdate.getAdminInfo().setPhoneNumber(phoneNumber);
+                userService.updateUser(user, userToUpdate);
+                return userToUpdate;
+            } else {
+                throw new AuthorizationException("You are not authorized to update phone numbers.");
+            }
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
 }
