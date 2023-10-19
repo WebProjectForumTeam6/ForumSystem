@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.service;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.PostRepository;
@@ -77,5 +78,10 @@ public class PostServiceImpl implements PostService {
         if (user.isBlocked()){
             throw new AuthorizationException(PERMISSION_ERROR);
         }
+    }
+
+    @Override
+    public List<Post> getAll(FilterOptions filterOptions) {
+        return repository.getAll(filterOptions);
     }
 }

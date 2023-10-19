@@ -6,6 +6,7 @@ import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.PostMapper;
+import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
@@ -68,5 +69,16 @@ public class PostRestController {
         }catch (AuthorizationException e){
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
+    }
+
+    @GetMapping("/all")
+    public List<Post> getAll(
+            @RequestParam(required = false) User createdBy,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder) {
+        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
+        return postService.getAll(filterOptions);
     }
 }

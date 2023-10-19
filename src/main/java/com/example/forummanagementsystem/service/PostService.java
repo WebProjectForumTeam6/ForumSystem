@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.service;
 
+import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 
@@ -15,6 +16,7 @@ public interface PostService {
 
     void update(Post post,User user);
 
+    List<Post> getAll(FilterOptions filterOptions);
 }
 
 
