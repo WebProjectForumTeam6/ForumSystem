@@ -42,10 +42,10 @@ public class PostRepositoryImpl implements PostRepository {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-            filterOptions.getCreatedBy().ifPresent(createdBy -> {
-                filters.add("createdBy = :createdBy");
-                params.put("createdBy", createdBy);
-            });
+//            filterOptions.getCreatedBy().ifPresent(createdBy -> {
+//                filters.add("createdBy = :createdBy");
+//                params.put("createdBy", createdBy);
+//            });
 
             filterOptions.getTitle().ifPresent(title -> {
                 filters.add("title like :title");
@@ -63,7 +63,7 @@ public class PostRepositoryImpl implements PostRepository {
                         .append(" where ")
                         .append(String.join(" and ", filters));
             }
-            queryString.append(generateOrderBy(filterOptions));
+//            queryString.append(generateOrderBy(filterOptions));
 
             Query<Post> query = session.createQuery(queryString.toString(), Post.class);
             query.setProperties(params);
@@ -115,33 +115,33 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
-    @Override
-    public String generateOrderBy(FilterOptions filterOptions) {
-        if (filterOptions.getSortBy().isEmpty()) {
-            return "";
-        }
-
-        String orderBy = "";
-        switch (filterOptions.getSortBy().get()) {
-            case "createdBy":
-                orderBy = "createdBy";
-                break;
-            case "title":
-                orderBy = "title";
-                break;
-            case "content":
-                orderBy = "content";
-                break;
-        }
-
-        orderBy = String.format(" order by %s", orderBy);
-
-        if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
-            orderBy = String.format("%s desc", orderBy);
-        }
-
-        return orderBy;
-    }
+//    @Override
+//    public String generateOrderBy(FilterOptions filterOptions) {
+//        if (filterOptions.getSortBy().isEmpty()) {
+//            return "";
+//        }
+//
+//        String orderBy = "";
+//        switch (filterOptions.getSortBy().get()) {
+//            case "createdBy":
+//                orderBy = "createdBy";
+//                break;
+//            case "title":
+//                orderBy = "title";
+//                break;
+//            case "content":
+//                orderBy = "content";
+//                break;
+//        }
+//
+//        orderBy = String.format(" order by %s", orderBy);
+//
+//        if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+//            orderBy = String.format("%s desc", orderBy);
+//        }
+//
+//        return orderBy;
+//    }
 }
 
 

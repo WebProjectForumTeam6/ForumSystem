@@ -17,7 +17,7 @@ public interface PostRepository {
     void update(Post post);
     List<Post>getAll(FilterOptions filterOptions);
 
-    String generateOrderBy(FilterOptions filterOptions);
+//    String generateOrderBy(FilterOptions filterOptions);
 }
 
 

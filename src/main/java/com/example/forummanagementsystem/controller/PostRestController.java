@@ -75,10 +75,19 @@ public class PostRestController {
     public List<Post> getAll(
             @RequestParam(required = false) User createdBy,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String content,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
+            @RequestParam(required = false) String content
+) {
+        FilterOptions filterOptions = new FilterOptions(title, content);
         return postService.getAll(filterOptions);
     }
+//    @GetMapping("/all")
+//    public List<Post> getAll(
+//            @RequestParam(required = false) User createdBy,
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String content,
+//            @RequestParam(required = false) String sortBy,
+//            @RequestParam(required = false) String sortOrder) {
+//        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
+//        return postService.getAll(filterOptions);
+//    }
 }
