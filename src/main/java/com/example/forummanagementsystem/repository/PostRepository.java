@@ -16,11 +16,8 @@ public interface PostRepository {
     void delete(int id);
 
     void update(Post post);
-    List<Post>getAll(FilterOptions filterOptions);
-
     String generateOrderBy(FilterOptions filterOptions);
-
-    List<Post> getAll(FilterOptions filterOptions, String orderBy);
+    List<Post> getAll(FilterOptions filterOptions);
 }
 
 
