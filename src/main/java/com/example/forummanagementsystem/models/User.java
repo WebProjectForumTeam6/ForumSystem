@@ -8,11 +8,11 @@ import java.util.Objects;
 import java.util.Set;
 
 @Entity
-@Table(name= "users")
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name= "user_id")
+    @Column(name = "user_id")
     private int id;
 
     @Column(name = "first_name")
@@ -32,9 +32,11 @@ public class User {
     private boolean isBlocked;
     @Column(name = "is_admin")
     private boolean isAdmin;
-    @Transient
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Comment> comments;
-    @Transient
+    @OneToMany(mappedBy = "createdBy", fetch = FetchType.EAGER)
+    @JsonIgnore
     private Set<Post> usersPosts;
 
     public User() {
