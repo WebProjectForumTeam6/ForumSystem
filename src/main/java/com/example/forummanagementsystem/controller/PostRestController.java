@@ -11,7 +11,6 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.PostService;
-import jakarta.servlet.annotation.HttpConstraint;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -30,10 +29,10 @@ public class PostRestController {
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
+    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper,PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
-        this.postMapper = postMapper;
+        this.postMapper=postMapper;
     }
 
 
@@ -78,10 +77,19 @@ public class PostRestController {
     public List<Post> getAll(
             @RequestParam(required = false) User createdBy,
             @RequestParam(required = false) String title,
-            @RequestParam(required = false) String content,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, sortBy, sortOrder);
+            @RequestParam(required = false) String content
+) {
+        FilterOptions filterOptions = new FilterOptions(title, content);
         return postService.getAll(filterOptions);
     }
+//    @GetMapping("/all")
+//    public List<Post> getAll(
+//            @RequestParam(required = false) User createdBy,
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String content,
+//            @RequestParam(required = false) String sortBy,
+//            @RequestParam(required = false) String sortOrder) {
+//        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
+//        return postService.getAll(filterOptions);
+//    }
 }

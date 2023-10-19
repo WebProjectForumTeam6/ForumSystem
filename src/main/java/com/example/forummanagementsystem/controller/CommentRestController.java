@@ -5,6 +5,7 @@ import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.service.CommentService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -42,4 +43,8 @@ public class CommentRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
     }
+//    @PostMapping("/create")
+//    public Comment create(@RequestHeader HttpHeaders headers, @Valid @RequestBody){
+//
+//    }
 }

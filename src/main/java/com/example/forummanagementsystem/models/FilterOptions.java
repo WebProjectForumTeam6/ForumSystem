@@ -3,30 +3,30 @@ package com.example.forummanagementsystem.models;
 import java.util.Optional;
 public class FilterOptions {
 
-    private Optional<User> createdBy;
+//    private Optional<User> createdBy;
     private Optional<String> title;
     private Optional<String> content;
-    private Optional<String> sortBy;
-    private Optional<String> sortOrder;
+//    private Optional<String> sortBy;
+//    private Optional<String> sortOrder;
 
     public FilterOptions(
-            User createdBy,
+//            User createdBy,
             String title,
-            String content,
-            String sortBy,
-            String sortOrder
+            String content
+//            String sortBy,
+//            String sortOrder
             ) {
-        this. createdBy= Optional.ofNullable(createdBy);
+//        this. createdBy= Optional.ofNullable(createdBy);
         this.title = Optional.ofNullable(title);
         this.content = Optional.ofNullable(content);
-        this.sortBy = Optional.ofNullable(sortBy);
-        this.sortOrder = Optional.ofNullable(sortOrder);
+//        this.sortBy = Optional.ofNullable(sortBy);
+//        this.sortOrder = Optional.ofNullable(sortOrder);
 
     }
 
-    public Optional<User> getCreatedBy() {
-        return createdBy;
-    }
+//    public Optional<User> getCreatedBy() {
+//        return createdBy;
+//    }
     public Optional<String> getTitle() {
         return title;
     }
@@ -35,11 +35,11 @@ public class FilterOptions {
         return content;
     }
 
-    public Optional<String> getSortBy() {
-        return sortBy;
-    }
-
-    public Optional<String> getSortOrder() {
-        return sortOrder;
-    }
+//    public Optional<String> getSortBy() {
+//        return sortBy;
+//    }
+//
+//    public Optional<String> getSortOrder() {
+//        return sortOrder;
+//    }
 }
