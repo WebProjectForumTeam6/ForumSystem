@@ -15,14 +15,6 @@ public class PostMapper {
         this.postService = postService;
     }
 
-//    public Post fromDto(int id, PostDto postDto){
-//        Post post= fromDtoIn(postDto);
-//        post.setId(id);
-//        post.setTitle(postDto.getTitle());
-//        post.setContent(postDto.getContent());
-//        return post;
-//    }
-
     public Post fromDtoIn(PostDto postDto, User creator) {
         Post post=new Post();
         post.setTitle(postDto.getTitle());

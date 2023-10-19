@@ -1,6 +1,7 @@
 package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.models.Comment;
+import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -34,5 +35,24 @@ public class CommentRepositoryImpl implements CommentRepository {
             query.setParameter("user", user);
             return query.list();
         }
+    }
+
+    @Override
+    public List<Comment> getPostComments(Post post) {
+        try (Session session= sessionFactory.openSession()){
+            Query<Comment> query=session.createQuery("from Comment where post=:post", Comment.class);
+            query.setParameter("post", post);
+            return query.list();
+        }
+    }
+
+    @Override
+    public Comment create(Comment comment){
+        try (Session session=sessionFactory.openSession()){
+            session.beginTransaction();
+            session.persist(comment);
+            session.getTransaction().commit();
+        }
+        return comment;
     }
 }

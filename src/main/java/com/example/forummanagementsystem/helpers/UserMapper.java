@@ -16,14 +16,6 @@ public class UserMapper {
         this.userService = userService;
     }
 
-    public User fromDto(int id, UserDto userDto){
-        User user=fromDto(userDto);
-        user.setId(id);
-        user.setBlocked(false);
-        user.setAdmin(false);
-        return user;
-    }
-
     public User fromDto(UserDto userDto) {
         User user=new User();
         user.setFirstName(userDto.getFirstName());

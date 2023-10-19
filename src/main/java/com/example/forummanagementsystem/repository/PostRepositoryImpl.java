@@ -37,41 +37,36 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public List<Post>getAll(FilterOptions filterOptions) {
-        try (Session session = sessionFactory.openSession()) {
+    public List<Post> getAll(FilterOptions FilterOptions) {
+        try(Session session = sessionFactory.openSession()) {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
 
-//            filterOptions.getCreatedBy().ifPresent(createdBy -> {
-//                filters.add("createdBy = :createdBy");
-//                params.put("createdBy", createdBy);
-//            });
-
-            filterOptions.getTitle().ifPresent(title -> {
+            FilterOptions.getTitle().ifPresent(value -> {
                 filters.add("title like :title");
-                params.put("title", "%" + title + "%");
+                params.put("title", String.format("%%%s%%", value));
             });
 
-            filterOptions.getContent().ifPresent(content -> {
+           FilterOptions.getContent().ifPresent(value -> {
                 filters.add("content like :content");
-                params.put("content", "%" + content + "%");
+                params.put("content", String.format("%%%s%%", value));
             });
 
-            StringBuilder queryString = new StringBuilder("from Post");
-            if (!filters.isEmpty()) {
-                queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
-            }
-//            queryString.append(generateOrderBy(filterOptions));
 
-            Query<Post> query = session.createQuery(queryString.toString(), Post.class);
+            StringBuilder queryString = new StringBuilder("FROM Post");
+
+            if (!filters.isEmpty()) {
+                queryString.append(" where ").append(String.join(" and ", filters));
+            }
+
+
+            queryString.append(generateOrderBy(FilterOptions));
+
+            Query<Post> query = session.createQuery(queryString.toString(),Post.class);
             query.setProperties(params);
             return query.list();
         }
     }
-
-
 
 
     @Override
@@ -130,33 +125,30 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
-//    @Override
-//    public String generateOrderBy(FilterOptions filterOptions) {
-//        if (filterOptions.getSortBy().isEmpty()) {
-//            return "";
-//        }
-//
-//        String orderBy = "";
-//        switch (filterOptions.getSortBy().get()) {
-//            case "createdBy":
-//                orderBy = "createdBy";
-//                break;
-//            case "title":
-//                orderBy = "title";
-//                break;
-//            case "content":
-//                orderBy = "content";
-//                break;
-//        }
-//
-//        orderBy = String.format(" order by %s", orderBy);
-//
-//        if (filterOptions.getSortOrder().isPresent() && filterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
-//            orderBy = String.format("%s desc", orderBy);
-//        }
-//
-//        return orderBy;
-//    }
+
+    public String generateOrderBy(FilterOptions postFilterOptions) {
+        if (postFilterOptions.getSortBy().isEmpty()) {
+            return "";
+        }
+
+        String orderBy = "";
+        switch (postFilterOptions.getSortBy().get()) {
+            case "title":
+                orderBy = "title";
+                break;
+            case "content":
+                orderBy = "content";
+
+        }
+
+        orderBy = String.format(" order by %s", orderBy);
+
+        if (postFilterOptions.getSortOrder().isPresent() && postFilterOptions.getSortOrder().get().equalsIgnoreCase("desc")) {
+            orderBy = String.format("%s desc", orderBy);
+        }
+
+        return orderBy;
+    }
 }
 
 
