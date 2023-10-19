@@ -41,11 +41,11 @@ public class PostServiceImpl implements PostService {
             if (excitingPost.getId() == post.getId()) {
                 duplicateExists = false;
             }
-        }catch (EntityNotFoundException e){
-            duplicateExists =false;
+        } catch (EntityNotFoundException e) {
+            duplicateExists = false;
         }
-        if (duplicateExists){
-            throw new EntityDuplicateException("Post","title",post.getTitle());
+        if (duplicateExists) {
+            throw new EntityDuplicateException("Post", "title", post.getTitle());
         }
         repository.update(post);
     }
@@ -74,12 +74,12 @@ public class PostServiceImpl implements PostService {
         isUserBlocked(creator);
         repository.create(post);
     }
-    private void isUserBlocked(User user){
-        if (user.isBlocked()){
+
+    private void isUserBlocked(User user) {
+        if (user.isBlocked()) {
             throw new AuthorizationException(PERMISSION_ERROR);
         }
     }
-
     @Override
     public List<Post> getAll(FilterOptions filterOptions) {
         return repository.getAll(filterOptions);

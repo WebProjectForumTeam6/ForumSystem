@@ -81,4 +81,21 @@ public class PostRestController {
         FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
         return postService.getAll(filterOptions);
     }
+//    @GetMapping("/all")
+//    public List<Post> getAll(
+//            @RequestParam(required = false) User createdBy,
+//            @RequestParam(required = false) String title,
+//            @RequestParam(required = false) String content,
+//            @RequestParam(required = false) String sortBy) {
+//        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy);
+//        return postService.getAll(filterOptions);
+//    }
+
+//    @GetMapping("/all")
+//    public List<Post> getAllPosts(@RequestBody FilterOptions filterOptions) {
+//        return postService.getAll(filterOptions);
+//    }
+
+
+
 }

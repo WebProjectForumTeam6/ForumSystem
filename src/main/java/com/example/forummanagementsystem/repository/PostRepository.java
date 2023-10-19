@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PostRepository {
 
@@ -18,6 +19,8 @@ public interface PostRepository {
     List<Post>getAll(FilterOptions filterOptions);
 
     String generateOrderBy(FilterOptions filterOptions);
+
+    List<Post> getAll(FilterOptions filterOptions, String orderBy);
 }
 
 

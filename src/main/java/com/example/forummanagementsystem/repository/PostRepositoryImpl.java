@@ -9,10 +9,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Repository
 public class PostRepositoryImpl implements PostRepository {
@@ -35,9 +32,8 @@ public class PostRepositoryImpl implements PostRepository {
             return post;
         }
     }
-
     @Override
-    public List<Post>getAll(FilterOptions filterOptions) {
+    public List<Post> getAll(FilterOptions filterOptions,String orderBy) {
         try (Session session = sessionFactory.openSession()) {
             List<String> filters = new ArrayList<>();
             Map<String, Object> params = new HashMap<>();
@@ -49,29 +45,31 @@ public class PostRepositoryImpl implements PostRepository {
 
             filterOptions.getTitle().ifPresent(title -> {
                 filters.add("title like :title");
-                params.put("title", "%" + title + "%");
+                params.put("title", "%%" + title + "%%");
             });
 
             filterOptions.getContent().ifPresent(content -> {
                 filters.add("content like :content");
-                params.put("content", "%" + content + "%");
+                params.put("content", "%%" + content + "%%");
             });
 
             StringBuilder queryString = new StringBuilder("from Post");
+
             if (!filters.isEmpty()) {
-                queryString
-                        .append(" where ")
-                        .append(String.join(" and ", filters));
+                queryString.append(" where ");
+                queryString.append(String.join(" and ", filters));
             }
+
+
             queryString.append(generateOrderBy(filterOptions));
+
 
             Query<Post> query = session.createQuery(queryString.toString(), Post.class);
             query.setProperties(params);
-            return query.list();
+
+            return Optional.of(query.list()).orElseThrow(()->new EntityNotFoundException("test","test","test"));
         }
     }
-
-
 
 
     @Override
@@ -115,6 +113,13 @@ public class PostRepositoryImpl implements PostRepository {
             session.getTransaction().commit();
         }
     }
+
+    @Override
+    public List<Post> getAll(FilterOptions filterOptions) {
+        return null;
+    }
+
+
     @Override
     public String generateOrderBy(FilterOptions filterOptions) {
         if (filterOptions.getSortBy().isEmpty()) {
@@ -123,9 +128,7 @@ public class PostRepositoryImpl implements PostRepository {
 
         String orderBy = "";
         switch (filterOptions.getSortBy().get()) {
-            case "createdBy":
-                orderBy = "createdBy";
-                break;
+
             case "title":
                 orderBy = "title";
                 break;
