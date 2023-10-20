@@ -72,7 +72,7 @@ create table likes
     id int auto_increment
         primary key,
     post_id   int not null,
-    user_id   int null,
+    user_id   int not null,
     constraint likes_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
     constraint likes_users_user_id_fk

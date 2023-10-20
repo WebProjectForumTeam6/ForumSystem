@@ -30,7 +30,9 @@ public class CommentRestController {
     private final CommentMapper commentMapper;
 
     @Autowired
-    public CommentRestController(AuthenticationHelper authenticationHelper, CommentService commentService, UserService userService, PostService postService, CommentMapper commentMapper) {
+    public CommentRestController(AuthenticationHelper authenticationHelper,
+                                 CommentService commentService, UserService userService,
+                                 PostService postService, CommentMapper commentMapper) {
         this.authenticationHelper = authenticationHelper;
         this.commentService = commentService;
         this.userService = userService;
@@ -60,7 +62,8 @@ public class CommentRestController {
     }
 
     @GetMapping("/post/{id}")
-    public List<Comment> getPostComments(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+    public List<Comment> getPostComments(@RequestHeader HttpHeaders headers,
+                                         @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             Post post = postService.getById(id);

@@ -60,6 +60,7 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.delete(comment);
     }
 
+
     private static void checkAccessPermissions(Comment comment, User user) {
         if (!user.isAdmin() && comment.getUser().getId() != user.getId()) {
             throw new AuthorizationException(ADMIN_OR_CREATOR);

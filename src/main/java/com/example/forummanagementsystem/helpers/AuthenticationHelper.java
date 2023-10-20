@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.helpers;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

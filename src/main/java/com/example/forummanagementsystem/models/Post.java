@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -27,7 +28,8 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Comment> comments;
-
+//todo
+//Set<Tag> tags
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JsonIgnore
@@ -35,7 +37,7 @@ public class Post {
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
 
-    private Set<User> likes;
+    private Set<User> likes = new HashSet<>();
 
     public Post() {
     }
@@ -85,8 +87,8 @@ public class Post {
         return likes;
     }
 
-    public void setLikes(Set<User> likes) {
-        this.likes = likes;
+    public void setLikes(User user) {
+        likes.add(user);
     }
     public int getLikesCount(){
         return likes.size();
