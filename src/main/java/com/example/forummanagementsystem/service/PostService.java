@@ -17,6 +17,10 @@ public interface PostService {
     void update(Post post,User user);
 
     List<Post> getAll(FilterOptions filterOptions);
+
+    void addLikeToPost(int postId, User user);
+
+
 }
 
 

@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.forummanagementsystem.constants.Constants.CommentService.ADMIN_OR_CREATOR;
+import static com.example.forummanagementsystem.constants.Constants.CommentService.NOT_AN_ADMIN;
+
 
 @Service
 public class CommentServiceImpl implements CommentService{
-    public static final String ADMIN_OR_CREATOR = "You are not and admin or creator.";
-    public static final String NOT_AN_ADMIN = "You are not an admin.";
+
     private final CommentRepository commentRepository;
     @Autowired
     public CommentServiceImpl(CommentRepository commentRepository) {

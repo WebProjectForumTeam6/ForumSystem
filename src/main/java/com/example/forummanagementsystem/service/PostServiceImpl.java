@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.forummanagementsystem.constants.Constants.Post.MODIFY_THE_POST;
+import static com.example.forummanagementsystem.constants.Constants.Post.PERMISSION_ERROR;
+
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -85,11 +88,11 @@ public class PostServiceImpl implements PostService {
         return repository.getAll(filterOptions);
     }
 
-
-    //todo
-    public void createLike( int postID, User user){
-        Post post = repository.getById(postID);
+    @Override
+    public void addLikeToPost(int postId, User user) {
+        Post post = repository.getById(postId);
         post.getLikes().add(user);
-        this.update(post,user);
+       repository.update(post);
     }
+
 }

@@ -9,10 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+import static com.example.forummanagementsystem.constants.Constants.AuthenticationHelper.AUTHORIZATION_HEADER_NAME;
+import static com.example.forummanagementsystem.constants.Constants.AuthenticationHelper.INVALID_AUTHENTICATION_ERROR;
+
 @Component
 public class AuthenticationHelper {
-    private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
-    private static final String INVALID_AUTHENTICATION_ERROR = "Invalid authentication.";
 
     private final UserService userService;
 
