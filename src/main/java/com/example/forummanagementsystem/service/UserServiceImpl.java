@@ -12,10 +12,11 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.forummanagementsystem.constants.Constants.User.MODIFY_USER_ERROR_MESSAGE;
+
 @Service
 public class UserServiceImpl implements UserService {
 
-    public static final String MODIFY_USER_ERROR_MESSAGE = "Only Admin can block user!";
     private final UserRepository repository;
     private final PostRepository postRepository;
 
@@ -123,6 +124,5 @@ public class UserServiceImpl implements UserService {
         repository.updatePhoneNumber(adminInfo);
         return adminInfo;
     }
-
 
 }

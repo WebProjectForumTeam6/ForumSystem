@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.example.forummanagementsystem.constants.Constants.Post.MODIFY_THE_POST;
+import static com.example.forummanagementsystem.constants.Constants.Post.PERMISSION_ERROR;
+
 @Service
 public class PostServiceImpl implements PostService {
 
 
-    public static final String MODIFY_THE_POST = "Only Admin or post creator can modify the post.";
-    public static final String PERMISSION_ERROR = "You don't have permission.";
     private final PostRepository repository;
 
     @Autowired
