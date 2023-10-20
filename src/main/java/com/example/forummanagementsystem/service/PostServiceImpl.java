@@ -86,9 +86,11 @@ public class PostServiceImpl implements PostService {
         return repository.getAll(filterOptions);
     }
 
-    public void createLike( int postID, User user){
-        Post post = repository.getById(postID);
+    @Override
+    public void addLikeToPost(int postId, User user) {
+        Post post = repository.getById(postId);
         post.getLikes().add(user);
-        this.update(post,user);
+       repository.update(post);
     }
+
 }

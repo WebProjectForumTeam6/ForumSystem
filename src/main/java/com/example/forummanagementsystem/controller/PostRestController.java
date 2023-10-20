@@ -83,4 +83,19 @@ public class PostRestController {
         FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
         return postService.getAll(filterOptions);
     }
+
+    @PostMapping("/like/{postId}")
+    public void likePost(@RequestHeader HttpHeaders headers, @PathVariable int postId) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            postService.addLikeToPost(postId,user);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
+    }
+
 }
