@@ -72,6 +72,7 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
+//TODO update
 
     @GetMapping("/all")
     public List<Post> getAll(
