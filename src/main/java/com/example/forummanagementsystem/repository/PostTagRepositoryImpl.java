@@ -22,7 +22,6 @@ public class PostTagRepositoryImpl implements PostTagRepository {
     }
 
 
-
     @Override
     public PostTag get(int postId, int tagId) {
         try (Session session = sessionFactory.openSession()) {
@@ -57,6 +56,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             return query.list();
         }
     }
+
     @Override
     public void create(PostTag postTag) {
         try (Session session = sessionFactory.openSession()) {
@@ -65,6 +65,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             session.getTransaction().commit();
         }
     }
+
     @Override
     public void update(PostTag postTag) {
         try (Session session = sessionFactory.openSession()) {
@@ -73,6 +74,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             session.getTransaction().commit();
         }
     }
+
     @Override
     public void delete(int postId, int tagId) {
         PostTag postTag = get(postId, tagId);
@@ -82,6 +84,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             session.getTransaction().commit();
         }
     }
+
     @Override
     public void deleteAllTagsForPost(int postId) {
         try (Session session = sessionFactory.openSession()) {
@@ -94,38 +97,41 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             }
         }
     }
+
     @Override
-    public List<Tag> getAllTags(){
-        try(Session session = sessionFactory.openSession()){
+    public List<Tag> getAllTags() {
+        try (Session session = sessionFactory.openSession()) {
             Query<Tag> query = session.createQuery(
-                    "from Tag ",Tag.class);
+                    "from Tag ", Tag.class);
             return query.list();
         }
     }
 
     @Override
-    public Tag getTagById(int id){
-        try( Session session = sessionFactory.openSession()){
-            Tag tag = session.get(Tag.class,id);
-            if (tag==null){
-                throw new EntityNotFoundException("Tag",id);
+    public Tag getTagById(int id) {
+        try (Session session = sessionFactory.openSession()) {
+            Tag tag = session.get(Tag.class, id);
+            if (tag == null) {
+                throw new EntityNotFoundException("Tag", id);
             }
             return tag;
         }
     }
+
     @Override
-    public Tag getTagByName(String name){
-        try(Session session= sessionFactory.openSession()){
+    public Tag getTagByName(String name) {
+        try (Session session = sessionFactory.openSession()) {
             Query<Tag> query = session.createQuery(
                     "from Tag where content= :name", Tag.class);
-            query.setParameter("name",name);
+            query.setParameter("name", name);
             List<Tag> result = query.list();
-            if (result.isEmpty()){
-                throw new EntityNotFoundException("Tag","name",name);
+            if (result.isEmpty()) {
+                throw new EntityNotFoundException("Tag", "name", name);
             }
             return result.get(0);
         }
     }
+
     @Override
     public Tag create(Tag tag) {
         try (Session session = sessionFactory.openSession()) {
@@ -135,69 +141,21 @@ public class PostTagRepositoryImpl implements PostTagRepository {
         }
         return tag;
     }
+}
 
-
-
-    }
-    //void addTagToPost(int postId, int tagId)
-
-    //void removeTagFromPost(int postId,int tagId)
-
-
-
-/*
-    @Override
-    public List<Tag> getAll() {
-        List<Tag> tags = null;
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            tags = session.createQuery("from Tag where content= :content", Tag.class).list();
-            session.getTransaction().commit();
-        }
-        return tags;
-    }
-@Override
-    public Tag create(PostTag postTag) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.persist(postTag);
-            session.getTransaction().commit();
-        }
-        return postTag;
-    }
-
-    @Override
-    public Tag delete(PostTag postTag){
-        try( Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            session.remove(postTag);
-            session.getTransaction().commit();
-        }
-        return postTag;
-    }
-@Override
-    public Tag update(PostTag postTag){
-        try(Session session = sessionFactory.openSession()){
-            session.beginTransaction();
-            session.merge(postTag);
-            session.getTransaction().commit();
-        }
-        return postTag;
-    }
 //todo
 
-    public String generateOrderBy(FilterOptions tagFilterOptions){
-        if(tagFilterOptions.getSortBy().isEmpty()) {
-            return "";
-        }
-        String orderBy ="";
-        if (tagFilterOptions.getSortBy().get().equals("content")) {
-            orderBy = "content";
-        }
-       return orderBy = String.format(" order by %s",orderBy);
-    }
+//    public String generateOrderBy(FilterOptions tagFilterOptions){
+//        if(tagFilterOptions.getSortBy().isEmpty()) {
+//            return "";
+//        }
+//        String orderBy ="";
+//        if (tagFilterOptions.getSortBy().get().equals("content")) {
+//            orderBy = "content";
+//        }
+//       return orderBy = String.format(" order by %s",orderBy);
+//    }
 
-*/
 
 
 

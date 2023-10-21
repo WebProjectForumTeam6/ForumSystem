@@ -1,8 +1,6 @@
 package com.example.forummanagementsystem.models;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSetter;
+
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -12,47 +10,23 @@ public class PostTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
+
     private int id;
 
     //@ManyToOne
     @JoinColumn (name = "post_id")
-   // private Post post;
+
     private int postId;
 
    //@ManyToOne
     @JoinColumn(name = "tag_id")
-  //  private Tag tag;
+
     private int tagId;
 
     public PostTag() {
     }
 
-   /* public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Post getPost() {
-        return post;
-    }
-
-    public void setPost(Post post) {
-        this.post = post;
-    }
-
-    public Tag getTag() {
-        return tag;
-    }
-
-    public void setTag(Tag tag) {
-        this.tag = tag;
-    }
-    */
-
-    public PostTag(int postId, int tagId) {
+    public PostTag (int postId, int tagId) {
         this.postId = postId;
         this.tagId = tagId;
     }

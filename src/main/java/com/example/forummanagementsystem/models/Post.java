@@ -92,10 +92,6 @@ public class Post {
    public void removeLikes(User user){
         likes.remove(user);
     }
-//    public int getLikesCount(){
-//        return likes.size();
-//    }
-
 
 
     @Override

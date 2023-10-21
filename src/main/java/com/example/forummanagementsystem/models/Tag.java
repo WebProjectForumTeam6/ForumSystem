@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
+    @JsonIgnore
     private int id;
 
     @Column(name = "content")
