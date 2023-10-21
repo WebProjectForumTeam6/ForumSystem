@@ -1,4 +1,3 @@
-use forum;
 create table tags
 (
     tag_id  int auto_increment
@@ -37,7 +36,6 @@ create table posts
     title   varchar(64)   not null,
     content varchar(8192) not null,
     user_id int           not null,
-
     constraint posts_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
@@ -55,27 +53,27 @@ create table comments
         foreign key (user_id) references users (user_id)
 );
 
+create table likes
+(
+    id      int auto_increment
+        primary key,
+    post_id int not null,
+    user_id int null,
+    constraint likes_posts_post_id_fk
+        foreign key (post_id) references posts (post_id),
+    constraint likes_users_user_id_fk
+        foreign key (user_id) references users (user_id)
+);
+
 create table posts_tags
 (
     id      int auto_increment
         primary key,
-    post_id int ,
+    post_id int null,
     tag_id  int not null,
     constraint posts_tags_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
     constraint posts_tags_tags_tag_id_fk
         foreign key (tag_id) references tags (tag_id)
-);
-
-create table likes
-(
-    id int auto_increment
-        primary key,
-    post_id   int not null,
-    user_id   int not null,
-    constraint likes_posts_post_id_fk
-        foreign key (post_id) references posts (post_id),
-    constraint likes_users_user_id_fk
-        foreign key (user_id) references users (user_id)
 );
 

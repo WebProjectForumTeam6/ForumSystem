@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 @Entity
-@Table(name = "posts_tag")
+@Table(name = "posts_tags")
 public class PostTag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

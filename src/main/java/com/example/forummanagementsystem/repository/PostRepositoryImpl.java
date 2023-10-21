@@ -97,24 +97,22 @@ public class PostRepositoryImpl implements PostRepository {
     public void delete(int id) {
         Post postToDelete = getById(id);
         try (Session session = sessionFactory.openSession()) {
-            deleteTags(id);
+           deleteTags(id);
             session.beginTransaction();
             session.remove(postToDelete);
             session.getTransaction().commit();
         }
 
     }
-    private void deleteTags(int id){
-        try (Session session = sessionFactory.openSession()){
+    private void deleteTags(int id) {
+        try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            Query<?> query =session.createNativeQuery(
-                    "delete from forum.posts_tags where post_id= :id",Post.class);
-            query.setParameter("id",id);
+            Query<?> query = session.createNativeQuery(
+                    "delete from posts_tags where post_id= :id", Post.class);
+            query.setParameter("id", id);
             query.executeUpdate();
             session.getTransaction().commit();
-
         }
-
     }
 
     @Override
@@ -149,15 +147,7 @@ public class PostRepositoryImpl implements PostRepository {
 
         return orderBy;
     }
-//    @Override
-//    public void createLike(int postId, User user) {
-//        try (Session session = sessionFactory.openSession()) {
-//            session.beginTransaction();
-//            Post post = session.get(Post.class, postId);
-//            post.getLikes().add(user);
-//            session.getTransaction().commit();
-//            }
-//        }
+
 @Override
 public void modifyLike(Post post){
     try (Session session = sessionFactory.openSession()) {

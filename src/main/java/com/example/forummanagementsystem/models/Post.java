@@ -25,16 +25,18 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
+
 //    @Column(name = "post_timestamp")
 //    @JsonIgnore
 //    private LocalDateTime localDateTime;
+
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Comment> comments;
 
     @ManyToMany(fetch = FetchType.EAGER)
 
-    @JoinTable(name = "post_tags",
+    @JoinTable(name = "posts_tags",
     joinColumns = @JoinColumn(name = "post_id"),
     inverseJoinColumns = @JoinColumn(name = "tag_id"))
     @JsonIgnore

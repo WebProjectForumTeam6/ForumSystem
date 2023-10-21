@@ -84,12 +84,7 @@ public class PostServiceImpl implements PostService {
         return repository.getAll(filterOptions);
     }
 
-//    @Override
-//    public void addLikeToPost(int postId, User user) {
-//        Post post = repository.getById(postId);
-//        post.getLikes().add(user);
-//       repository.update(post);
-//    }
+
 @Override
     public void modifyLike(int id, User user, boolean likeFlag){
        isUserBlocked(user);

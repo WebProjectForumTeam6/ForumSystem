@@ -1,3 +1,4 @@
+use forum;
 INSERT INTO tags (content)
 VALUES ('Tag 1'),
        ('Tag 2'),
