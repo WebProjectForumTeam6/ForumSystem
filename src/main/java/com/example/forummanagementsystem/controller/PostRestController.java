@@ -88,14 +88,13 @@ public class PostRestController {
 
 
     @PatchMapping("like/{postId}")
-    public void modifyLike(@RequestHeader HttpHeaders headers, @PathVariable int postId, @RequestParam boolean isLiked) {
+    public void modifyLike(@RequestHeader HttpHeaders headers, @PathVariable int postId) {
         try {
-            boolean likeFlag = isLiked;
+//            boolean likeFlag = isLiked;
 
             User user = authenticationHelper.tryGetUser(headers);
             postService.modifyLike(postId,
-                    user,
-                    likeFlag);
+                    user);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {

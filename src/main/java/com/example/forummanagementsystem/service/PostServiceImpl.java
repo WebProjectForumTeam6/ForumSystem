@@ -86,16 +86,18 @@ public class PostServiceImpl implements PostService {
 
 
 @Override
-    public void modifyLike(int id, User user, boolean likeFlag){
+    public void modifyLike(int id, User user){
        isUserBlocked(user);
     Post postToModify=repository.getById(id);
-
-    if(likeFlag){
-        postToModify.addLikes(user);
-    }
-    if(!likeFlag){
+    if (postToModify.likesSet().contains(user)){
         postToModify.removeLikes(user);
-    }
+    } else {postToModify.addLikes(user);}
+//    if(likeFlag){
+//        postToModify.addLikes(user);
+//    }
+//    if(!likeFlag){
+//        postToModify.removeLikes(user);
+//    }
     repository.modifyLike(postToModify);
 }
 

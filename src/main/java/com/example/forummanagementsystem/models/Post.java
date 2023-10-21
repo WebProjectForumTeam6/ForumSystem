@@ -3,9 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -34,27 +32,21 @@ public class Post {
     @JsonIgnore
     private Set<Comment> comments;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-
-    @JoinTable(name = "posts_tags",
-    joinColumns = @JoinColumn(name = "post_id"),
-    inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @JsonIgnore
-    private Set<PostTag> tags;
-
+//    @ManyToMany(fetch = FetchType.EAGER)
+//    @JoinTable(name = "posts_tags",
+//    joinColumns = @JoinColumn(name = "post_id"),
+//    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+//    @JsonIgnore
+//    private Set<PostTag> tags;
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     @JoinTable(name = "likes",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
-
     private Set<User> likes = new HashSet<>();
 
     public Post() {
     }
-
-
 
     public int getId() {
         return id;
@@ -107,12 +99,16 @@ public class Post {
     public int getLikes() {
         return likes.size();
     }
-    public Set<PostTag> getTags() {
-        return tags;
-    }
+//    public Set<PostTag> getTags() {
+//        return tags;
+//    }
+//
+//    public void setTags(Set<PostTag> tags) {
+//        this.tags = tags;
+//    }
 
-    public void setTags(Set<PostTag> tags) {
-        this.tags = tags;
+    public Set<User> likesSet() {
+        return likes;
     }
 
     public void setLikes(Set<User> likes) {
@@ -122,7 +118,8 @@ public class Post {
     public void addLikes(User user) {
         likes.add(user);
     }
-   public void removeLikes(User user){
+
+    public void removeLikes(User user) {
         likes.remove(user);
     }
 

@@ -20,7 +20,7 @@ public interface PostService {
 
   //  void addLikeToPost(int postId, User user);
 
-    void modifyLike(int id, User user, boolean likeFlag);
+    void modifyLike(int id, User user);
 }
 
 
