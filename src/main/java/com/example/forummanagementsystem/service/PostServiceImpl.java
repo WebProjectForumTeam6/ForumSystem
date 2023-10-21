@@ -55,7 +55,6 @@ public class PostServiceImpl implements PostService {
         if (!(user.isAdmin() || post.getCreatedBy().equals(user))) {
             throw new AuthorizationException(MODIFY_THE_POST);
         }
-
     }
 
 

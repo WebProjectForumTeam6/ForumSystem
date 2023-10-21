@@ -51,7 +51,7 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/id/{id}")
+    @GetMapping("/{id}")
     public User getById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -62,7 +62,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    @GetMapping("/username/{username}")
+    @GetMapping("/{username}")
     public User getByUsername( @RequestHeader HttpHeaders headers, @PathVariable String username){
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -98,7 +98,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    @PutMapping("/unblock/{id}")
+    @PutMapping("/{id}")
     public User unblock(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user=authenticationHelper.tryGetUser(headers);
@@ -126,7 +126,7 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/byEmail/{email}")
+    @GetMapping("/{email}")
     public User getByEmail(@RequestHeader HttpHeaders headers, @PathVariable String email) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -139,7 +139,7 @@ public class UserRestController {
         }
 
     }
-    @GetMapping("/firstName/{firstName}")
+    @GetMapping("/{firstName}")
     public User getByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
@@ -164,11 +164,7 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    private static void checkAccessPermissions(int targetUserId, User executingUser) {
-        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
-            throw new AuthorizationException(ERROR_MESSAGE);
-        }
-    }
+
     @PutMapping("/phoneNumber")
     public AdminInfo updatePhoneNumber(@RequestHeader HttpHeaders headers, @Valid @RequestBody String phoneNumber) {
         try {

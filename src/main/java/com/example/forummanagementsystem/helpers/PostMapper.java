@@ -7,19 +7,18 @@ import com.example.forummanagementsystem.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.HashSet;
+
 @Component
 public class PostMapper {
-    private final PostService postService;
-    @Autowired
-    public PostMapper(PostService postService) {
-        this.postService = postService;
-    }
-
     public Post fromDtoIn(PostDto postDto, User creator) {
         Post post=new Post();
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setCreatedBy(creator);
+        post.setLocalDateTime(LocalDateTime.now());
+        post.setLikes(new HashSet<>());
         return post;
     }
 }

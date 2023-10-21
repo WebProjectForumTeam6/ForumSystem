@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -23,6 +24,10 @@ public class Comment {
     private Post post;
     @Column(name = "content")
     private String content;
+
+    @Column(name = "comment_timestamp")
+    @JsonIgnore
+    private LocalDateTime localDateTime;
 
     public Comment() {
     }
@@ -57,6 +62,14 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     @Override

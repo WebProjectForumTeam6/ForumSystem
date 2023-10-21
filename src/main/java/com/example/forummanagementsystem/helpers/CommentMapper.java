@@ -9,6 +9,8 @@ import com.example.forummanagementsystem.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+
 @Component
 public class CommentMapper {
     private final CommentService commentService;
@@ -23,6 +25,7 @@ public class CommentMapper {
         comment.setContent(commentDto.getContent());
         comment.setPost(post);
         comment.setUser(creator);
+        comment.setLocalDateTime(LocalDateTime.now());
         return comment;
     }
     public Comment fromDtoUpdate(CommentDto commentDto, int commentId) {

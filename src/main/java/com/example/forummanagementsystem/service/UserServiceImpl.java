@@ -17,13 +17,11 @@ import static com.example.forummanagementsystem.constants.Constants.User.MODIFY_
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserRepository repository;
-    private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository, PostRepository postRepository) {
-        this.repository = repository;
-        this.postRepository = postRepository;
+    public UserServiceImpl(UserRepository repository) {
+        this.userRepository = repository;
     }
 
     @Override
