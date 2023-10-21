@@ -17,6 +17,17 @@ public interface PostService {
     void update(Post post,User user);
 
     List<Post> getAll(FilterOptions filterOptions);
+
+  //  void addLikeToPost(int postId, User user);
+
+
+    //    @Override
+    //    public void addLikeToPost(int postId, User user) {
+    //        Post post = repository.getById(postId);
+    //        post.getLikes().add(user);
+    //       repository.update(post);
+    //    }
+    void modifyLike(int id, User user, boolean likeFlag);
 }
 
 

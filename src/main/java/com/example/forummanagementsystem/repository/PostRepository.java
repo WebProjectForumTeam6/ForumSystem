@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
+import com.example.forummanagementsystem.models.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,10 @@ public interface PostRepository {
     void update(Post post);
     String generateOrderBy(FilterOptions filterOptions);
     List<Post> getAll(FilterOptions filterOptions);
+ //   void createLike(int postId, User user);
+
+
+    void modifyLike(Post post);
 }
 
 

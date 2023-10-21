@@ -10,6 +10,7 @@ public class Tag {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tag_id")
     private int id;
+
     @Column(name = "content")
     private String content;
 
@@ -33,7 +34,7 @@ public class Tag {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = content.toLowerCase();
     }
 
     @Override

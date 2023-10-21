@@ -57,6 +57,7 @@ public class PostRestController {
         }
     }
 
+
     @PostMapping("/create")
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
         try {
@@ -84,4 +85,36 @@ public class PostRestController {
         FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
         return postService.getAll(filterOptions);
     }
-}
+//todo - не работи командата -> само добавя нов лайк
+//    @PostMapping("/like/{postId}")
+//    public void likePost(@RequestHeader HttpHeaders headers, @PathVariable int postId) {
+//        try {
+//            User user = authenticationHelper.tryGetUser(headers);
+//            postService.addLikeToPost(postId,user);
+//        } catch (EntityNotFoundException e) {
+//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+//        } catch (EntityDuplicateException e) {
+//            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+//        } catch (AuthorizationException e) {
+//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+//        }
+//    }
+
+    @PatchMapping("like/{postId}")
+    public void modifyLike(@RequestHeader HttpHeaders headers, @PathVariable int postId, @RequestParam boolean isLiked) {
+        try {
+            boolean likeFlag = isLiked;
+
+            User user = authenticationHelper.tryGetUser(headers);
+            postService.modifyLike(postId,
+                    user,
+                    likeFlag);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (ResponseStatusException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+    }

@@ -12,13 +12,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.forummanagementsystem.constants.Constants.Post.MODIFY_THE_POST;
-import static com.example.forummanagementsystem.constants.Constants.Post.PERMISSION_ERROR;
-
 @Service
 public class PostServiceImpl implements PostService {
 
 
+    public static final String MODIFY_THE_POST = "Only Admin or post creator can modify the post.";
+    public static final String PERMISSION_ERROR = "You don't have permission.";
     private final PostRepository repository;
 
     @Autowired
@@ -85,9 +84,26 @@ public class PostServiceImpl implements PostService {
         return repository.getAll(filterOptions);
     }
 
-    public void createLike( int postID, User user){
-        Post post = repository.getById(postID);
-        post.getLikes().add(user);
-        this.update(post,user);
+//    @Override
+//    public void addLikeToPost(int postId, User user) {
+//        Post post = repository.getById(postId);
+//        post.getLikes().add(user);
+//       repository.update(post);
+//    }
+@Override
+    public void modifyLike(int id, User user, boolean likeFlag){
+       isUserBlocked(user);
+    Post postToModify=repository.getById(id);
+
+    if(likeFlag){
+        postToModify.setLikes(user);
     }
+    if(!likeFlag){
+        postToModify.removeLikes(user);
+    }
+    repository.modifyLike(postToModify);
+}
+
+
+
 }
