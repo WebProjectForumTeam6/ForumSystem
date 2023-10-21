@@ -1,5 +1,7 @@
 package com.example.forummanagementsystem.service;
 
+import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.models.PostTag;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
@@ -33,10 +35,19 @@ public class PostTagServiceImpl implements PostTagService {
         return postTagRepository.getTagByName(name);
     }
 
+    public Tag create(Tag tag) {
+        boolean duplicateExist = true;
+        try {
+            postTagRepository.getTagByName(tag.getContent());
+        } catch (EntityNotFoundException e) {
+            duplicateExist = false;
+        }
+            return postTagRepository.getTagByName(tag.getContent());
+        }
+
+    }
 
 
 
 
 
-
-}

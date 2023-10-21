@@ -19,8 +19,10 @@ public interface PostRepository {
     void update(Post post);
     String generateOrderBy(FilterOptions filterOptions);
     List<Post> getAll(FilterOptions filterOptions);
-    void createLike(int postId, User user);
+ //   void createLike(int postId, User user);
 
+
+    void modifyLike(Post post);
 }
 
 

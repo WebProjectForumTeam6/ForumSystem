@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -25,14 +24,14 @@ public class Post {
     @Column(name = "content")
     private String content;
 
+
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    @JsonIgnore
+
     private Set<Comment> comments;
 //todo
 //Set<Tag> tags
 
     @ManyToMany(fetch = FetchType.EAGER)
-    @JsonIgnore
     @JoinTable(name = "likes",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -83,16 +82,20 @@ public class Post {
         this.comments = comments;
     }
 
-    public Set<User> getLikes() {
-        return likes;
+    public int getLikes() {
+        return likes.size();
     }
 
     public void setLikes(User user) {
         likes.add(user);
     }
-    public int getLikesCount(){
-        return likes.size();
+   public void removeLikes(User user){
+        likes.remove(user);
     }
+//    public int getLikesCount(){
+//        return likes.size();
+//    }
+
 
 
     @Override

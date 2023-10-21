@@ -3,7 +3,6 @@ package com.example.forummanagementsystem.repository;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
-import com.example.forummanagementsystem.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -150,15 +149,23 @@ public class PostRepositoryImpl implements PostRepository {
 
         return orderBy;
     }
-    @Override
-    public void createLike(int postId, User user) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            Post post = session.get(Post.class, postId);
-            post.getLikes().add(user);
-            session.getTransaction().commit();
-            }
-        }
+//    @Override
+//    public void createLike(int postId, User user) {
+//        try (Session session = sessionFactory.openSession()) {
+//            session.beginTransaction();
+//            Post post = session.get(Post.class, postId);
+//            post.getLikes().add(user);
+//            session.getTransaction().commit();
+//            }
+//        }
+@Override
+public void modifyLike(Post post){
+    try (Session session = sessionFactory.openSession()) {
+        session.beginTransaction();
+        session.merge(post);
+        session.getTransaction().commit();
+    }
+}
     }
 
 
