@@ -26,23 +26,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> get() {
-        return repository.get();
+        return userRepository.get();
     }
 
     @Override
     public User get(int id) {
-        return repository.get(id);
+        return userRepository.get(id);
     }
 
     public User getByUsername(String username) {
-        return repository.getByUsername(username);
+        return userRepository.getByUsername(username);
     }
 
     @Override
     public User create(User user) {
         boolean duplicateExists = true;
         try {
-            repository.getByUsername(user.getUsername());
+            userRepository.getByUsername(user.getUsername());
         } catch (EntityNotFoundException e) {
             duplicateExists = false;
         }
@@ -51,26 +51,26 @@ public class UserServiceImpl implements UserService {
             throw new EntityDuplicateException("User", "username", user.getUsername());
         }
 
-        return repository.create(user);
+        return userRepository.create(user);
     }
 
     @Override
     public void block(User user, User userToBlock) {
         checkModifyPermissions(user);
         userToBlock.setBlocked(true);
-        repository.block(userToBlock);
+        userRepository.block(userToBlock);
     }
     @Override
     public void unblock(User user, User userToUnblock){
         checkModifyPermissions(user);
         userToUnblock.setBlocked(false);
-        repository.unblock(userToUnblock);
+        userRepository.unblock(userToUnblock);
     }
 
     public User makeAdmin(User user, User userToMakeAdmin) {
         checkModifyPermissions(user);
         userToMakeAdmin.setAdmin(true);
-        repository.makeAdmin(userToMakeAdmin);
+        userRepository.makeAdmin(userToMakeAdmin);
         return user;
     }
 
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByEmail(String email) {
-        User user = repository.getByEmail(email);
+        User user = userRepository.getByEmail(email);
 
         if (user == null) {
             throw new EntityNotFoundException("User", "email", email);
@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getByFirstName(String firstName) {
-        User user = repository.getByFirstName(firstName);
+        User user = userRepository.getByFirstName(firstName);
 
         if (user == null) {
             throw new EntityNotFoundException("User", "firstName", firstName);
@@ -102,10 +102,10 @@ public class UserServiceImpl implements UserService {
         if (user.getId()!=updatedUser.getId()){
             throw new AuthorizationException("You can't update other users information");
         }
-        repository.updateUser(updatedUser);
+        userRepository.updateUser(updatedUser);
     }
     private void checkModifyPermissions(User user) {
-        User user1 = repository.get(user.getId());
+        User user1 = userRepository.get(user.getId());
         if (!(user.isAdmin())) {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
         AdminInfo adminInfo = new AdminInfo();
         adminInfo.setUser(user);
         adminInfo.setPhoneNumber(phoneNumber);
-        repository.updatePhoneNumber(adminInfo);
+        userRepository.updatePhoneNumber(adminInfo);
         return adminInfo;
     }
 

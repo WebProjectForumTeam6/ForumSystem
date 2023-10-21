@@ -17,8 +17,8 @@ public class PostMapper {
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
         post.setCreatedBy(creator);
-        post.setLocalDateTime(LocalDateTime.now());
-        post.setLikes(new HashSet<>());
+//        post.setLocalDateTime(LocalDateTime.now());
+
         return post;
     }
 }

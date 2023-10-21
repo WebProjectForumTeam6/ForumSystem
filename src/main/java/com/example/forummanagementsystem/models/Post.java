@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -24,12 +25,20 @@ public class Post {
     private String title;
     @Column(name = "content")
     private String content;
-    @Column(name = "post_timestamp")
-    @JsonIgnore
-    private LocalDateTime localDateTime;
+//    @Column(name = "post_timestamp")
+//    @JsonIgnore
+//    private LocalDateTime localDateTime;
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Comment> comments;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+
+    @JoinTable(name = "post_tags",
+    joinColumns = @JoinColumn(name = "post_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    @JsonIgnore
+    private Set<PostTag> tags;
 
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -42,6 +51,7 @@ public class Post {
 
     public Post() {
     }
+
 
 
     public int getId() {
@@ -76,13 +86,13 @@ public class Post {
         this.content = content;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
-    }
-
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
-    }
+//    public LocalDateTime getLocalDateTime() {
+//        return localDateTime;
+//    }
+//
+//    public void setLocalDateTime(LocalDateTime localDateTime) {
+//        this.localDateTime = localDateTime;
+//    }
 
     public Set<Comment> getComments() {
         return comments;
@@ -95,8 +105,19 @@ public class Post {
     public int getLikes() {
         return likes.size();
     }
+    public Set<PostTag> getTags() {
+        return tags;
+    }
 
-    public void setLikes(User user) {
+    public void setTags(Set<PostTag> tags) {
+        this.tags = tags;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
+    }
+
+    public void addLikes(User user) {
         likes.add(user);
     }
    public void removeLikes(User user){

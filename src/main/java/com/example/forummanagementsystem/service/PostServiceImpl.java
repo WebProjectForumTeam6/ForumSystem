@@ -96,7 +96,7 @@ public class PostServiceImpl implements PostService {
     Post postToModify=repository.getById(id);
 
     if(likeFlag){
-        postToModify.setLikes(user);
+        postToModify.addLikes(user);
     }
     if(!likeFlag){
         postToModify.removeLikes(user);

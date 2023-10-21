@@ -13,12 +13,11 @@ public class PostTag {
 
     private int id;
 
-    //@ManyToOne
     @JoinColumn (name = "post_id")
 
     private int postId;
 
-   //@ManyToOne
+
     @JoinColumn(name = "tag_id")
 
     private int tagId;
