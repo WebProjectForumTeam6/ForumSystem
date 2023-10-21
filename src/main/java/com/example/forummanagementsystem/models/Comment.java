@@ -27,7 +27,7 @@ public class Comment {
 
     @Column(name = "comment_timestamp")
     @JsonIgnore
-    private LocalDateTime localDateTime;
+    private LocalDateTime createdAt;
 
     public Comment() {
     }
@@ -64,12 +64,12 @@ public class Comment {
         this.content = content;
     }
 
-    public LocalDateTime getLocalDateTime() {
-        return localDateTime;
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
     }
 
-    public void setLocalDateTime(LocalDateTime localDateTime) {
-        this.localDateTime = localDateTime;
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

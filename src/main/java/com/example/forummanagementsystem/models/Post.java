@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -24,9 +25,9 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-//    @Column(name = "post_timestamp")
-//    @JsonIgnore
-//    private LocalDateTime localDateTime;
+    @Column(name = "post_timestamp")
+    @JsonIgnore
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     @JsonIgnore
@@ -80,13 +81,6 @@ public class Post {
         this.content = content;
     }
 
-//    public LocalDateTime getLocalDateTime() {
-//        return localDateTime;
-//    }
-//
-//    public void setLocalDateTime(LocalDateTime localDateTime) {
-//        this.localDateTime = localDateTime;
-//    }
 
     public Set<Comment> getComments() {
         return comments;
@@ -99,7 +93,15 @@ public class Post {
     public int getLikes() {
         return likes.size();
     }
-//    public Set<PostTag> getTags() {
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+    //    public Set<PostTag> getTags() {
 //        return tags;
 //    }
 //

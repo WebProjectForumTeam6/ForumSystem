@@ -31,22 +31,24 @@ create table admins_info
 
 create table posts
 (
-    post_id int auto_increment
+    post_id        int auto_increment
         primary key,
-    title   varchar(64)   not null,
-    content varchar(8192) not null,
-    user_id int           not null,
+    title          varchar(64)   not null,
+    content        varchar(8192) not null,
+    post_timestamp datetime      not null,
+    user_id        int           not null,
     constraint posts_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );
 
 create table comments
 (
-    comment_id int auto_increment
+    comment_id        int auto_increment
         primary key,
-    user_id    int           not null,
-    post_id    int           not null,
-    content    varchar(8192) not null,
+    user_id           int           not null,
+    post_id           int           not null,
+    content           varchar(8192) not null,
+    comment_timestamp datetime      not null,
     constraint comments_posts_fk
         foreign key (post_id) references posts (post_id),
     constraint comments_users_fk
@@ -58,7 +60,7 @@ create table likes
     id      int auto_increment
         primary key,
     post_id int not null,
-    user_id int null,
+    user_id int not null,
     constraint likes_posts_post_id_fk
         foreign key (post_id) references posts (post_id),
     constraint likes_users_user_id_fk

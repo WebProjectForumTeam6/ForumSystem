@@ -92,12 +92,6 @@ public class PostServiceImpl implements PostService {
     if (postToModify.likesSet().contains(user)){
         postToModify.removeLikes(user);
     } else {postToModify.addLikes(user);}
-//    if(likeFlag){
-//        postToModify.addLikes(user);
-//    }
-//    if(!likeFlag){
-//        postToModify.removeLikes(user);
-//    }
     repository.modifyLike(postToModify);
 }
 
