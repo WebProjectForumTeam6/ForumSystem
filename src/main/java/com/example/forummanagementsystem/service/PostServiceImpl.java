@@ -50,13 +50,6 @@ public class PostServiceImpl implements PostService {
         repository.update(post);
     }
 
-    private void checkModifyPermissions(int id, User user) {
-        Post post = repository.getById(id);
-        if (!(user.isAdmin() || post.getCreatedBy().equals(user))) {
-            throw new AuthorizationException(MODIFY_THE_POST);
-        }
-    }
-
 
     @Override
     public Post getById(int id) {
@@ -74,27 +67,33 @@ public class PostServiceImpl implements PostService {
         repository.create(post);
     }
 
-    private void isUserBlocked(User user) {
-        if (user.isBlocked()) {
-            throw new AuthorizationException(PERMISSION_ERROR);
-        }
-    }
     @Override
     public List<Post> getAll(FilterOptions filterOptions) {
         return repository.getAll(filterOptions);
     }
 
 
-@Override
-    public void modifyLike(int id, User user){
-       isUserBlocked(user);
-    Post postToModify=repository.getById(id);
-    if (postToModify.likesSet().contains(user)){
-        postToModify.removeLikes(user);
-    } else {postToModify.addLikes(user);}
-    repository.modifyLike(postToModify);
-}
+    @Override
+    public void modifyLike(int id, User user) {
+        isUserBlocked(user);
+        Post postToModify = repository.getById(id);
+        if (postToModify.likesSet().contains(user)) {
+            postToModify.removeLikes(user);
+        } else {
+            postToModify.addLikes(user);
+        }
+        repository.modifyLike(postToModify);
+    }
 
-
-
+    private void checkModifyPermissions(int id, User user) {
+        Post post = repository.getById(id);
+        if (!(user.isAdmin() || post.getCreatedBy().equals(user))) {
+            throw new AuthorizationException(MODIFY_THE_POST);
+        }
+    }
+    private void isUserBlocked(User user) {
+        if (user.isBlocked()) {
+            throw new AuthorizationException(PERMISSION_ERROR);
+        }
+    }
 }

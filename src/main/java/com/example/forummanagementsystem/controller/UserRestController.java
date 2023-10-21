@@ -143,38 +143,23 @@ public class UserRestController {
     public User getByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            User foundUser = userService.getByFirstName(firstName);
-            return foundUser;
+            return userService.getByFirstName(firstName);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
-    @PutMapping("/update")
-    public User updateUserInfo(@RequestHeader HttpHeaders headers, @Valid @RequestBody UserDtoUpdate userDtoUpdate){
+    @PutMapping("/info/{userId}")
+    public User updateUserInfo(@RequestHeader HttpHeaders headers,
+                               @Valid @RequestBody UserDtoUpdate userDtoUpdate,
+                               @PathVariable int userId){
         try {
             User user= authenticationHelper.tryGetUser(headers);
-            User updatedUser=userMapper.fromDtoUpdate(user.getId(), userDtoUpdate);
-            userService.updateUser(user, updatedUser);
-            return updatedUser;
+            User userToUpdate=userService.get(userId);
+            userService.updateUser(user, userToUpdate, userDtoUpdate);
+            return userToUpdate;
         }catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }
-
-    @PutMapping("/phoneNumber")
-    public AdminInfo updatePhoneNumber(@RequestHeader HttpHeaders headers, @Valid @RequestBody String phoneNumber) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            if (user.isAdmin()) {
-                return userService.addPhoneNumberToAdmin(user, phoneNumber);
-            } else {
-                throw new AuthorizationException("You are not authorized to update phone numbers.");
-            }
-        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
