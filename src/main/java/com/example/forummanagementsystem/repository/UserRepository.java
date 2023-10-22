@@ -11,16 +11,15 @@ public interface UserRepository {
 
     User get(int id);
     User getByUsername(String username);
+    AdminInfo getAdminInfo(User user);
     User create(User user);
-
     User block(User userToBlock);
     User unblock(User userToUnblock);
-
     User makeAdmin(User user);
     User getByEmail(String email);
-
     User getByFirstName(String firstName);
     void updateUser(User userToUpdate);
-
+    void addPhoneNumber(AdminInfo adminInfo);
     void updatePhoneNumber(AdminInfo adminInfo);
+
 }

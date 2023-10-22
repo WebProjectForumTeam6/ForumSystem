@@ -44,13 +44,12 @@ public class AdminInfo {
     }
 
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        AdminInfo admin = (AdminInfo) o;
-        return Objects.equals(user, admin.user) && Objects.equals(phoneNumber, admin.phoneNumber);
+        AdminInfo adminInfo = (AdminInfo) o;
+        return Objects.equals(user, adminInfo.user);
     }
 
     @Override

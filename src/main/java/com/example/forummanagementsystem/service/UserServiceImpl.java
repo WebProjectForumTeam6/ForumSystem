@@ -5,7 +5,7 @@ import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
-import com.example.forummanagementsystem.repository.PostRepository;
+import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +17,8 @@ import static com.example.forummanagementsystem.constants.Constants.User.MODIFY_
 @Service
 public class UserServiceImpl implements UserService {
 
+    public static final String PHONE_NUMBER_ERROR = "Only admins can add a phone number.";
+    public static final String NOT_AN_ADMIN_ERROR = "Only if you are an admin can change other user information.";
     private final UserRepository userRepository;
 
     @Autowired
@@ -74,8 +76,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
-
     @Override
     public User getByEmail(String email) {
         User user = userRepository.getByEmail(email);
@@ -98,29 +98,53 @@ public class UserServiceImpl implements UserService {
         return user;
     }
     @Override
-    public void updateUser(User user, User updatedUser){
-        if (user.getId()!=updatedUser.getId()){
-            throw new AuthorizationException("You can't update other users information");
+    public User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate){
+        checkAccessPermission(user, updatedUser);
+        if (userDtoUpdate.getFirstName()!=null) {
+            updatedUser.setFirstName(userDtoUpdate.getFirstName());
+        }
+        if (userDtoUpdate.getLastName()!=null) {
+            updatedUser.setLastName(userDtoUpdate.getLastName());
+        }
+        if (userDtoUpdate.getEmail()!=null) {
+            updatedUser.setEmail(userDtoUpdate.getEmail());
+        }
+        if (userDtoUpdate.getPassword()!=null) {
+            updatedUser.setPassword(userDtoUpdate.getPassword());
+        }
+        if (userDtoUpdate.getPhoneNumber()!=null &&
+                user.getId() == updatedUser.getId()){
+            addPhoneNumberToAdmin(updatedUser, userDtoUpdate.getPhoneNumber());
         }
         userRepository.updateUser(updatedUser);
+        return updatedUser;
+    }
+
+
+    private void addPhoneNumberToAdmin(User user, String phoneNumber) {
+        if (!user.isAdmin()) {
+            throw new AuthorizationException(PHONE_NUMBER_ERROR);
+        }
+
+        if (userRepository.getAdminInfo(user) == null) {
+            AdminInfo adminInfo = new AdminInfo();
+            adminInfo.setUser(user);
+            adminInfo.setPhoneNumber(phoneNumber);
+            userRepository.addPhoneNumber(adminInfo);
+        } else {
+            AdminInfo adminInfo = userRepository.getAdminInfo(user);
+            adminInfo.setPhoneNumber(phoneNumber);
+            userRepository.updatePhoneNumber(adminInfo);
+        }
     }
     private void checkModifyPermissions(User user) {
-        User user1 = userRepository.get(user.getId());
-        if (!(user.isAdmin())) {
+        if (!user.isAdmin()) {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
-
-    @Override
-    public AdminInfo addPhoneNumberToAdmin(User user, String phoneNumber) {
-        if (!user.isAdmin()) {
-            throw new AuthorizationException("Only admins can add a phone number.");
+    private void checkAccessPermission(User user, User updated){
+        if (!(user.isAdmin() || user.getId()==updated.getId())){
+            throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
-        AdminInfo adminInfo = new AdminInfo();
-        adminInfo.setUser(user);
-        adminInfo.setPhoneNumber(phoneNumber);
-        userRepository.updatePhoneNumber(adminInfo);
-        return adminInfo;
-    }
-
+     }
 }
