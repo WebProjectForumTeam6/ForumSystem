@@ -44,6 +44,7 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.getCommentById(commentId);
     }
 
+    //todo - мисля, че трябва да добавим проверка, че не всеки може да добавя коментари
     @Override
     public Comment create(Comment comment) {
         return commentRepository.create(comment);
