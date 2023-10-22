@@ -5,17 +5,15 @@ import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.UserMapper;
-import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -41,11 +39,7 @@ public class UserRestController {
     public List<User> getAll(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            user.setAdmin(true);
-            if (!user.isAdmin()) {
-                throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE);
-            }
-            return userService.get();
+            return userService.get(user);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
@@ -73,8 +67,32 @@ public class UserRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,e.getMessage());
         }
     }
-//TODO
-    @PostMapping("/create")
+
+    @GetMapping("/{email}")
+    public User getByEmail(@RequestHeader HttpHeaders headers, @PathVariable String email) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return userService.getByEmail(email);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @GetMapping("/{firstName}")
+    public User getByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            return userService.getByFirstName(firstName);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+    @PostMapping()
     public User create(@Valid @RequestBody UserDto userDto) {
         try {
             User user = userMapper.fromDto(userDto);
@@ -126,31 +144,7 @@ public class UserRestController {
         }
     }
 
-    @GetMapping("/{email}")
-    public User getByEmail(@RequestHeader HttpHeaders headers, @PathVariable String email) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            User foundUser = userService.getByEmail(email);
-            return foundUser;
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-
-    }
-    @GetMapping("/{firstName}")
-    public User getByFirstName(@RequestHeader HttpHeaders headers, @PathVariable String firstName) {
-        try {
-            User user = authenticationHelper.tryGetUser(headers);
-            return userService.getByFirstName(firstName);
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }
-    }
-    @PutMapping("/info/{userId}")
+    @PutMapping("/{userId}")
     public User updateUserInfo(@RequestHeader HttpHeaders headers,
                                @Valid @RequestBody UserDtoUpdate userDtoUpdate,
                                @PathVariable int userId){

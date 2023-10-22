@@ -52,7 +52,10 @@ public class PostRepositoryImpl implements PostRepository {
                 params.put("content", String.format("%%%s%%", value));
             });
 
-
+            FilterOptions.getCreatedBy().ifPresent(value -> {
+                filters.add("createdBy.username like :createdBy");
+                params.put("createdBy", String.format("%%%s%%", value));
+            });
             StringBuilder queryString = new StringBuilder("FROM Post");
 
             if (!filters.isEmpty()) {
@@ -70,7 +73,7 @@ public class PostRepositoryImpl implements PostRepository {
 
 
     @Override
-    public Post get(String title) {
+    public Post getByTitle(String title) {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery(
                     "from Post where title= :title", Post.class);
@@ -116,12 +119,13 @@ public class PostRepositoryImpl implements PostRepository {
     }
 
     @Override
-    public void update(Post post){
+    public Post update(Post post){
         try (Session session = sessionFactory.openSession()){
             session.beginTransaction();
             session.merge(post);
             session.getTransaction().commit();
         }
+        return post;
     }
 
     public String generateOrderBy(FilterOptions postFilterOptions) {

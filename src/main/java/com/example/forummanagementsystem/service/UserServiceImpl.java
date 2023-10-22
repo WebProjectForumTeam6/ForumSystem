@@ -27,7 +27,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> get() {
+    public List<User> get(User user) {
+        checkModifyPermissions(user);
         return userRepository.get();
     }
 

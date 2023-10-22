@@ -5,14 +5,14 @@ import java.util.Optional;
 
 
 public class FilterOptions {
-    private Optional<User> createdBy;
+    private Optional<String> createdBy;
     private Optional<String> title;
     private Optional<String> content;
     private Optional<String> sortBy;
     private Optional<String> sortOrder;
 
     public FilterOptions(
-            User createdBy,
+            String createdBy,
             String title,
             String content,
             String sortBy,
@@ -25,7 +25,7 @@ public class FilterOptions {
         this.sortOrder = Optional.ofNullable(sortOrder);
     }
 
-    public Optional<User> getCreatedBy() {
+    public Optional<String> getCreatedBy() {
         return createdBy;
     }
 

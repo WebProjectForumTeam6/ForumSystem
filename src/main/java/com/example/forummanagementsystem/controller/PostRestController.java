@@ -11,6 +11,7 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.PostService;
+import com.example.forummanagementsystem.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -29,18 +30,53 @@ public class PostRestController {
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper,PostMapper postMapper) {
+    public PostRestController(PostService postService,AuthenticationHelper authenticationHelper, PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper=postMapper;
     }
 
-
+    @GetMapping()
+    public List<Post> getAll(
+            @RequestParam(required = false) String createdBy,
+            @RequestParam(required = false) String title,
+            @RequestParam(required = false) String content,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(required = false) String sortOrder) {
+        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
+        return postService.getAll(filterOptions);
+    }
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {
         try {
             return postService.getById(id);
         } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        }
+    }
+    @PostMapping()
+    public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
+        try {
+            User creator = authenticationHelper.tryGetUser(headers);
+            Post post = postMapper.fromDtoIn(postDto, creator);
+            postService.create(post, creator);
+            return post;
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (EntityDuplicateException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
+    }
+    @PutMapping("/{postId}")
+    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int postId, @Valid @RequestBody PostDto postDto){
+        try {
+            User user=authenticationHelper.tryGetUser(headers);
+            return postService.update(postDto, user, postId);
+        }catch (AuthorizationException e){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }catch (EntityNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -57,44 +93,12 @@ public class PostRestController {
         }
     }
 
-
-    @PostMapping("/create")
-    public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
-        try {
-            User creator = authenticationHelper.tryGetUser(headers);
-            Post post = postMapper.fromDtoIn(postDto, creator);
-            postService.create(post, creator);
-            return post;
-        } catch (EntityNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
-        } catch (EntityDuplicateException e) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        } catch (AuthorizationException e) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
-        }
-    }
-//TODO update
-
-    @GetMapping("/all")
-    public List<Post> getAll(
-            @RequestParam(required = false) User createdBy,
-            @RequestParam(required = false) String title,
-            @RequestParam(required = false) String content,
-            @RequestParam(required = false) String sortBy,
-            @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
-        return postService.getAll(filterOptions);
-    }
-
-
-    @PatchMapping("like/{postId}")
+    @PatchMapping("{postId}")
     public void modifyLike(@RequestHeader HttpHeaders headers, @PathVariable int postId) {
         try {
-//            boolean likeFlag = isLiked;
-
             User user = authenticationHelper.tryGetUser(headers);
-            postService.modifyLike(postId,
-                    user);
+            postService.modifyLike(postId, user);
+
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {
