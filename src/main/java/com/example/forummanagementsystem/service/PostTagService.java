@@ -12,4 +12,9 @@ public interface PostTagService {
     Tag getTagById(int id);
 
     Tag getTagByName(String name);
+
+
+    void create(PostTag tag, User user);
+
+    void deleteAllTagsForPost(int postId);
 }
