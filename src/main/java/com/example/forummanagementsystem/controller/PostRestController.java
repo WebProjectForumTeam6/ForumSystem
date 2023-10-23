@@ -44,7 +44,8 @@ public class PostRestController {
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
         FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
-        return postService.getAll(filterOptions);
+        List<Post> posts = postService.getAll(filterOptions);
+        return posts;
     }
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {

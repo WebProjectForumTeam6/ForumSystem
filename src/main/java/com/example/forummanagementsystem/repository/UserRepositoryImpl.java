@@ -173,12 +173,12 @@ public class UserRepositoryImpl implements UserRepository {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
-            Query<User> deleteLikesQuery = session.createNativeQuery("DELETE FROM likes WHERE user_id = :userId", User.class);
+            Query<User> deleteLikesQuery = session.createQuery("delete from likes WHERE user_id = :userId", User.class);
             deleteLikesQuery.setParameter("userId", id);
             deleteLikesQuery.executeUpdate();
 
             Query<User> updatePostsAndCommentsQuery = session.createNativeQuery(
-                    "UPDATE posts SET user_id = :deletedUserId WHERE user_id = :userId", User.class);
+                    "UPDATE forum.posts SET user_id = :deletedUserId WHERE user_id = :userId", User.class);
             updatePostsAndCommentsQuery.setParameter("deletedUserId", deletedUserId);
             updatePostsAndCommentsQuery.setParameter("userId", id);
             updatePostsAndCommentsQuery.executeUpdate();
