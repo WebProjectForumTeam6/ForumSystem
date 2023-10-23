@@ -157,16 +157,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(int id, User user) {
         checkUserAuthorization(id, user);
-
+        User userToDelete= get(id);
+        if (userToDelete.isAdmin()){
+            throw new AuthorizationException("Admins can not be deleted.");
+        }
+        userToDelete.setFirstName("DeletedUser");
+        userToDelete.setLastName("DeletedUser");
+        userToDelete.setEmail("deletedUser@example.com");
+        userToDelete.setUsername("DeletedUser");
+        userToDelete.setPassword("DeletedUser");
         boolean userExists = true;
-
         try {
             userRepository.getById(id);
         } catch (EntityNotFoundException e) {
             userExists = false;
         }
         if (userExists) {
-            userRepository.deleteUser(id);
+            userRepository.deleteUser(userToDelete);
         }
 
     }

@@ -165,25 +165,10 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void deleteUser(int id) {
-        User userToDelete = getById(id);
-        User deletedUser = getByUsername("deletedUser");
-        int deletedUserId = deletedUser.getId();
-
+    public void deleteUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-
-            Query<User> deleteLikesQuery = session.createNativeQuery("DELETE FROM likes WHERE user_id = :userId", User.class);
-            deleteLikesQuery.setParameter("userId", id);
-            deleteLikesQuery.executeUpdate();
-
-            Query<User> updatePostsAndCommentsQuery = session.createNativeQuery(
-                    "UPDATE posts SET user_id = :deletedUserId WHERE user_id = :userId", User.class);
-            updatePostsAndCommentsQuery.setParameter("deletedUserId", deletedUserId);
-            updatePostsAndCommentsQuery.setParameter("userId", id);
-            updatePostsAndCommentsQuery.executeUpdate();
-
-            session.remove(userToDelete);
+            session.merge(user);
             session.getTransaction().commit();
         }
     }
