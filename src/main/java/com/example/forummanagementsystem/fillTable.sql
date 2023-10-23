@@ -17,12 +17,14 @@ VALUES (1, '1234567890'),
        (3, '1245789552'),
        (4, '9897885698');
 
-INSERT INTO posts (title, content, user_id)
-VALUES ('Post 1', 'Content of Post 1', 1),
-       ('Post 2', 'Content of Post 2', 2),
-       ('Post 3', 'Content of Post 2', 3),
+INSERT INTO posts (title, content,post_timestamp, user_id)
+VALUES ('Post 1', 'Content of Post 1','2023-05-01 19:09:24', 1),
+       ('Post 2', 'Content of Post 2','2023-07-24 19:09:14', 2),
+       ('Post 3', 'Content of Post 2','2023-10-21 19:09:10', 3),
        ('Post 4', 'Content of Post 2', 4),
        ('Post 5', 'Content of Post 2', 2);
+INSERT INTO posts (title, content,post_timestamp, user_id)
+VALUES ('Post 1', 'Content of Post 1','2023-05-01 19:09:24', 1);
 
 INSERT INTO comments (user_id, post_id, content)
 VALUES (1, 1, 'Comment on Post 1'),

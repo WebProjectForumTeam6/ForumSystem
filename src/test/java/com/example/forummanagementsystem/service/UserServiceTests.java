@@ -60,7 +60,8 @@ public class UserServiceTests {
         User newUser = new User();
         newUser.setUsername("newuser");
 
-        when(userRepository.getByUsername(newUser.getUsername())).thenThrow(new EntityNotFoundException("User", "Username", newUser.getUsername()));
+        when(userRepository.getByUsername(newUser.getUsername()))
+                .thenThrow(new EntityNotFoundException("User", "Username", newUser.getUsername()));
         when(userRepository.create(newUser)).thenReturn(newUser);
 
         User createdUser = userService.create(newUser);
