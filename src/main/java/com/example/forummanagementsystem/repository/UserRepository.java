@@ -21,5 +21,7 @@ public interface UserRepository {
     void updateUser(User userToUpdate);
     void addPhoneNumber(AdminInfo adminInfo);
     void updatePhoneNumber(AdminInfo adminInfo);
+    User getById(int id);
+    void deleteUser(int id);
 
 }

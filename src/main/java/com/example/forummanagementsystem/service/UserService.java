@@ -19,4 +19,5 @@ public interface UserService {
    User getByEmail(String email);
    User getByFirstName(String firstName);
    User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate);
+   void deleteUser(int id, User user);
 }

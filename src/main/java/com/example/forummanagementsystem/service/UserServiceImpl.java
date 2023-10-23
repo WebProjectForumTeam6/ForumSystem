@@ -64,8 +64,9 @@ public class UserServiceImpl implements UserService {
         userToBlock.setBlocked(true);
         userRepository.block(userToBlock);
     }
+
     @Override
-    public void unblock(User user, User userToUnblock){
+    public void unblock(User user, User userToUnblock) {
         checkModifyPermissions(user);
         userToUnblock.setBlocked(false);
         userRepository.unblock(userToUnblock);
@@ -99,23 +100,24 @@ public class UserServiceImpl implements UserService {
 
         return user;
     }
+
     @Override
-    public User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate){
+    public User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate) {
         checkAccessPermission(user, updatedUser);
-        if (userDtoUpdate.getFirstName()!=null) {
+        if (userDtoUpdate.getFirstName() != null) {
             updatedUser.setFirstName(userDtoUpdate.getFirstName());
         }
-        if (userDtoUpdate.getLastName()!=null) {
+        if (userDtoUpdate.getLastName() != null) {
             updatedUser.setLastName(userDtoUpdate.getLastName());
         }
-        if (userDtoUpdate.getEmail()!=null) {
+        if (userDtoUpdate.getEmail() != null) {
             updatedUser.setEmail(userDtoUpdate.getEmail());
         }
-        if (userDtoUpdate.getPassword()!=null) {
+        if (userDtoUpdate.getPassword() != null) {
             updatedUser.setPassword(userDtoUpdate.getPassword());
         }
-        if (userDtoUpdate.getPhoneNumber()!=null &&
-                user.getId() == updatedUser.getId()){
+        if (userDtoUpdate.getPhoneNumber() != null &&
+                user.getId() == updatedUser.getId()) {
             addPhoneNumberToAdmin(updatedUser, userDtoUpdate.getPhoneNumber());
         }
         userRepository.updateUser(updatedUser);
@@ -145,9 +147,33 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
-    private void checkAccessPermission(User user, User updated){
-        if (!(user.isAdmin() || user.getId()==updated.getId())){
+
+    private void checkAccessPermission(User user, User updated) {
+        if (!(user.isAdmin() || user.getId() == updated.getId())) {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
-     }
+    }
+
+    @Override
+    public void deleteUser(int id, User user) {
+        checkUserAuthorization(id, user);
+
+        boolean userExists = true;
+
+        try {
+            userRepository.getById(id);
+        } catch (EntityNotFoundException e) {
+            userExists = false;
+        }
+        if (userExists) {
+            userRepository.deleteUser(id);
+        }
+
+    }
+
+    public static void checkUserAuthorization(int targetUserId, User executingUser) {
+        if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
+            throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
+        }
+    }
 }

@@ -163,5 +163,42 @@ public class UserRepositoryImpl implements UserRepository {
             session.getTransaction().commit();
         }
     }
+
+    @Override
+    public void deleteUser(int id) {
+        User userToDelete = getById(id);
+        User deletedUser = getByUsername("deletedUser");
+        int deletedUserId = deletedUser.getId();
+
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+
+            Query<User> deleteLikesQuery = session.createNativeQuery("DELETE FROM likes WHERE user_id = :userId", User.class);
+            deleteLikesQuery.setParameter("userId", id);
+            deleteLikesQuery.executeUpdate();
+
+            Query<User> updatePostsAndCommentsQuery = session.createNativeQuery(
+                    "UPDATE posts SET user_id = :deletedUserId WHERE user_id = :userId", User.class);
+            updatePostsAndCommentsQuery.setParameter("deletedUserId", deletedUserId);
+            updatePostsAndCommentsQuery.setParameter("userId", id);
+            updatePostsAndCommentsQuery.executeUpdate();
+
+            session.remove(userToDelete);
+            session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public User getById(int id) {
+        try (
+                Session session = sessionFactory.openSession()
+        ) {
+            User user = session.get(User.class, id);
+            if (user == null) {
+                throw new EntityNotFoundException("User", id);
+            }
+            return user;
+        }
+    }
 }
 
