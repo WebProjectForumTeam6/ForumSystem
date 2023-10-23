@@ -1,11 +1,4 @@
-DROP DATABASE IF EXISTS `forum`;
-CREATE DATABASE IF NOT EXISTS `forum`;
-
-
-use `forum`;
-
 create table tags
-
 (
     tag_id  int auto_increment
         primary key,
