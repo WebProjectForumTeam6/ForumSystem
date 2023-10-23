@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
+import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.repository.UserRepository;
@@ -138,6 +139,7 @@ public class UserServiceImpl implements UserService {
             userRepository.updatePhoneNumber(adminInfo);
         }
     }
+
     private void checkModifyPermissions(User user) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);

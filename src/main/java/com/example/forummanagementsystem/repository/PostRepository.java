@@ -11,6 +11,7 @@ public interface PostRepository {
     Post getByTitle(String title);
     void create(Post post);
     void delete(int id);
+
     Post update(Post post);
     String generateOrderBy(FilterOptions filterOptions);
     List<Post> getAll(FilterOptions filterOptions);
