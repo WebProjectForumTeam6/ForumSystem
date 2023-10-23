@@ -163,7 +163,6 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException("Admins cannot be deleted.");
         }
 
-        // Perform the deletion (you can set the user's status to "deleted" or perform any other appropriate action)
         userToDelete.setFirstName("DeletedUser");
         userToDelete.setLastName("DeletedUser");
         userToDelete.setEmail("deletedUser@example.com");
@@ -183,7 +182,6 @@ public class UserServiceImpl implements UserService {
             throw new EntityNotFoundException("User", "id", String.valueOf(id));
         }
 
-        // Implement user update logic, e.g., updating user details
         existingUser.setFirstName(updatedUser.getFirstName());
         existingUser.setLastName(updatedUser.getLastName());
         existingUser.setEmail(updatedUser.getEmail());
