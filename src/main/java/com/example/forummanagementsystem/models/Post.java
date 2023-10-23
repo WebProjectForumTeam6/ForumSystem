@@ -33,14 +33,13 @@ public class Post {
    // @JsonIgnore
     private Set<Comment> comments;
 
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "posts_tags",
-//    joinColumns = @JoinColumn(name = "post_id"),
-//    inverseJoinColumns = @JoinColumn(name = "tag_id"))
-//    @JsonIgnore
-//    private Set<PostTag> tags;
-
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "posts_tags",
+    joinColumns = @JoinColumn(name = "post_id"),
+    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags;
+
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "likes",
             joinColumns = @JoinColumn(name = "post_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id"))
@@ -101,13 +100,13 @@ public class Post {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-    //    public Set<PostTag> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(Set<PostTag> tags) {
-//        this.tags = tags;
-//    }
+        public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
 
     public Set<User> likesSet() {
         return likes;
