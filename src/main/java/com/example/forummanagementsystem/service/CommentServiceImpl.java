@@ -69,6 +69,7 @@ public class CommentServiceImpl implements CommentService{
             throw new AuthorizationException(ADMIN_OR_CREATOR);
         }
     }
+
     private static void checkIsAdmin(User user) {
         if (!user.isAdmin()){
             throw new AuthorizationException(NOT_AN_ADMIN);

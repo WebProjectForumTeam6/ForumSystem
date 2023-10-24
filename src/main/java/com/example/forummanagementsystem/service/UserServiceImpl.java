@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     public static final String PHONE_NUMBER_ERROR = "Only admins can add a phone number.";
     public static final String NOT_AN_ADMIN_ERROR = "Only if you are an admin can change other user information.";
+    public static final String ADMINS_ERROR = "Admins can not be deleted.";
     private final UserRepository userRepository;
 
     @Autowired
@@ -125,7 +126,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    public void addPhoneNumberToAdmin(User user, String phoneNumber) {
+    private void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(PHONE_NUMBER_ERROR);
         }
@@ -142,39 +143,46 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public void checkModifyPermissions(User user) {
+    private void checkModifyPermissions(User user) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
 
-    public void checkAccessPermission(User user, User updated) {
+    private void checkAccessPermission(User user, User updated) {
         if (!(user.isAdmin() || user.getId() == updated.getId())) {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
     }
+
+    @Override
     public void deleteUser(int id, User user) {
-        User userToDelete = userRepository.get(id);
-        if (userToDelete == null) {
-            throw new EntityNotFoundException("User", "id", String.valueOf(id));
+        checkUserAuthorization(id, user);
+        User userToDelete= get(id);
+        if (userToDelete.isAdmin()){
+            throw new AuthorizationException(ADMINS_ERROR);
         }
-
-        if (userToDelete.isAdmin()) {
-            throw new AuthorizationException("Admins cannot be deleted.");
-        }
-
         userToDelete.setFirstName("DeletedUser");
         userToDelete.setLastName("DeletedUser");
         userToDelete.setEmail("deletedUser@example.com");
         userToDelete.setUsername("DeletedUser");
         userToDelete.setPassword("DeletedUser");
+        userToDelete.setBlocked(true);
+        boolean userExists = true;
+        try {
+            userRepository.getById(id);
+        } catch (EntityNotFoundException e) {
+            userExists = false;
+        }
+        if (userExists) {
+            userRepository.deleteUser(userToDelete);
+        }
 
-        userRepository.updateUser(userToDelete);
     }
+
     public static void checkUserAuthorization(int targetUserId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
     }
-
 }

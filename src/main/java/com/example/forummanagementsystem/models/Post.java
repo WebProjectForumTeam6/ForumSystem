@@ -26,7 +26,7 @@ public class Post {
     private String content;
 
     @Column(name = "post_timestamp")
-   // @JsonIgnore
+//    @JsonIgnore
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
