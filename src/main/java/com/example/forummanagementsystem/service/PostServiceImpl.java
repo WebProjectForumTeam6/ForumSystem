@@ -26,6 +26,23 @@ public class PostServiceImpl implements PostService {
         this.postRepository = postRepository;
     }
 
+
+    @Override
+    public List<Post> getAll(FilterOptions filterOptions) {
+        return postRepository.getAll(filterOptions);
+    }
+
+    @Override
+    public Post getById(int id) {
+        return postRepository.getById(id);
+    }
+
+    @Override
+    public void create(Post post, User creator) {
+        isUserBlocked(creator);
+        postRepository.create(post);
+    }
+
     public void delete(int id, User user) {
         checkModifyPermissions(id, user);
         postRepository.delete(id);
@@ -35,31 +52,12 @@ public class PostServiceImpl implements PostService {
     public Post update(PostDto postDto, User user, int postId) {
         checkModifyPermissions(postId, user);
 
-        Post post=getById(postId);
+        Post post = getById(postId);
         post.setTitle(postDto.getTitle());
         post.setContent(postDto.getContent());
 
         return postRepository.update(post);
     }
-
-
-    @Override
-    public Post getById(int id) {
-        return postRepository.getById(id);
-    }
-
-
-    @Override
-    public void create(Post post, User creator) {
-        isUserBlocked(creator);
-        postRepository.create(post);
-    }
-
-    @Override
-    public List<Post> getAll(FilterOptions filterOptions) {
-        return postRepository.getAll(filterOptions);
-    }
-
 
     @Override
     public void modifyLike(int id, User user) {
@@ -79,6 +77,7 @@ public class PostServiceImpl implements PostService {
             throw new AuthorizationException(MODIFY_THE_POST);
         }
     }
+
     private void isUserBlocked(User user) {
         if (user.isBlocked()) {
             throw new AuthorizationException(PERMISSION_ERROR);

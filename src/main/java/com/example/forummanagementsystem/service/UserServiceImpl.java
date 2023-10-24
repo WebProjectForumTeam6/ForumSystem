@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
 
     public static final String PHONE_NUMBER_ERROR = "Only admins can add a phone number.";
     public static final String NOT_AN_ADMIN_ERROR = "Only if you are an admin can change other user information.";
+    public static final String ADMINS_ERROR = "Admins can not be deleted.";
     private final UserRepository userRepository;
 
     @Autowired
@@ -159,13 +160,14 @@ public class UserServiceImpl implements UserService {
         checkUserAuthorization(id, user);
         User userToDelete= get(id);
         if (userToDelete.isAdmin()){
-            throw new AuthorizationException("Admins can not be deleted.");
+            throw new AuthorizationException(ADMINS_ERROR);
         }
         userToDelete.setFirstName("DeletedUser");
         userToDelete.setLastName("DeletedUser");
         userToDelete.setEmail("deletedUser@example.com");
         userToDelete.setUsername("DeletedUser");
         userToDelete.setPassword("DeletedUser");
+        userToDelete.setBlocked(true);
         boolean userExists = true;
         try {
             userRepository.getById(id);

@@ -80,7 +80,7 @@ public class PostRepositoryImpl implements PostRepository {
             query.setParameter("title", title);
 
             List<Post> result = query.list();
-            if (result.isEmpty()) {
+            if (result.size()==0) {
                 throw new EntityNotFoundException("Post", "title", title);
             }
             return result.get(0);
