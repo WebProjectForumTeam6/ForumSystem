@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 
 public class Helpers {
 
-
     public static User createMockAdmin() {
         User mockUser = createMockUser();
         mockUser.setAdmin(true);
@@ -27,7 +26,7 @@ public class Helpers {
         return mockUser;
     }
 
-    public static Comment createCommentByUser(){
+    public static Comment createCommentByUser() {
         var mockComment = new Comment();
         mockComment.setCreatedAt(LocalDateTime.now());
         mockComment.setId(1);
@@ -37,6 +36,7 @@ public class Helpers {
         return mockComment;
 
     }
+
     public static FilterOptions createMockFilterOptions() {
         return new FilterOptions(
                 "mockCreatedBy",

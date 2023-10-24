@@ -1,7 +1,6 @@
 DROP DATABASE IF EXISTS `forum`;
 CREATE DATABASE IF NOT EXISTS `forum`;
 
-
 use `forum`;
 
 create table tags
