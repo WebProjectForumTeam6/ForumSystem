@@ -6,6 +6,8 @@ import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.CommentRepository;
+import org.hibernate.id.uuid.Helper;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,6 +17,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -42,7 +45,14 @@ public class CommentServiceTests {
         assertEquals(comment, createdComment);
     }
     @Test
-    public void testCreateCommentByAdmin(){}
+    public void testCreateCommentByAdmin(){
+        User user = Helpers.createMockUser();
+        Comment comment = Helpers.createCommentByUser();
+        when(commentRepository.create(comment)).thenReturn(comment);
+
+        Comment createdComment = commentService.create(comment);
+        assertEquals(comment,createdComment);
+    }
 
     @Test
     public void testDeleteCommentByAdmin() {
@@ -72,20 +82,23 @@ public class CommentServiceTests {
         Mockito.verify(commentRepository,Mockito.times(1)).delete(deletedComment);
     }
 
-//    @Test
-//    public void testUpdateCommentByAdmin() {
-//        User adminUser = new User();
-//        Comment comment = new Comment();
-//
-//        // Mock the user to be an admin
-//        when(commentRepository.getCommentById(comment.getId())).thenReturn(comment);
-//
-//        Comment updatedComment = new Comment();
-//        when(commentRepository.update(comment)).thenReturn(updatedComment);
-//
-//        Comment result = commentService.update(comment, adminUser);
-//
-//        // Verify that the comment was updated successfully
-//        assertEquals(updatedComment, result);
-//    }
+    @Test
+public void testUpdateCommentByAdmin_Success() {
+    User adminUser = Helpers.createMockAdmin();
+    Comment comment = Helpers.createCommentByUser();
+
+    when(commentRepository.update(comment)).thenReturn(comment);
+
+    // Act
+    Comment updatedComment = commentService.update(comment, adminUser);
+
+    assertEquals(adminUser, updatedComment.getUser());
+    Mockito.verify(commentRepository, Mockito.times(1)).update(comment);
+}
+
+    //getAllComments
+    //getUserComments
+    //getPostComments
+    //getCommentsById
+
 }

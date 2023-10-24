@@ -125,7 +125,7 @@ public class UserServiceImpl implements UserService {
     }
 
 
-    protected void addPhoneNumberToAdmin(User user, String phoneNumber) {
+    public void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(PHONE_NUMBER_ERROR);
         }
@@ -142,13 +142,13 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    protected void checkModifyPermissions(User user) {
+    public void checkModifyPermissions(User user) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(MODIFY_USER_ERROR_MESSAGE);
         }
     }
 
-    protected void checkAccessPermission(User user, User updated) {
+    public void checkAccessPermission(User user, User updated) {
         if (!(user.isAdmin() || user.getId() == updated.getId())) {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
