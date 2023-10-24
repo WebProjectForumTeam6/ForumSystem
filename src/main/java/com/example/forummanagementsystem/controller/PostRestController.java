@@ -108,4 +108,17 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+    @GetMapping("/top-commented")
+    public List<Post> getTop10MostCommentedPosts() {
+        List<Post> mostCommentedPosts = postService.getTop10MostCommentedPosts();
+        return mostCommentedPosts;
     }
+
+    @GetMapping("/recently-created")
+    public List<Post> get10MostRecentlyCreatedPosts() {
+        List<Post> recentlyCreatedPosts = postService.get10MostRecentlyCreatedPosts();
+        return recentlyCreatedPosts;
+    }
+
+    }
+

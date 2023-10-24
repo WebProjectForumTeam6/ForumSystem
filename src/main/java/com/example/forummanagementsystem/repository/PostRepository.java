@@ -6,7 +6,8 @@ import com.example.forummanagementsystem.models.Post;
 import java.util.List;
 
 public interface PostRepository {
-
+    List<Post> getTop10MostCommentedPosts();
+    List<Post> get10MostRecentlyCreatedPosts();
     Post getById(int id);
     Post getByTitle(String title);
     void create(Post post);

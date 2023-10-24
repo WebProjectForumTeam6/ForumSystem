@@ -84,4 +84,13 @@ public class PostServiceImpl implements PostService {
             throw new AuthorizationException(PERMISSION_ERROR);
         }
     }
+    @Override
+    public List<Post> getTop10MostCommentedPosts() {
+        return postRepository.getTop10MostCommentedPosts();
+    }
+
+    @Override
+    public List<Post> get10MostRecentlyCreatedPosts() {
+        return postRepository.get10MostRecentlyCreatedPosts();
+    }
 }

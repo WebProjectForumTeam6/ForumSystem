@@ -19,6 +19,9 @@ public interface PostService {
     Post update(PostDto postDto, User user, int postId);
 
     void modifyLike(int id, User user);
+    List<Post> getTop10MostCommentedPosts();
+
+    List<Post> get10MostRecentlyCreatedPosts();
 }
 
 
