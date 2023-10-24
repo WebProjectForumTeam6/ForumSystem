@@ -176,19 +176,5 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
     }
-    public User updateUser(int id, User updatedUser) {
-        User existingUser = userRepository.get(id);
-        if (existingUser == null) {
-            throw new EntityNotFoundException("User", "id", String.valueOf(id));
-        }
 
-        existingUser.setFirstName(updatedUser.getFirstName());
-        existingUser.setLastName(updatedUser.getLastName());
-        existingUser.setEmail(updatedUser.getEmail());
-        existingUser.setUsername(updatedUser.getUsername());
-        existingUser.setPassword(updatedUser.getPassword());
-
-        userRepository.updateUser(existingUser);
-        return existingUser;
-    }
 }

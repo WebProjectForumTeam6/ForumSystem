@@ -12,10 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -35,32 +35,26 @@ public class UserServiceTests {
     public void testGetUser() {
         User testUser = new User();
         testUser.setId(1);
-        when(userRepository.get(1)).thenReturn(testUser);
+        Mockito.when(userRepository.get(1)).thenReturn(testUser);
 
         User result = userService.get(1);
         assertEquals(1, result.getId());
     }
-
 
     @Test
     public void testCreateUserDuplicate() {
         User testUser = new User();
         testUser.setUsername("existinguser");
 
-        when(userRepository.getByUsername("existinguser")).thenReturn(new User());
+        Mockito.when(userRepository.getByUsername("existinguser")).thenReturn(new User());
 
-        try {
-            userService.create(testUser);
-            fail("Expected EntityDuplicateException");
-        } catch (EntityDuplicateException e) {
-        }
+        assertThrows(EntityDuplicateException.class, () -> userService.create(testUser));
     }
 
     @Test
     public void testBlockUser() {
         User adminUser = new User();
         adminUser.setAdmin(true);
-
         User userToBlock = new User();
 
         userService.block(adminUser, userToBlock);
@@ -71,7 +65,6 @@ public class UserServiceTests {
     public void testUnblockUser() {
         User adminUser = new User();
         adminUser.setAdmin(true);
-
         User userToUnblock = new User();
         userToUnblock.setBlocked(true);
 
@@ -83,7 +76,6 @@ public class UserServiceTests {
     public void testMakeAdmin() {
         User adminUser = new User();
         adminUser.setAdmin(true);
-
         User userToMakeAdmin = new User();
 
         User result = userService.makeAdmin(adminUser, userToMakeAdmin);
@@ -95,7 +87,7 @@ public class UserServiceTests {
     public void testGetByEmail() {
         User testUser = new User();
         testUser.setEmail("testuser@example.com");
-        when(userRepository.getByEmail("testuser@example.com")).thenReturn(testUser);
+        Mockito.when(userRepository.getByEmail("testuser@example.com")).thenReturn(testUser);
 
         User result = userService.getByEmail("testuser@example.com");
         assertEquals("testuser@example.com", result.getEmail());
@@ -103,9 +95,9 @@ public class UserServiceTests {
 
     @Test
     public void testGetByFirstName() {
-        User testUser = aUser();
+        User testUser = new User();
         testUser.setFirstName("John");
-        when(userRepository.getByFirstName("John")).thenReturn(testUser);
+        Mockito.when(userRepository.getByFirstName("John")).thenReturn(testUser);
 
         User result = userService.getByFirstName("John");
         assertEquals("John", result.getFirstName());
@@ -113,15 +105,14 @@ public class UserServiceTests {
 
     @Test
     public void testUpdateUser() {
-        User user = aUser();
+        User user = new User();
         user.setId(1);
 
-        User updatedUser = aUser();
+        User updatedUser = new User();
         updatedUser.setId(1);
         updatedUser.setFirstName("UpdatedFirstName");
         updatedUser.setLastName("UpdatedLastName");
         updatedUser.setEmail("updated@example.com");
-        updatedUser.setUsername("updateduser");
         updatedUser.setPassword("updatedpassword");
 
         UserDtoUpdate userDtoUpdate = new UserDtoUpdate();
@@ -137,50 +128,33 @@ public class UserServiceTests {
         assertEquals("updatedpassword", result.getPassword());
     }
 
-
     @Test
     public void testAddPhoneNumberToAdminUnauthorized() {
-        User regularUser = aUser();
-
-        try {
-            userService.addPhoneNumberToAdmin(regularUser, "1234567890");
-            fail("Expected AuthorizationException");
-        } catch (AuthorizationException e) {
-        }
+        User regularUser = new User();
+        assertThrows(AuthorizationException.class, () -> userService.addPhoneNumberToAdmin(regularUser, "1234567890"));
     }
 
     @Test
     public void testCheckModifyPermissionsUnauthorized() {
-        User regularUser = aUser();
-
-        try {
-            userService.checkModifyPermissions(regularUser);
-            fail("Expected AuthorizationException");
-        } catch (AuthorizationException e) {
-        }
+        User regularUser = new User();
+        assertThrows(AuthorizationException.class, () -> userService.checkModifyPermissions(regularUser));
     }
 
     @Test
     public void testCheckAccessPermissionUnauthorized() {
-        User regularUser = aUser();
+        User regularUser = new User();
         regularUser.setId(1);
-
-        User updatedUser = aUser();
+        User updatedUser = new User();
         updatedUser.setId(2);
 
-        try {
-            userService.checkAccessPermission(regularUser, updatedUser);
-            fail("Expected AuthorizationException");
-        } catch (AuthorizationException e) {
-        }
+        assertThrows(AuthorizationException.class, () -> userService.checkAccessPermission(regularUser, updatedUser));
     }
 
     @Test
     public void testDeleteUser() {
-        User userToDelete = aUser();
+        User userToDelete = new User();
         userToDelete.setId(1);
-
-        when(userRepository.get(1)).thenReturn(userToDelete);
+        Mockito.when(userRepository.get(1)).thenReturn(userToDelete);
 
         userService.deleteUser(1, userToDelete);
         assertEquals("DeletedUser", userToDelete.getFirstName());
@@ -192,71 +166,21 @@ public class UserServiceTests {
 
     @Test
     public void testDeleteUserNotFound() {
-        when(userRepository.get(1)).thenReturn(null);
+        Mockito.when(userRepository.get(1)).thenReturn(null);
 
-        User userToDelete = aUser();
+        User userToDelete = new User();
 
-        try {
-            userService.deleteUser(1, userToDelete);
-            fail("Expected EntityNotFoundException");
-        } catch (EntityNotFoundException e) {
-        }
+        assertThrows(EntityNotFoundException.class, () -> userService.deleteUser(1, userToDelete));
     }
 
     @Test
     public void testDeleteUserAdmin() {
-        when(userRepository.get(1)).thenReturn(null);
+        Mockito.when(userRepository.get(1)).thenReturn(null);
 
         User adminUser = new User();
         adminUser.setAdmin(true);
 
-        try {
-            userService.deleteUser(1, adminUser);
-            fail("Expected EntityNotFoundException");
-        } catch (EntityNotFoundException e) {
-        }
+        assertThrows(EntityNotFoundException.class, () -> userService.deleteUser(1, adminUser));
     }
 
-    @Test
-    public void testUpdateUserById() {
-        User existingUser = aUser();
-        existingUser.setId(1);
-
-        User updatedUser = aUser();
-        updatedUser.setId(1);
-        updatedUser.setFirstName("UpdatedFirstName");
-        updatedUser.setLastName("UpdatedLastName");
-        updatedUser.setEmail("updated@example.com");
-        updatedUser.setUsername("updateduser");
-        updatedUser.setPassword("updatedpassword");
-
-        when(userRepository.get(1)).thenReturn(existingUser);
-
-        User result = userService.updateUser(1, updatedUser);
-        assertEquals("UpdatedFirstName", result.getFirstName());
-        assertEquals("UpdatedLastName", result.getLastName());
-        assertEquals("updated@example.com", result.getEmail());
-        assertEquals("updateduser", result.getUsername());
-        assertEquals("updatedpassword", result.getPassword());
-    }
-
-    @Test
-    public void testUpdateUserByIdNotFound() {
-        when(userRepository.get(1)).thenReturn(null);
-
-        User updatedUser = aUser();
-        updatedUser.setId(1);
-
-        try {
-            userService.updateUser(1, updatedUser);
-            fail("Expected EntityNotFoundException");
-        } catch (EntityNotFoundException e) {
-        }
-    }
-
-    private User aUser() {
-        User user = new User();
-        user.setAdmin(false);
-        return user;
-    }
 }
