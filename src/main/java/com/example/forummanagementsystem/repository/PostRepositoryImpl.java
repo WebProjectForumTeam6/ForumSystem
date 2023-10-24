@@ -169,12 +169,9 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public List<Post> getTop10MostCommentedPosts() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery(
-                    "SELECT post " +
-                            "FROM Post post " +
-                            "LEFT JOIN FETCH post.comments " +
-                            "GROUP BY post.id " +
-                            "ORDER BY COUNT(post.comments) DESC", Post.class
+            Query<Post> query = session.createQuery("SELECT p "+
+                            "FROM Post p " +
+                            "ORDER BY SIZE(p.comments) DESC", Post.class
             );
             query.setMaxResults(10);
             return query.list();
@@ -184,8 +181,8 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public List<Post> get10MostRecentlyCreatedPosts() {
         try (Session session = sessionFactory.openSession()) {
-            Query<Post> query = session.createQuery(
-                    "FROM Post " +
+            Query<Post> query = session.createQuery("SELECT p " +
+                    "FROM Post p " +
                             "ORDER BY createdAt DESC", Post.class
             );
             query.setMaxResults(10);

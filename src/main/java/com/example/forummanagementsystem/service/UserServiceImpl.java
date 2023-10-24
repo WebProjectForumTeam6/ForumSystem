@@ -31,11 +31,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> get(User user) {
         checkModifyPermissions(user);
+        if (userRepository.get().isEmpty()){
+            throw new EntityNotFoundException("User", "id", user.getId());
+        }
         return userRepository.get();
     }
 
     @Override
     public User get(int id) {
+        if (userRepository.get().isEmpty()){
+            throw new EntityNotFoundException("User", "id", id);
+        }
         return userRepository.get(id);
     }
 
@@ -124,7 +130,23 @@ public class UserServiceImpl implements UserService {
         userRepository.updateUser(updatedUser);
         return updatedUser;
     }
+    @Override
+    public void deleteUser(int id, User user) {
+        checkUserAuthorization(id, user);
+        User userToDelete= get(id);
+        if (userToDelete.isAdmin()){
+            throw new AuthorizationException(ADMINS_ERROR);
+        }
+        userToDelete.setFirstName("DeletedUser");
+        userToDelete.setLastName("DeletedUser");
+        userToDelete.setEmail("deletedUser@example.com");
+        userToDelete.setUsername("DeletedUser");
+        userToDelete.setPassword("DeletedUser");
+        userToDelete.setBlocked(true);
+        boolean userExists = true;
+        userRepository.deleteUser(userToDelete);
 
+    }
 
     private void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
@@ -155,30 +177,7 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    @Override
-    public void deleteUser(int id, User user) {
-        checkUserAuthorization(id, user);
-        User userToDelete= get(id);
-        if (userToDelete.isAdmin()){
-            throw new AuthorizationException(ADMINS_ERROR);
-        }
-        userToDelete.setFirstName("DeletedUser");
-        userToDelete.setLastName("DeletedUser");
-        userToDelete.setEmail("deletedUser@example.com");
-        userToDelete.setUsername("DeletedUser");
-        userToDelete.setPassword("DeletedUser");
-        userToDelete.setBlocked(true);
-        boolean userExists = true;
-        try {
-            userRepository.getById(id);
-        } catch (EntityNotFoundException e) {
-            userExists = false;
-        }
-        if (userExists) {
-            userRepository.deleteUser(userToDelete);
-        }
 
-    }
 
     public static void checkUserAuthorization(int targetUserId, User executingUser) {
         if (!executingUser.isAdmin() && executingUser.getId() != targetUserId) {
