@@ -76,11 +76,13 @@ public List<PostTag> getPostByTagId(int tagId){
         postTagRepository.delete(postId,tagId);
     }
     @Override
-    public void updateTag(PostTag postTag, User user){
+    public Tag updateTag(int tagId, String content, User user){
+        Tag tag = getTagById(tagId);
+        tag.setContent(content);
         if((!user.isAdmin() || (user.isBlocked()))){
             throw new AuthorizationException(ERROR_MESSAGE);
         }else{
-            postTagRepository.update(postTag);
+            return postTagRepository.update(tag);
         }
     }
 

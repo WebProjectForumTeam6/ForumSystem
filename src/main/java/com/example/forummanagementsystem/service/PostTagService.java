@@ -24,5 +24,5 @@ public interface PostTagService {
 
     void removeTagFromPost(int postId, int tagId);
 
-    void updateTag(PostTag postTag, User user);
+    Tag updateTag(int tagId, String content, User user);
 }

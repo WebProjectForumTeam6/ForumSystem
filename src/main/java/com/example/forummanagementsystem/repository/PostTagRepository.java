@@ -14,7 +14,7 @@ public interface PostTagRepository {
 
     void create(PostTag postTag);
 
-    void update(PostTag postTag);
+    Tag update(Tag tag);
 
     void delete(int postId, int tagId);
 

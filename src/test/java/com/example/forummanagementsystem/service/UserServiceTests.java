@@ -187,5 +187,4 @@ public class UserServiceTests {
 
         assertThrows(EntityNotFoundException.class, () -> userService.deleteUser(1, adminUser));
     }
-
 }
