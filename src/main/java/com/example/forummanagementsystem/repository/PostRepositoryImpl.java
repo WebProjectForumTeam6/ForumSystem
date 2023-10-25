@@ -36,6 +36,7 @@ public class PostRepositoryImpl implements PostRepository {
         }
     }
 
+
     @Override
     public List<Post> getAll(FilterOptions FilterOptions) {
         try(Session session = sessionFactory.openSession()) {
@@ -47,7 +48,9 @@ public class PostRepositoryImpl implements PostRepository {
                 params.put("title", String.format("%%%s%%", value));
             });
 
-           FilterOptions.getContent().ifPresent(value -> {
+
+
+            FilterOptions.getContent().ifPresent(value -> {
                 filters.add("content like :content");
                 params.put("content", String.format("%%%s%%", value));
             });
@@ -80,7 +83,7 @@ public class PostRepositoryImpl implements PostRepository {
             query.setParameter("title", title);
 
             List<Post> result = query.list();
-            if (result.isEmpty()) {
+            if (result.size()==0) {
                 throw new EntityNotFoundException("Post", "title", title);
             }
             return result.get(0);
@@ -162,6 +165,31 @@ public class PostRepositoryImpl implements PostRepository {
 
         return orderBy;
     }
+
+    @Override
+    public List<Post> getTop10MostCommentedPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p "+
+                            "FROM Post p " +
+                            "ORDER BY SIZE(p.comments) DESC", Post.class
+            );
+            query.setMaxResults(10);
+            return query.list();
+        }
+    }
+
+    @Override
+    public List<Post> get10MostRecentlyCreatedPosts() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<Post> query = session.createQuery("SELECT p " +
+                    "FROM Post p " +
+                            "ORDER BY createdAt DESC", Post.class
+            );
+            query.setMaxResults(10);
+            return query.list();
+        }
+    }
+
 
 @Override
 public void modifyLike(Post post){
