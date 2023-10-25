@@ -3,9 +3,11 @@ package com.example.forummanagementsystem.service;
 import com.example.forummanagementsystem.Helpers;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.PostTag;
+import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +37,34 @@ public class PostTagServiceTests {
         MockitoAnnotations.openMocks(this);
         postTagService = new PostTagServiceImpl(postTagRepository, postRepository);
     }
+    @Test
+    void get_Should_CallRepository() {
+        // Arrange
+        Mockito.when(postTagRepository.getAllTags())
+                .thenReturn(null);
 
+        // Act
+        postTagService.getAllTags();
+
+        // Assert
+        Mockito.verify(postTagRepository, Mockito.times(1))
+                .getAllTags();
+    }
+
+    @Test
+    public void get_Should_ReturnTag_When_MatchByIdExist() {
+        // Arrange
+        Tag mockTag=new Tag();
+        mockTag.setContent("content");
+        Mockito.when(postTagRepository.getTagById(Mockito.anyInt()))
+                .thenReturn(mockTag);
+
+        // Act
+        Tag result = postTagService.getTagById(mockTag.getId());
+
+        // Assert
+        Assertions.assertEquals(mockTag, result);
+    }
     @Test
     public void createTag_Should_CreateTagForAdminUser() {
         // Arrange

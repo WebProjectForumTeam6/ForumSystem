@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public class PostTagServiceImpl implements PostTagService {
     private final PostTagRepository postTagRepository;
     private final PostRepository postRepository;
 
+    @Autowired
     public PostTagServiceImpl(PostTagRepository postTagRepository, PostRepository postRepository) {
         this.postTagRepository = postTagRepository;
         this.postRepository = postRepository;
@@ -45,7 +47,7 @@ public class PostTagServiceImpl implements PostTagService {
         postTagRepository.deleteAllTagsForPost(postId);
     }
 
-//todo - add tag to DtoPost and Mapper
+    //todo - add tag to DtoPost and Mapper
     @Override
     public void addTagToPost(int postId, int tagId) {
         Post post = postRepository.getById(postId);
