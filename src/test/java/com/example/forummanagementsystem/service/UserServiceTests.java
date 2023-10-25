@@ -1,12 +1,10 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.Helpers;
-import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
-import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
