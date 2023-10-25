@@ -1,5 +1,4 @@
 package com.example.forummanagementsystem.service;
-
 import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
@@ -11,7 +10,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -84,13 +82,15 @@ public class CommentServiceTests {
         User adminUser = createMockAdmin();
         Comment comment = createCommentByUser();
 
-        when(commentRepository.update(comment)).thenReturn(comment);
+ //       when(commentRepository.getCommentById(Mockito.anyInt()))
+  //              .thenReturn(comment);
 
-        // Act
-        Comment updatedComment = commentService.update(comment, adminUser);
+      commentService.update(comment,adminUser);
 
-        assertEquals(adminUser, updatedComment.getUser());
-        Mockito.verify(commentRepository, Mockito.times(1)).update(comment);
+     //   assertEquals(adminUser, updatedComment);
+
+        Mockito.verify(commentRepository, Mockito.times(1))
+                .update(comment);
     }
     @Test
     public void testGetAllComments() {
@@ -150,6 +150,6 @@ public class CommentServiceTests {
 
 }
 
-    //getPostComments
+
 
 

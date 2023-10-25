@@ -1,6 +1,7 @@
 package com.example.forummanagementsystem;
 
 import com.example.forummanagementsystem.models.*;
+import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.time.LocalDateTime;
@@ -71,6 +72,21 @@ public class Helpers {
                 "mockContent",
                 "MockSortBY",
                 "sort");
+    }
+    public static Post createMockPost(){
+        User user=createMockUser();
+        Post post=new Post();
+        post.setId(1);
+        post.setTitle("Title1234567891011");
+        post.setContent("Content1234567891011");
+        post.setCreatedBy(user);
+        return post;
+    }
+    public static PostDto createMockDtoForUpdate(){
+        PostDto postDto=new PostDto();
+        postDto.setContent("Content12345678910");
+        postDto.setTitle("Title1234567891011");
+        return postDto;
     }
 
 }

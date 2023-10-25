@@ -30,15 +30,6 @@ public class PostTagServiceImpl implements PostTagService {
     public Tag getTagById(int id) {
         return postTagRepository.getTagById(id);
     }
-//    @Override
-//    public PostTag getPostTagById(int id){
-//        return postTagRepository.getPostTagById(id);
-//    }
-
-    @Override
-    public Tag getTagByName(String name) {
-        return postTagRepository.getTagByName(name);
-    }
 
     @Override
     public void create(PostTag tag, User user) {
@@ -54,38 +45,35 @@ public class PostTagServiceImpl implements PostTagService {
         postTagRepository.deleteAllTagsForPost(postId);
     }
 
-
-@Override
-public void addTagToPost(int postId, int tagId){
-        Post post = postRepository.getById(postId);
-        if(post.getTags().stream()
-                .anyMatch(p -> p.getId()== postId)){
-            return;
-        }
-        PostTag postTag =new PostTag(postId,tagId);
-        postTagRepository.create(postTag);
-
-}
-@Override
-public List<PostTag> getPostByTagId(int tagId){
-        return postTagRepository.getPostsByTagsId(tagId);
-}
-@Override
-    public void removeTagFromPost(int postId, int tagId){
-        Post post = postRepository.getById(postId);
-        if(post.getTags().stream()
-                .noneMatch(p -> p.getId()== postId)){
-            return;
-        }
-        postTagRepository.delete(postId,tagId);
-    }
+//todo - add tag to DtoPost and Mapper
     @Override
-    public Tag updateTag(int tagId, String content, User user){
+    public void addTagToPost(int postId, int tagId) {
+        Post post = postRepository.getById(postId);
+        if (post.getTags().stream()
+                .anyMatch(p -> p.getId() == postId)) {
+            return;
+        }
+        PostTag postTag = new PostTag(postId, tagId);
+        postTagRepository.create(postTag);
+    }
+
+    @Override
+    public void removeTagFromPost(int postId, int tagId) {
+        Post post = postRepository.getById(postId);
+        if (post.getTags().stream()
+                .noneMatch(p -> p.getId() == postId)) {
+            return;
+        }
+        postTagRepository.delete(postId, tagId);
+    }
+
+    @Override
+    public Tag updateTag(int tagId, String content, User user) {
         Tag tag = getTagById(tagId);
         tag.setContent(content);
-        if((!user.isAdmin() || (user.isBlocked()))){
+        if ((!user.isAdmin() || (user.isBlocked()))) {
             throw new AuthorizationException(ERROR_MESSAGE);
-        }else{
+        } else {
             return postTagRepository.update(tag);
         }
     }

@@ -65,6 +65,15 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             session.getTransaction().commit();
         }
     }
+    @Override
+    public Tag create(Tag tag) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            session.persist(tag);
+            session.getTransaction().commit();
+        }
+        return tag;
+    }
 
     @Override
     public Tag update(Tag tag) {
@@ -107,7 +116,6 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             return query.list();
         }
     }
-
     @Override
     public Tag getTagById(int id) {
         try (Session session = sessionFactory.openSession()) {
@@ -119,38 +127,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
         }
     }
 
-
-    @Override
-    public Tag getTagByName(String name) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Tag> query = session.createQuery(
-                    "from Tag where content= :name", Tag.class);
-            query.setParameter("name", name);
-            List<Tag> result = query.list();
-            if (result.isEmpty()) {
-                throw new EntityNotFoundException("Tag", "name", name);
-            }
-            return result.get(0);
-        }
-    }
-
-    @Override
-    public Tag create(Tag tag) {
-        try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.persist(tag);
-            session.getTransaction().commit();
-        }
-        return tag;
-    }
-
-
-
-
-
 }
-
-//todo
 
 //    public String generateOrderBy(FilterOptions tagFilterOptions){
 //        if(tagFilterOptions.getSortBy().isEmpty()) {
