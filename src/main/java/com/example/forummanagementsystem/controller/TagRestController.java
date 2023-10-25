@@ -88,17 +88,20 @@ public class TagRestController {
     }
 
     @PutMapping("/{tagId}")
-    public void updateTag(@RequestHeader HttpHeaders headers,
+    public Tag updateTag(@RequestHeader HttpHeaders headers,
+                          @Valid @RequestBody String content,
                           @PathVariable int tagId) {
 
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            postTagService.getTagById(tagId);
+
+          return  postTagService.getTagById(tagId);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
+
     }
 
 

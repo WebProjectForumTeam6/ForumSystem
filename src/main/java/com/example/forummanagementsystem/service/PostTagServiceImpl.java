@@ -30,6 +30,10 @@ public class PostTagServiceImpl implements PostTagService {
     public Tag getTagById(int id) {
         return postTagRepository.getTagById(id);
     }
+//    @Override
+//    public PostTag getPostTagById(int id){
+//        return postTagRepository.getPostTagById(id);
+//    }
 
     @Override
     public Tag getTagByName(String name) {
