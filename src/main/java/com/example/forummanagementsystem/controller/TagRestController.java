@@ -25,41 +25,40 @@ import java.util.List;
 public class TagRestController {
     private final AuthenticationHelper authenticationHelper;
     private final PostTagService postTagService;
-    private final UserService userService;
     private final PostService postService;
 
     @Autowired
     public TagRestController(AuthenticationHelper authenticationHelper,
-                             PostTagService postTagService, UserService userService, PostService postService){
-       this.authenticationHelper = authenticationHelper;
-       this.postTagService = postTagService;
-       this.userService = userService;
-       this.postService = postService;
+                             PostTagService postTagService, PostService postService) {
+        this.authenticationHelper = authenticationHelper;
+        this.postTagService = postTagService;
+        this.postService = postService;
     }
 
-@GetMapping
+    @GetMapping
     public List<Tag> getAllTags() {
-    return postTagService.getAllTags();
-}
+        return postTagService.getAllTags();
+    }
 
 
-@GetMapping("/{id}")
-public Tag getTagById(@RequestHeader HttpHeaders headers, @PathVariable int id){
-        try{
-            User user =authenticationHelper.tryGetUser(headers);
+    @GetMapping("/{id}")
+    public Tag getTagById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
             return postTagService.getTagById(id);
-        }catch (EntityNotFoundException e){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,e.getMessage());
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
-}
-@PostMapping("/{tagId}")
+    }
+
+    @PostMapping("/{tagId}")
     public PostTag create(@RequestHeader HttpHeaders headers,
                           @Valid @RequestBody PostTag postTag,
                           @PathVariable int postId) {
-        try{
+        try {
             User user = authenticationHelper.tryGetUser(headers);
             Post post = postService.getById(postId);
-            postTagService.create(postTag,user);
+            postTagService.create(postTag, user);
             return postTag;
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -68,14 +67,14 @@ public Tag getTagById(@RequestHeader HttpHeaders headers, @PathVariable int id){
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
-}
+    }
 
-@DeleteMapping("/{postIdForTag}")
-    public void  deleteAllTagsForPost(@RequestHeader HttpHeaders headers,
-                      @PathVariable int postIdForTag){
+    @DeleteMapping("/{postIdForTag}")
+    public void deleteAllTagsForPost(@RequestHeader HttpHeaders headers,
+                                     @PathVariable int postIdForTag) {
 
         try {
-            User user =authenticationHelper.tryGetUser(headers);
+            User user = authenticationHelper.tryGetUser(headers);
             postTagService.deleteAllTagsForPost(postIdForTag);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
@@ -84,7 +83,23 @@ public Tag getTagById(@RequestHeader HttpHeaders headers, @PathVariable int id){
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
-}
+    }
+
+    @PutMapping("/{tagId}")
+    public void updateTag(@RequestHeader HttpHeaders headers,
+                          @PathVariable int tagId) {
+
+        try {
+            User user = authenticationHelper.tryGetUser(headers);
+            postTagService.getTagById(tagId);
+        } catch (EntityNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+        } catch (AuthorizationException e) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
+        }
+    }
+
+
 }
 
 

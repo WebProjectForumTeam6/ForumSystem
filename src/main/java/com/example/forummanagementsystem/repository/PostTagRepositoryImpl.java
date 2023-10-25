@@ -67,12 +67,13 @@ public class PostTagRepositoryImpl implements PostTagRepository {
     }
 
     @Override
-    public void update(PostTag postTag) {
+    public Tag update(Tag tag) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.merge(postTag);
+            session.merge(tag);
             session.getTransaction().commit();
         }
+        return tag;
     }
 
     @Override
@@ -80,7 +81,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
         PostTag postTag = get(postId, tagId);
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.detach(postTag);
+            session.remove(postTag);
             session.getTransaction().commit();
         }
     }
@@ -117,6 +118,7 @@ public class PostTagRepositoryImpl implements PostTagRepository {
             return tag;
         }
     }
+
 
     @Override
     public Tag getTagByName(String name) {

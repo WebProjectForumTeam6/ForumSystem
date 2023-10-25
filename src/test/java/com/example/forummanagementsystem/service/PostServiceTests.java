@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.example.forummanagementsystem.HelpersPost.*;
+import static com.example.forummanagementsystem.Helpers.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PostServiceTests {
@@ -33,11 +33,7 @@ public class PostServiceTests {
     @Test
     void getAll_Should_CallRepository() {
         // Arrange
-        FilterOptions mockFilterOptions = new FilterOptions("username",
-                "title",
-                "content",
-                "sort",
-                "order");
+        FilterOptions mockFilterOptions = createMockFilterOptions();
         Mockito.when(mockRepository.getAll(mockFilterOptions))
                 .thenReturn(null);
 
@@ -128,15 +124,12 @@ public class PostServiceTests {
     public void update_Should_CallRepository_When_UpdatingExistingPost() {
         //Arrange
         User user = createMockUser();
-
         Post post = createMockPost();
 
         PostDto postDto = createMockDtoForUpdate();
 
         Mockito.when(mockRepository.getById(Mockito.anyInt()))
                 .thenReturn(post);
-//        Mockito.when(mockRepository.getByTitle(Mockito.anyString()))
-//                .thenReturn(post);
 
         //Act
         postService.update(postDto, user, post.getId());
@@ -164,8 +157,7 @@ public class PostServiceTests {
     @Test
     public void delete_Should_CallRepository_When_UserIsAdmin() {
         //Arrange
-        User user = createMockUser();
-        user.setAdmin(true);
+        User user = createMockAdmin();
         user.setId(2);
         Post post = createMockPost();
 
@@ -214,8 +206,8 @@ public class PostServiceTests {
     @Test
     public void modifyLike_Should_CallRepository_WhenArguments_AreValid() {
         //Arrange
-        User user=createMockUser();
-        Post post=createMockPost();
+        User user = createMockUser();
+        Post post = createMockPost();
 
         Mockito.when(mockRepository.getById(Mockito.anyInt()))
                 .thenReturn(post);

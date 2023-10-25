@@ -18,7 +18,6 @@ public class Post {
     private int id;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    @JsonIgnore
     private User createdBy;
     @Column(name = "title")
     private String title;
@@ -26,17 +25,15 @@ public class Post {
     private String content;
 
     @Column(name = "post_timestamp")
-//    @JsonIgnore
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-   // @JsonIgnore
     private Set<Comment> comments;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "posts_tags",
-    joinColumns = @JoinColumn(name = "post_id"),
-    inverseJoinColumns = @JoinColumn(name = "tag_id"))
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id"))
     private Set<Tag> tags;
 
     @OneToMany(fetch = FetchType.EAGER)
@@ -100,7 +97,8 @@ public class Post {
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
-        public Set<Tag> getTags() {
+
+    public Set<Tag> getTags() {
         return tags;
     }
 
