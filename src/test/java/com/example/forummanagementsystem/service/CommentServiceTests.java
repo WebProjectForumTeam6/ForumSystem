@@ -1,14 +1,9 @@
 package com.example.forummanagementsystem.service;
 
-import com.example.forummanagementsystem.Helpers;
-import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.models.Comment;
-import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.CommentRepository;
-import org.hibernate.id.uuid.Helper;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,15 +12,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.MissingFormatArgumentException;
 
-import static com.example.forummanagementsystem.Helpers.createCommentByUser;
-import static com.example.forummanagementsystem.HelpersPost.*;
+import static com.example.forummanagementsystem.Helpers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 

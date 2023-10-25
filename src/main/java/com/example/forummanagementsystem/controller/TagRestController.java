@@ -25,15 +25,13 @@ import java.util.List;
 public class TagRestController {
     private final AuthenticationHelper authenticationHelper;
     private final PostTagService postTagService;
-    private final UserService userService;
     private final PostService postService;
 
     @Autowired
     public TagRestController(AuthenticationHelper authenticationHelper,
-                             PostTagService postTagService, UserService userService, PostService postService) {
+                             PostTagService postTagService, PostService postService) {
         this.authenticationHelper = authenticationHelper;
         this.postTagService = postTagService;
-        this.userService = userService;
         this.postService = postService;
     }
 
@@ -88,19 +86,20 @@ public class TagRestController {
     }
 
     @PutMapping("/{tagId}")
-    public Tag updateTag(@RequestHeader HttpHeaders headers,
-                         @PathVariable int tagId,
-                         @RequestBody String content) {
+    public void updateTag(@RequestHeader HttpHeaders headers,
+                          @PathVariable int tagId) {
 
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return postTagService.updateTag(tagId, content, user);
+            postTagService.getTagById(tagId);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
+
+
 }
 
 

@@ -42,12 +42,6 @@ public class PostServiceImpl implements PostService {
         isUserBlocked(creator);
         postRepository.create(post);
     }
-
-    public void delete(int id, User user) {
-        checkModifyPermissions(id, user);
-        postRepository.delete(id);
-    }
-
     @Override
     public Post update(PostDto postDto, User user, int postId) {
         checkModifyPermissions(postId, user);
@@ -57,6 +51,11 @@ public class PostServiceImpl implements PostService {
         post.setContent(postDto.getContent());
 
         return postRepository.update(post);
+    }
+
+    public void delete(int id, User user) {
+        checkModifyPermissions(id, user);
+        postRepository.delete(id);
     }
 
     @Override
@@ -71,18 +70,7 @@ public class PostServiceImpl implements PostService {
         postRepository.modifyLike(postToModify);
     }
 
-    private void checkModifyPermissions(int id, User user) {
-        Post post = postRepository.getById(id);
-        if (!(user.isAdmin() || post.getCreatedBy().equals(user))) {
-            throw new AuthorizationException(MODIFY_THE_POST);
-        }
-    }
 
-    private void isUserBlocked(User user) {
-        if (user.isBlocked()) {
-            throw new AuthorizationException(PERMISSION_ERROR);
-        }
-    }
     @Override
     public List<Post> getTop10MostCommentedPosts() {
         return postRepository.getTop10MostCommentedPosts();
@@ -91,5 +79,18 @@ public class PostServiceImpl implements PostService {
     @Override
     public List<Post> get10MostRecentlyCreatedPosts() {
         return postRepository.get10MostRecentlyCreatedPosts();
+    }
+
+    private void checkModifyPermissions(int id, User user) {
+        Post post = getById(id);
+        if (!user.isAdmin() && !post.getCreatedBy().equals(user)) {
+            throw new AuthorizationException(MODIFY_THE_POST);
+        }
+    }
+
+    private void isUserBlocked(User user) {
+        if (user.isBlocked()) {
+            throw new AuthorizationException(PERMISSION_ERROR);
+        }
     }
 }

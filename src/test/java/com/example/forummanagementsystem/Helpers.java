@@ -17,7 +17,7 @@ public class Helpers {
     }
 
     public static User createMockUser() {
-        var mockUser = new User();
+        User mockUser = new User();
         mockUser.setId(1);
         mockUser.setUsername("MockUsername");
         mockUser.setPassword("MockPassword");
@@ -28,7 +28,7 @@ public class Helpers {
     }
 
     public static Comment createCommentByUser() {
-        var mockComment = new Comment();
+        Comment mockComment = new Comment();
         mockComment.setCreatedAt(LocalDateTime.now());
         mockComment.setId(1);
         mockComment.setContent("mockContent");
@@ -57,9 +57,8 @@ public class Helpers {
     }
     public static PostDto createMockDtoForUpdate(){
         PostDto postDto=new PostDto();
-        postDto.setContent("Content");
-        postDto.setTitle("Title");
+        postDto.setContent("Content should be between 32 and 8193 symbols.");
+        postDto.setTitle("Title should be between 16 and 64 symbols.");
         return postDto;
     }
-
 }

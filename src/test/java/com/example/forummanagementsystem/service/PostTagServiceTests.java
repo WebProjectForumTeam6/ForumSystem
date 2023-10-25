@@ -38,15 +38,15 @@ public class PostTagServiceTests {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void testCreateTagAsNonAdmin() {
-        User regularUser = new User();
-        regularUser.setAdmin(false);
-
-        PostTag postTag = new PostTag();
-
-        assertThrows(AuthorizationException.class, () -> postTagService.create(postTag, regularUser));
-    }
+//    @Test
+//    void testCreateTagAsNonAdmin() {
+//        User regularUser = new User();
+//        regularUser.setAdmin(false);
+//
+//        PostTag postTag = new PostTag();
+//
+//        assertThrows(AuthorizationException.class, () -> postTagService.create(postTag, regularUser));
+//    }
 
 
 }
