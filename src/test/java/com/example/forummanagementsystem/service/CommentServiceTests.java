@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.Helpers;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.FilterOptions;
+import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.repository.CommentRepository;
 import org.hibernate.id.uuid.Helper;
@@ -21,9 +22,12 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.MissingFormatArgumentException;
 
+import static com.example.forummanagementsystem.Helpers.createCommentByUser;
+import static com.example.forummanagementsystem.HelpersPost.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
+
 
 @ExtendWith(MockitoExtension.class)
 public class CommentServiceTests {
@@ -41,7 +45,7 @@ public class CommentServiceTests {
 
     @Test
     public void testCreateCommentByUser() {
-        Comment comment = Helpers.createCommentByUser();
+        Comment comment = createCommentByUser();
         when(commentRepository.create(comment)).thenReturn(comment);
 
         Comment createdComment = commentService.create(comment);
@@ -49,7 +53,7 @@ public class CommentServiceTests {
     }
     @Test
     public void testCreateCommentByAdmin() {
-        Comment comment = Helpers.createCommentByUser();
+        Comment comment = createCommentByUser();
         when(commentRepository.create(comment)).thenReturn(comment);
 
         Comment createdComment = commentService.create(comment);
@@ -58,9 +62,9 @@ public class CommentServiceTests {
 
     @Test
     public void testDeleteCommentByAdmin() {
-        User admin = Helpers.createMockAdmin();
-        Comment comment = Helpers.createCommentByUser();
-        comment.setUser(Helpers.createMockAdmin());
+        User admin = createMockAdmin();
+        Comment comment = createCommentByUser();
+        comment.setUser(createMockAdmin());
 
         when(commentRepository.getCommentById(comment.getId())).thenReturn(comment);
         when(commentRepository.delete(comment)).thenReturn(comment);
@@ -73,8 +77,8 @@ public class CommentServiceTests {
 
     @Test
     public void testDeleteCommentByNonAdminUser() {
-        User notAdminUser = Helpers.createMockUser();
-        Comment comment = Helpers.createCommentByUser();
+        User notAdminUser = createMockUser();
+        Comment comment = createCommentByUser();
         when(commentRepository.getCommentById(comment.getId())).thenReturn(comment);
         when(commentRepository.delete(comment)).thenReturn(comment);
 
@@ -86,8 +90,8 @@ public class CommentServiceTests {
 
     @Test
     public void testUpdateCommentByAdmin_Success() {
-        User adminUser = Helpers.createMockAdmin();
-        Comment comment = Helpers.createCommentByUser();
+        User adminUser = createMockAdmin();
+        Comment comment = createCommentByUser();
 
         when(commentRepository.update(comment)).thenReturn(comment);
 
@@ -99,9 +103,9 @@ public class CommentServiceTests {
     }
     @Test
     public void testGetAllComments() {
-        User user = Helpers.createMockAdmin();
-        Comment comment1 = Helpers.createCommentByUser();
-        Comment comment2 = Helpers.createCommentByUser();
+        User user = createMockAdmin();
+        Comment comment1 = createCommentByUser();
+        Comment comment2 = createCommentByUser();
         List<Comment> commentList = Arrays.asList(comment1, comment2);
         when(commentRepository.getAllComments()).thenReturn(commentList);
 
@@ -112,9 +116,9 @@ public class CommentServiceTests {
     }
     @Test
     public void testGetUserComments(){
-        User user = Helpers.createMockUser();
-        Comment comment = Helpers.createCommentByUser();
-        Comment comment1 = Helpers.createCommentByUser();
+        User user = createMockUser();
+        Comment comment = createCommentByUser();
+        Comment comment1 = createCommentByUser();
         List<Comment> commentList = Arrays.asList(comment,comment1);
 
         when(commentRepository.getUserComments(user)).thenReturn(commentList);
@@ -126,7 +130,7 @@ public class CommentServiceTests {
 
 @Test
     public void testGetCommentsById(){
-        Comment comment = Helpers.createCommentByUser();
+        Comment comment = createCommentByUser();
         comment.setId(1);
         when(commentRepository.getCommentById(1)).thenReturn(comment);
 
@@ -140,7 +144,17 @@ public class CommentServiceTests {
 
 @Test
     public void testPostComments(){
+        Comment comment = createCommentByUser();
+        Comment comment1 = createCommentByUser();
+        Post post = createMockPost();
+        List<Comment> postsComments = Arrays.asList(comment,comment1);
+    when(commentRepository.getPostComments(post)).thenReturn(postsComments);
 
+    List<Comment> result = commentService.getPostComments(post);
+
+    assertEquals(postsComments,result);
+
+    Mockito.verify(commentRepository,Mockito.times(1)).getPostComments(post);
 }
 
 }

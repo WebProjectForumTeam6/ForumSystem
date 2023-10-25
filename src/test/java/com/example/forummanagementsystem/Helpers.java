@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.dto.PostDto;
 
 import java.time.LocalDateTime;
 
@@ -44,6 +45,21 @@ public class Helpers {
                 "mockContent",
                 "MockSortBY",
                 "sort");
+    }
+    public static Post createMockPost(){
+        User user=createMockUser();
+        Post post=new Post();
+        post.setId(1);
+        post.setTitle("Title");
+        post.setContent("Content");
+        post.setCreatedBy(user);
+        return post;
+    }
+    public static PostDto createMockDtoForUpdate(){
+        PostDto postDto=new PostDto();
+        postDto.setContent("Content");
+        postDto.setTitle("Title");
+        return postDto;
     }
 
 }
