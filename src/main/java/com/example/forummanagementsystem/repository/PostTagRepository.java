@@ -24,6 +24,7 @@ public interface PostTagRepository {
 
     Tag getTagById(int id);
 
+
     Tag getTagByName(String name);
 
     Tag create(Tag tag);

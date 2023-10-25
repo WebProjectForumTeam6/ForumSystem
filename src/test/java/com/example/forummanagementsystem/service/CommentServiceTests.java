@@ -16,6 +16,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.MissingFormatArgumentException;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
@@ -34,10 +39,8 @@ public class CommentServiceTests {
         commentService = new CommentServiceImpl(commentRepository);
     }
 
-
     @Test
     public void testCreateCommentByUser() {
-        User user = Helpers.createMockUser();
         Comment comment = Helpers.createCommentByUser();
         when(commentRepository.create(comment)).thenReturn(comment);
 
@@ -45,13 +48,12 @@ public class CommentServiceTests {
         assertEquals(comment, createdComment);
     }
     @Test
-    public void testCreateCommentByAdmin(){
-        User user = Helpers.createMockUser();
+    public void testCreateCommentByAdmin() {
         Comment comment = Helpers.createCommentByUser();
         when(commentRepository.create(comment)).thenReturn(comment);
 
         Comment createdComment = commentService.create(comment);
-        assertEquals(comment,createdComment);
+        assertEquals(comment, createdComment);
     }
 
     @Test
@@ -66,7 +68,7 @@ public class CommentServiceTests {
         Comment deletedComment = commentService.delete(admin, comment.getId());
 
         assertEquals(comment, deletedComment);
-        Mockito.verify(commentRepository,Mockito.times(1)).delete(deletedComment);
+        Mockito.verify(commentRepository, Mockito.times(1)).delete(deletedComment);
     }
 
     @Test
@@ -76,29 +78,73 @@ public class CommentServiceTests {
         when(commentRepository.getCommentById(comment.getId())).thenReturn(comment);
         when(commentRepository.delete(comment)).thenReturn(comment);
 
-        Comment deletedComment = commentService.delete(notAdminUser,comment.getId());
+        Comment deletedComment = commentService.delete(notAdminUser, comment.getId());
 
-        assertEquals(comment,deletedComment);
-        Mockito.verify(commentRepository,Mockito.times(1)).delete(deletedComment);
+        assertEquals(comment, deletedComment);
+        Mockito.verify(commentRepository, Mockito.times(1)).delete(deletedComment);
     }
 
     @Test
-public void testUpdateCommentByAdmin_Success() {
-    User adminUser = Helpers.createMockAdmin();
-    Comment comment = Helpers.createCommentByUser();
+    public void testUpdateCommentByAdmin_Success() {
+        User adminUser = Helpers.createMockAdmin();
+        Comment comment = Helpers.createCommentByUser();
 
-    when(commentRepository.update(comment)).thenReturn(comment);
+        when(commentRepository.update(comment)).thenReturn(comment);
 
-    // Act
-    Comment updatedComment = commentService.update(comment, adminUser);
+        // Act
+        Comment updatedComment = commentService.update(comment, adminUser);
 
-    assertEquals(adminUser, updatedComment.getUser());
-    Mockito.verify(commentRepository, Mockito.times(1)).update(comment);
+        assertEquals(adminUser, updatedComment.getUser());
+        Mockito.verify(commentRepository, Mockito.times(1)).update(comment);
+    }
+    @Test
+    public void testGetAllComments() {
+        User user = Helpers.createMockAdmin();
+        Comment comment1 = Helpers.createCommentByUser();
+        Comment comment2 = Helpers.createCommentByUser();
+        List<Comment> commentList = Arrays.asList(comment1, comment2);
+        when(commentRepository.getAllComments()).thenReturn(commentList);
+
+        List<Comment> result = commentService.getAllComments(user);
+        assertEquals(commentList, result);
+        Mockito.verify(commentRepository, Mockito.times(1)).getAllComments();
+
+    }
+    @Test
+    public void testGetUserComments(){
+        User user = Helpers.createMockUser();
+        Comment comment = Helpers.createCommentByUser();
+        Comment comment1 = Helpers.createCommentByUser();
+        List<Comment> commentList = Arrays.asList(comment,comment1);
+
+        when(commentRepository.getUserComments(user)).thenReturn(commentList);
+
+        List<Comment> result = commentService.getUserComments(user);
+        assertEquals(commentList,result);
+        Mockito.verify(commentRepository,Mockito.times(1)).getUserComments(user);
+    }
+
+@Test
+    public void testGetCommentsById(){
+        Comment comment = Helpers.createCommentByUser();
+        comment.setId(1);
+        when(commentRepository.getCommentById(1)).thenReturn(comment);
+
+        Comment result = commentService.getCommentById(comment.getId());
+
+        assertEquals(comment,result);
+
+        Mockito.verify(commentRepository,Mockito.times(1)).getCommentById(comment.getId());
+
 }
 
-    //getAllComments
-    //getUserComments
+@Test
+    public void testPostComments(){
+
+}
+
+}
+
     //getPostComments
-    //getCommentsById
 
-}
+

@@ -62,8 +62,6 @@ public class CommentServiceImpl implements CommentService{
         return commentRepository.delete(comment);
     }
 
-//todo - трябва да бъде с §§, защото винаги хвърля грешка при проверка
-    //дали е създател на коментара;
     private static void checkAccessPermissions(Comment comment, User user) {
         if (!user.isAdmin() && comment.getUser().getId() != user.getId()) {
             throw new AuthorizationException(ADMIN_OR_CREATOR);

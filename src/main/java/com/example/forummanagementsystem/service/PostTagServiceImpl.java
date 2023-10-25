@@ -1,21 +1,18 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
-import com.example.forummanagementsystem.models.PostTag;
-import com.example.forummanagementsystem.models.Tag;
-import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-import static com.example.forummanagementsystem.constants.Constants.CommentService.ADMIN_OR_CREATOR;
-
 @Service
 public class PostTagServiceImpl implements PostTagService {
 
     public static final String PERMISSION_ERROR = "You don't have permission.";
+    public static final String ERROR_MESSAGE = "Only Admin or tag creator can modify the tag.";
     private final PostTagRepository postTagRepository;
     private final PostRepository postRepository;
 
@@ -41,7 +38,7 @@ public class PostTagServiceImpl implements PostTagService {
 
     @Override
     public void create(PostTag tag, User user) {
-        if (user.isAdmin() || user.isBlocked()) {
+        if (user.isAdmin() || (!user.isBlocked())) {
             postTagRepository.create(tag);
         } else {
             throw new AuthorizationException(PERMISSION_ERROR);
@@ -53,8 +50,41 @@ public class PostTagServiceImpl implements PostTagService {
         postTagRepository.deleteAllTagsForPost(postId);
     }
 
-}
 
+@Override
+public void addTagToPost(int postId, int tagId){
+        Post post = postRepository.getById(postId);
+        if(post.getTags().stream()
+                .anyMatch(p -> p.getId()== postId)){
+            return;
+        }
+        PostTag postTag =new PostTag(postId,tagId);
+        postTagRepository.create(postTag);
+
+}
+@Override
+public List<PostTag> getPostByTagId(int tagId){
+        return postTagRepository.getPostsByTagsId(tagId);
+}
+@Override
+    public void removeTagFromPost(int postId, int tagId){
+        Post post = postRepository.getById(postId);
+        if(post.getTags().stream()
+                .noneMatch(p -> p.getId()== postId)){
+            return;
+        }
+        postTagRepository.delete(postId,tagId);
+    }
+    @Override
+    public void updateTag(PostTag postTag, User user){
+        if((!user.isAdmin() || (user.isBlocked()))){
+            throw new AuthorizationException(ERROR_MESSAGE);
+        }else{
+            postTagRepository.update(postTag);
+        }
+    }
+
+}
 
 
 

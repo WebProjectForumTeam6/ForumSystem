@@ -17,4 +17,12 @@ public interface PostTagService {
     void create(PostTag tag, User user);
 
     void deleteAllTagsForPost(int postId);
+
+    void addTagToPost(int postId, int tagId);
+
+    List<PostTag> getPostByTagId(int tagId);
+
+    void removeTagFromPost(int postId, int tagId);
+
+    void updateTag(PostTag postTag, User user);
 }
