@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserService {
 
    List<User> get(User user);
-   User get(int id);
+   User getById(int id);
    User getByUsername(String username);
    User create(User user);
    User makeAdmin(User user, User userToMakeAdmin);

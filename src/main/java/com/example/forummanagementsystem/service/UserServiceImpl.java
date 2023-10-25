@@ -38,11 +38,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User get(int id) {
-        if (userRepository.get().isEmpty()){
+    public User getById(int id) {
+        if (userRepository.getById(id)==null){
             throw new EntityNotFoundException("User", "id", id);
         }
-        return userRepository.get(id);
+        return userRepository.getById(id);
     }
 
     public User getByUsername(String username) {
@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(int id, User user) {
         checkUserAuthorization(id, user);
-        User userToDelete= get(id);
+        User userToDelete= getById(id);
         if (userToDelete.isAdmin()){
             throw new AuthorizationException(ADMINS_ERROR);
         }

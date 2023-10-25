@@ -54,7 +54,7 @@ public class CommentRestController {
     public List<Comment> getUserComments(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            User requestComments = userService.get(id);
+            User requestComments = userService.getById(id);
             return commentService.getUserComments(requestComments);
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);

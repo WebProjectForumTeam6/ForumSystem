@@ -1,9 +1,7 @@
 package com.example.forummanagementsystem;
 
-import com.example.forummanagementsystem.models.Comment;
-import com.example.forummanagementsystem.models.FilterOptions;
-import com.example.forummanagementsystem.models.Post;
-import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.*;
+import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.time.LocalDateTime;
 
@@ -11,6 +9,7 @@ public class Helpers {
 
     public static User createMockAdmin() {
         User mockUser = createMockUser();
+        mockUser.setId(2);
         mockUser.setAdmin(true);
         return mockUser;
     }
@@ -36,6 +35,34 @@ public class Helpers {
         return mockComment;
 
     }
+    public static User createMockBlockedUser() {
+        User user = createMockUser();
+        user.setBlocked(true);
+        return user;
+    }
+
+    public static AdminInfo createMockAdminInfo() {
+        AdminInfo adminInfo = new AdminInfo();
+        adminInfo.setUser(createMockAdmin());
+        adminInfo.setPhoneNumber("1234567890");
+        return adminInfo;
+    }
+    public static User createMockUserWithId(int id) {
+        User user = createMockUser();
+        user.setId(id);
+        return user;
+    }
+    public static UserDtoUpdate createMockUserDtoUpdate() {
+        UserDtoUpdate dto = new UserDtoUpdate();
+        dto.setFirstName("UpdatedFirstName");
+        dto.setLastName("UpdatedLastName");
+        dto.setEmail("updated@user.com");
+        dto.setPassword("UpdatedPassword");
+        return dto;
+    }
+
+
+
 
     public static FilterOptions createMockFilterOptions() {
         return new FilterOptions(

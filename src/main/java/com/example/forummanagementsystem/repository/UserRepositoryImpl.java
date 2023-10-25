@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User get(int id) {
+    public User getById(int id) {
         try (Session session = sessionFactory.openSession()) {
             User user = session.get(User.class, id);
             if (user == null) {
@@ -173,17 +173,5 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
-    @Override
-    public User getById(int id) {
-        try (
-                Session session = sessionFactory.openSession()
-        ) {
-            User user = session.get(User.class, id);
-            if (user == null) {
-                throw new EntityNotFoundException("User", id);
-            }
-            return user;
-        }
-    }
 }
 

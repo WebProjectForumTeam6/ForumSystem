@@ -49,7 +49,7 @@ public class UserRestController {
     public User getById(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return userService.get(id);
+            return userService.getById(id);
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (AuthorizationException e) {
@@ -107,7 +107,7 @@ public class UserRestController {
     public User block(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user=authenticationHelper.tryGetUser(headers);
-            User userToBlock= userService.get(id);
+            User userToBlock= userService.getById(id);
             userService.block(user, userToBlock);
             return userToBlock;
         } catch (EntityNotFoundException e) {
@@ -120,7 +120,7 @@ public class UserRestController {
     public User unblock(@RequestHeader HttpHeaders headers, @PathVariable int id) {
         try {
             User user=authenticationHelper.tryGetUser(headers);
-            User userToUnblock= userService.get(id);
+            User userToUnblock= userService.getById(id);
             userService.unblock(user, userToUnblock);
             return userToUnblock;
         } catch (EntityNotFoundException e) {
@@ -134,7 +134,7 @@ public class UserRestController {
     public User makeAdmin(@RequestHeader HttpHeaders headers, @PathVariable int id){
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            User userToMakeAdmin = userService.get(id);
+            User userToMakeAdmin = userService.getById(id);
             userService.makeAdmin(user, userToMakeAdmin);
             return userToMakeAdmin;
         }catch (EntityNotFoundException e){
@@ -150,7 +150,7 @@ public class UserRestController {
                                @PathVariable int userId){
         try {
             User user= authenticationHelper.tryGetUser(headers);
-            User userToUpdate=userService.get(userId);
+            User userToUpdate=userService.getById(userId);
             userService.updateUser(user, userToUpdate, userDtoUpdate);
             return userToUpdate;
         }catch (EntityNotFoundException e) {
