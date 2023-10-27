@@ -51,7 +51,7 @@ public class TagRestController {
         }
     }
 
-    @PostMapping("/{tagId}")
+    @PostMapping("/{postId}")
     public PostTag create(@RequestHeader HttpHeaders headers,
                           @Valid @RequestBody PostTag postTag,
                           @PathVariable int postId) {

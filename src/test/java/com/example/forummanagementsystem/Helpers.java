@@ -36,6 +36,7 @@ public class Helpers {
         return mockComment;
 
     }
+
     public static User createMockBlockedUser() {
         User user = createMockUser();
         user.setBlocked(true);
@@ -48,11 +49,13 @@ public class Helpers {
         adminInfo.setPhoneNumber("1234567890");
         return adminInfo;
     }
+
     public static User createMockUserWithId(int id) {
         User user = createMockUser();
         user.setId(id);
         return user;
     }
+
     public static UserDtoUpdate createMockUserDtoUpdate() {
         UserDtoUpdate dto = new UserDtoUpdate();
         dto.setFirstName("UpdatedFirstName");
@@ -63,8 +66,6 @@ public class Helpers {
     }
 
 
-
-
     public static FilterOptions createMockFilterOptions() {
         return new FilterOptions(
                 "mockCreatedBy",
@@ -73,20 +74,38 @@ public class Helpers {
                 "MockSortBY",
                 "sort");
     }
-    public static Post createMockPost(){
-        User user=createMockUser();
-        Post post=new Post();
+
+    public static Post createMockPost() {
+        User user = createMockUser();
+        Post post = new Post();
         post.setId(1);
         post.setTitle("Title1234567891011");
         post.setContent("Content1234567891011");
         post.setCreatedBy(user);
         return post;
     }
-    public static PostDto createMockDtoForUpdate(){
-        PostDto postDto=new PostDto();
+
+    public static PostDto createMockDtoForUpdate() {
+        PostDto postDto = new PostDto();
         postDto.setContent("Content12345678910");
         postDto.setTitle("Title1234567891011");
         return postDto;
     }
 
+    public static Tag createMockTag() {
+        Tag tag = new Tag();
+        tag.setId(1);
+        tag.setContent("mockTag");
+        return tag;
+
+    }
+
+    public static PostTag createMockPostTag() {
+        PostTag postTag = new PostTag();
+        postTag.setId(2);
+        postTag.setPostId(1);
+        postTag.setTagId(1);
+        return postTag;
+
+    }
 }

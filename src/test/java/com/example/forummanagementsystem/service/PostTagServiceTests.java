@@ -1,6 +1,7 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.Helpers;
+import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.PostTag;
 import com.example.forummanagementsystem.models.Tag;
@@ -17,6 +18,8 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.HashSet;
+
+import static com.example.forummanagementsystem.Helpers.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -54,8 +57,7 @@ public class PostTagServiceTests {
     @Test
     public void get_Should_ReturnTag_When_MatchByIdExist() {
         // Arrange
-        Tag mockTag=new Tag();
-        mockTag.setContent("content");
+        Tag mockTag=createMockTag();
         Mockito.when(postTagRepository.getTagById(Mockito.anyInt()))
                 .thenReturn(mockTag);
 
@@ -68,16 +70,13 @@ public class PostTagServiceTests {
     @Test
     public void createTag_Should_CreateTagForAdminUser() {
         // Arrange
-        PostTag tag = new PostTag();
-        User adminUser = Helpers.createMockAdmin();
-
-
+        PostTag tag = createMockPostTag();
+        User adminUser = createMockAdmin();
         // Act
         postTagService.create(tag, adminUser);
 
         // Assert
         verify(postTagRepository, times(1)).create(tag);
-
     }
 
     @Test
@@ -98,14 +97,13 @@ public class PostTagServiceTests {
         // Arrange
         int postId = 1;
         int tagId = 2;
-        Post post = new Post();
+        Post post = createMockPost();
         post.setTags(new HashSet<>());
-        PostTag postTag = new PostTag(postId, tagId);
+
         when(postRepository.getById(postId)).thenReturn(post);
 
         // Act
         postTagService.addTagToPost(postId, tagId);
-
     }
 
     @Test
@@ -113,7 +111,7 @@ public class PostTagServiceTests {
         // Arrange
         int postId = 1;
         int tagId = 2;
-        Post post = new Post();
+        Post post = createMockPost();
         post.setTags(new HashSet<>());
         when(postRepository.getById(postId)).thenReturn(post);
 
@@ -122,6 +120,38 @@ public class PostTagServiceTests {
 
         // Assert
         verify(postTagRepository, never()).delete(postId, tagId);
+        //    Mockito.verify(postTagRepository,Mockito.times(1)).delete(postId,tagId);
     }
+
+
+    @Test
+    public void updateTag_FromUser_Should_Have_Permission(){
+        int tagId = 1;
+        String newContent ="updatedtag";
+        User user = createMockUser();
+        user.setBlocked(false);
+        user.setAdmin(true);
+        Tag tag = createMockTag();
+
+        when(postTagRepository.getTagById(tagId)).thenReturn(tag);
+
+        postTagService.updateTag(tagId,"updatedtag",user);
+
+        Assertions.assertEquals(newContent,tag.getContent());
+//    Assertions.assertThrows(AuthorizationException.class,
+//            () -> postTagService.updateTag(tagId,newContent,user));
+    }
+//    @Test
+//    public void updateTag_When_Have_Authorization_Exception(){
+//       Tag tag = createMockTag();
+//        String newContent = "Updated Content";
+//        User user = createMockUser();
+//        user.setAdmin(true);
+//        user.setBlocked(true);
+//
+//        when(postTagRepository.update(tag)).thenReturn(tag);
+//        Assertions.assertThrows(AuthorizationException.class, ()->
+//                postTagService.updateTag(tag.getId(),newContent,user));
+//    }
 
 }
