@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.Objects;
+import java.util.Set;
+
 @Entity
 @Table(name = "tags")
 public class Tag {
@@ -15,6 +17,14 @@ public class Tag {
 
     @Column(name = "content")
     private String content;
+    @ManyToMany
+    @JoinTable(
+            name = "posts_tags",
+            joinColumns = @JoinColumn(name = "tag_id"),
+            inverseJoinColumns = @JoinColumn(name = "post_id")
+    )
+    @JsonIgnore
+    private Set<Post> posts;
 
     public Tag() {
     }
@@ -38,6 +48,20 @@ public class Tag {
     public void setContent(String content) {
         this.content = content.toLowerCase();
     }
+
+    public Set<Post> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(Set<Post> posts) {
+        this.posts = posts;
+    }
+//    public void addPost(Post post){
+//        posts.add(post);
+//    }
+//    public void removePost(Post post){
+//        posts.remove(post);
+//    }
 
     @Override
     public boolean equals(Object o) {

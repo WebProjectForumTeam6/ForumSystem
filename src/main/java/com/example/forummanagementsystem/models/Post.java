@@ -122,6 +122,12 @@ public class Post {
         likes.remove(user);
     }
 
+    public void addTag(Tag tag){
+        tags.add(tag);
+    }
+    public void removeTag(Tag tag){
+        tags.remove(tag);
+    }
 
     @Override
     public boolean equals(Object o) {

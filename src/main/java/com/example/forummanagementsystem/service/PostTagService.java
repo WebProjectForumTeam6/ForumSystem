@@ -1,8 +1,9 @@
 package com.example.forummanagementsystem.service;
 
-import com.example.forummanagementsystem.models.PostTag;
+import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.dto.TagDto;
 
 import java.util.List;
 
@@ -11,14 +12,13 @@ public interface PostTagService {
 
     Tag getTagById(int id);
 
-    void create(PostTag tag, User user);
+    Tag create(TagDto tagDto);
 
-    void deleteAllTagsForPost(int postId);
+    Tag updateTag(int tagId, TagDto tagDto);
 
-    void addTagToPost(int postId, int tagId);
+    void delete(int tagId);
 
+    Post addTagToPost(String tags, User user, Post post);
+    Post deleteTagFromPost(String tags, User user, Post post);
 
-    void removeTagFromPost(int postId, int tagId);
-
-    Tag updateTag(int tagId, String content, User user);
 }

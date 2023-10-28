@@ -42,6 +42,7 @@ public class PostServiceImpl implements PostService {
         isUserBlocked(creator);
         postRepository.create(post);
     }
+
     @Override
     public Post update(PostDto postDto, User user, int postId) {
         checkModifyPermissions(postId, user);

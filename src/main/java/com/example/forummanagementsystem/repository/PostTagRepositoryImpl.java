@@ -1,7 +1,7 @@
 package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
-import com.example.forummanagementsystem.models.PostTag;
+import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,50 +21,39 @@ public class PostTagRepositoryImpl implements PostTagRepository {
         this.sessionFactory = sessionFactory;
     }
 
-
     @Override
-    public PostTag get(int postId, int tagId) {
+    public List<Tag> getAllTags() {
         try (Session session = sessionFactory.openSession()) {
-            Query<PostTag> query = session.createQuery(
-                    "from PostTag where postId= :postId and tagId= :tagId",
-                    PostTag.class);
-            query.setParameter("postId", postId);
-            query.setParameter("tagId", tagId);
-
-            return query.list().stream()
-                    .findFirst()
-                    .orElseThrow(() -> new EntityNotFoundException("PostTag", "post ID", String.valueOf(postId)));
-        }
-    }
-
-    @Override
-    public List<PostTag> getAllTagsForPost(int postId) {
-        try (Session session = sessionFactory.openSession()) {
-            Query<PostTag> query = session.createQuery(
-                    "from PostTag where postId= :postId", PostTag.class);
-            query.setParameter("postId", postId);
+            Query<Tag> query = session.createQuery(
+                    "from Tag ", Tag.class);
             return query.list();
         }
     }
 
     @Override
-    public List<PostTag> getPostsByTagsId(int tagId) {
+    public Tag getTagById(int id) {
         try (Session session = sessionFactory.openSession()) {
-            Query<PostTag> query = session.createQuery(
-                    "from PostTag where tagId= :tagId", PostTag.class);
-            query.setParameter("tagId", tagId);
-            return query.list();
+            Tag tag = session.get(Tag.class, id);
+            if (tag == null) {
+                throw new EntityNotFoundException("Tag", id);
+            }
+            return tag;
         }
     }
 
     @Override
-    public void create(PostTag postTag) {
+    public Tag getTagByContent(String content) {
         try (Session session = sessionFactory.openSession()) {
-            session.beginTransaction();
-            session.persist(postTag);
-            session.getTransaction().commit();
+            Query<Tag> query = session.createQuery(
+                    "from Tag where content= :content", Tag.class);
+            query.setParameter("content", content);
+            if (query.list().isEmpty()) {
+                throw new EntityNotFoundException("Tag", "content", content);
+            }
+            return query.list().get(0);
         }
     }
+
     @Override
     public Tag create(Tag tag) {
         try (Session session = sessionFactory.openSession()) {
@@ -86,62 +75,24 @@ public class PostTagRepositoryImpl implements PostTagRepository {
     }
 
     @Override
-    public void delete(int postId, int tagId) {
-        PostTag postTag = get(postId, tagId);
+    public void delete(Tag tag) {
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.remove(postTag);
+            session.remove(tag);
             session.getTransaction().commit();
         }
     }
 
     @Override
-    public void deleteAllTagsForPost(int postId) {
+    public Post modifyPostTags(Post post) {
         try (Session session = sessionFactory.openSession()) {
-            Query<PostTag> query = session.createQuery(
-                    "from PostTag where postId= :postId", PostTag.class);
-            query.setParameter("postId", postId);
-            List<PostTag> list = query.list();
-            for (PostTag postTag : list) {
-                delete(postId, postTag.getTagId());
-            }
+            session.beginTransaction();
+            session.merge(post);
+            session.getTransaction().commit();
         }
+        return post;
     }
-
-    @Override
-    public List<Tag> getAllTags() {
-        try (Session session = sessionFactory.openSession()) {
-            Query<Tag> query = session.createQuery(
-                    "from Tag ", Tag.class);
-            return query.list();
-        }
-    }
-    @Override
-    public Tag getTagById(int id) {
-        try (Session session = sessionFactory.openSession()) {
-            Tag tag = session.get(Tag.class, id);
-            if (tag == null) {
-                throw new EntityNotFoundException("Tag", id);
-            }
-            return tag;
-        }
-    }
-
 }
-
-//    public String generateOrderBy(FilterOptions tagFilterOptions){
-//        if(tagFilterOptions.getSortBy().isEmpty()) {
-//            return "";
-//        }
-//        String orderBy ="";
-//        if (tagFilterOptions.getSortBy().get().equals("content")) {
-//            orderBy = "content";
-//        }
-//       return orderBy = String.format(" order by %s",orderBy);
-//    }
-
-
-
 
 
 
