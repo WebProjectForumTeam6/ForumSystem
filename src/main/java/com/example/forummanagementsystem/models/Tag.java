@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -17,7 +18,7 @@ public class Tag {
 
     @Column(name = "content")
     private String content;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "posts_tags",
             joinColumns = @JoinColumn(name = "tag_id"),
@@ -27,6 +28,7 @@ public class Tag {
     private Set<Post> posts;
 
     public Tag() {
+        posts = new HashSet<>();
     }
 
     public Tag(String content){
@@ -56,12 +58,12 @@ public class Tag {
     public void setPosts(Set<Post> posts) {
         this.posts = posts;
     }
-//    public void addPost(Post post){
-//        posts.add(post);
-//    }
-//    public void removePost(Post post){
-//        posts.remove(post);
-//    }
+    public void addPost(Post post){
+        posts.add(post);
+    }
+    public void removePost(Post post){
+        posts.remove(post);
+    }
 
     @Override
     public boolean equals(Object o) {

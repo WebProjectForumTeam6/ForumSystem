@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TagMapper {
     public Tag fromTagDto(TagDto tagDto){
-        Tag tag=new Tag();
-        tag.setContent(tagDto.getContent().toLowerCase());
-        return tag;
+//        Tag tag=new Tag();
+//        tag.setContent(tagDto.getContent().toLowerCase());
+        return new Tag(tagDto.getContent().toLowerCase());
     }
 }
