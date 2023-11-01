@@ -99,13 +99,4 @@ public class Helpers {
         return tag;
 
     }
-
-    public static PostTag createMockPostTag() {
-        PostTag postTag = new PostTag();
-        postTag.setId(2);
-        postTag.setPostId(1);
-        postTag.setTagId(1);
-        return postTag;
-
-    }
 }

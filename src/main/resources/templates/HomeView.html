@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Forum System</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+
+    <!-- core:css -->
+    <link rel="stylesheet" href="../static/vendors/core/core.css">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css"
+          th:href="@{/fonts/feather-font/css/iconfont.css}">
+    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css"
+          th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
+</head>
+<body>
+<div class="main-wrapper">
+
+    <!-- partial:../../partials/_sidebar.html -->
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                Forum<span>System</span>
+            </a>
+            <div class="sidebar-toggler not-active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="sidebar-body">
+            <ul class="nav">
+                <li class="nav-item nav-category">Main</li>
+                <li class="nav-item">
+
+                    <!--        TODO navigation bar left -->
+
+            </ul>
+        </div>
+    </nav>
+
+    <div class="page-wrapper">
+        <nav class="navbar navbar-dark bg-primary">
+            <nav class="navbar navbar-light bg-light">
+                <form class="d-flex ms-auto">
+                    <div class='myDiv'>
+                        <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Login</a>
+                        <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Register</a>
+                    </div>
+                </form>
+            </nav>
+        </nav>
+
+        <div class="page-content">
+            <div class="row">
+                <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline mb-2">
+                                <h2><span class="badge rounded-pill bg-primary">Top 10 recently created posts</span></h2>
+<!--                                <h6 class="card-title mb-0">Top 10 recently created posts</h6>-->
+                            </div>
+
+
+                            <div class="d-flex flex-column">
+                                <div th:if="${recentlyAddedPosts.isEmpty()}">
+                                    <h3 class="text-muted mt-3">No Posts</h3>
+                                </div>
+                                <div th:each="post : ${recentlyAddedPosts}">
+                                    <a href="javascript:" class="d-flex align-items-center border-bottom pb-3">
+                                        <div class="me-3">
+<!--                                            TODO add picture-->
+                                            <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35"
+                                                 alt="user">
+                                        </div>
+                                        <div class="w-100">
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()}">Title</h6>
+                                                <p class="text-muted tx-12 mt-2" th:text="${post.getCreatedAt()}">CreatedAt</p>
+                                            </div>
+                                            <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
+                                            overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">Content</p>
+                                        </div>
+                                    </a>
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline mb-2">
+                                <h2><span class="badge rounded-pill bg-primary">Top 10 most commented posts</span></h2>
+<!--                                <h6 class="card-title mb-0">Top 10 most commented posts</h6>-->
+                            </div>
+                            <div class="d-flex flex-column">
+                                <div th:if="${topCommented.isEmpty()}">
+                                    <h3 class="text-muted mt-3">No Posts</h3>
+                                </div>
+                                <div th:each="post : ${recentlyAddedPosts}">
+                                <a href="javascript:" class="d-flex align-items-center border-bottom pb-3">
+                                    <div class="me-3">
+                                        <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35"
+                                             alt="user">
+                                    </div>
+                                    <div class="w-100">
+                                        <div class="d-flex justify-content-between">
+                                            <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()}">Title</h6>
+                                            <p class="text-muted tx-12 mt-2" th:text="${post.getCreatedAt()}">CreatedAt</p>
+                                        </div>
+                                        <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
+                                        overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">Content</p>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- row -->
+        </div>
+
+        <!-- partial:../../partials/_footer.html -->
+        <footer class="footer d-flex flex-column flex-md-row align-items-center justify-content-between px-4 py-3 border-top small">
+        </footer>
+        <!-- partial -->
+
+    </div>
+</div>
+
+<!-- core:js -->
+<script src="../static/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+
+<!-- inject:js -->
+<script src="../static/vendors/feather-icons/feather.min.js"></script>
+<script src="../static/js/template.js"></script>
+<!-- endinject -->
+
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->
+</body>
+</html>

@@ -12,7 +12,7 @@
     <!-- End fonts -->
 
     <!-- core:css -->
-    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/styles.css}">
+    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
     <!-- endinject -->
 
     <!-- Plugin css for this page -->
@@ -46,8 +46,6 @@
                                             <label for="Username" class="form-label">Username</label>
                                             <input type="text" th:field="*{username}" class="form-control" id="Username"
                                                    placeholder="Username">
-                                            <label style="color: red" class="error" th:errors="*{username}"> Username error placeholder
-                                            </label>
                                         </div>
 
                                         <div class="mb-3">
@@ -55,7 +53,7 @@
                                             <input type="password" th:field="*{password}" class="form-control"
                                                    id="userPassword"
                                                    autocomplete="current-password" placeholder="Password">
-                                            <label style="color: red" class="error" th:errors="*{password}"> Password error placeholder
+                                            <label style="color: red" class="error" th:errors="*{password}"> Authentication error placeholder
                                             </label>
                                         </div>
                                         <div>
