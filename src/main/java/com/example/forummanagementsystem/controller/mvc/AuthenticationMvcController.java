@@ -47,10 +47,9 @@ public class AuthenticationMvcController {
             httpSession.setAttribute("currentUser", loginDto.getUsername());
             return "redirect:/";
         }catch (AuthorizationException e) {
-            bindingResult.rejectValue("username", "auth_error", e.getMessage());
+            bindingResult.rejectValue("password", "auth_error", e.getMessage());
             return "LoginView";
         }
-
     }
 }
 
