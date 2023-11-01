@@ -1,13 +1,15 @@
 package com.example.forummanagementsystem.controller.mvc;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
+import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.UserMapper;
+import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.LoginDto;
+import com.example.forummanagementsystem.models.dto.UserDto;
 import com.example.forummanagementsystem.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,6 +51,33 @@ public class AuthenticationMvcController {
         }catch (AuthorizationException e) {
             bindingResult.rejectValue("password", "auth_error", e.getMessage());
             return "LoginView";
+        }
+    }
+    @GetMapping("/register")
+    public String showRegisterPage(Model model) {
+        model.addAttribute("register", new UserDto());
+        return "RegisterView";
+    }
+
+    @PostMapping("/register")
+    public String handleRegister(@Valid @ModelAttribute("register") UserDto registerDto,
+                                 BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "RegisterView";
+        }
+
+        if (!registerDto.getPassword().equals(registerDto.getPasswordConfirm())) {
+            bindingResult.rejectValue("passwordConfirm", "password_error", "Password confirmation should match password.");
+            return "RegisterView";
+        }
+
+        try {
+            User user = userMapper.fromDto(registerDto);
+            userService.create(user);
+            return "redirect:/auth/login";
+        } catch (EntityDuplicateException e) {
+            bindingResult.rejectValue("username", "username_error", e.getMessage());
+            return "RegisterView";
         }
     }
 }

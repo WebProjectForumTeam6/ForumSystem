@@ -183,7 +183,7 @@ public class PostRepositoryImpl implements PostRepository {
         try (Session session = sessionFactory.openSession()) {
             Query<Post> query = session.createQuery("SELECT p " +
                     "FROM Post p " +
-                            "ORDER BY createdAt DESC", Post.class
+                            "ORDER BY p.createdAt DESC", Post.class
             );
             query.setMaxResults(10);
             return query.list();

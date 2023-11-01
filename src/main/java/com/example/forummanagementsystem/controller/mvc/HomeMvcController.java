@@ -20,7 +20,7 @@ public class HomeMvcController {
     @GetMapping
     public String showHomePage(Model model) {
         model.addAttribute("topCommented", postService.getTop10MostCommentedPosts());
-        model.addAttribute("recentlyAddedPosts", postService.getTop10MostCommentedPosts());
+        model.addAttribute("recentlyAddedPosts", postService.get10MostRecentlyCreatedPosts());
         return "HomeView";
     }
 }

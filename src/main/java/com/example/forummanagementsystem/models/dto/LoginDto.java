@@ -1,7 +1,6 @@
 package com.example.forummanagementsystem.models.dto;
 
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 
 public class LoginDto {
     @NotEmpty(message = "Username should not be empty.")

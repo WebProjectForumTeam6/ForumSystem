@@ -5,20 +5,18 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import org.checkerframework.common.aliasing.qual.Unique;
 
-public class UserDto {
-    @NotNull(message = "name can't be empty")
+public class UserDto extends LoginDto{
+    @NotNull(message = "First name can't be empty")
     @Size(min = 4, max = 32, message = "First name should be between 4 and 34 symbols.")
     private String firstName;
-    @NotNull(message = "name can't be empty")
+    @NotNull(message = "Last name can't be empty")
     @Size(min = 4, max = 32, message = "Last name should be between 4 and 34 symbols.")
     private String lastName;
     @Email
     @Unique
     private String email;
-    @NotNull(message = "Username can't be empty.")
-    private String username;
     @NotNull(message = "Password can't be empty.")
-    private String password;
+    private String passwordConfirm;
 
     public UserDto() {
     }
@@ -47,19 +45,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public String getUsername() {
-        return username;
+    public String getPasswordConfirm() {
+        return passwordConfirm;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

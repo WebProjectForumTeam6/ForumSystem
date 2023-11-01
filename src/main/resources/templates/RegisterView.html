@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+    <meta name="author" content="NobleUI">
+    <meta name="keywords"
+          content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+    <title>Register</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
+    <!-- End layout styles -->
+    <!--    TODO add picture-->
+    <!--    <link rel="shortcut icon" href="../static/images/favicon.png" />-->
+</head>
+<body>
+<div class="main-wrapper">
+    <div class="page-wrapper full-page">
+        <div class="page-content d-flex align-items-center justify-content-center">
+
+            <div class="row w-100 mx-0 auth-page">
+                <div class="col-md-8 col-xl-6 mx-auto">
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-4 pe-md-0">
+                                <div class="auth-side-wrapper">
+
+                                </div>
+                            </div>
+                            <div class="col-md-8 ps-md-0">
+                                <div class="auth-form-wrapper px-4 py-5">
+                                    <a href="#" class="noble-ui-logo d-block mb-2">Forum<span>System</span></a>
+                                    <h5 class="text-muted fw-normal mb-4">Create a free account.</h5>
+
+                                    <form class="forms-sample" th:action="@{/auth/register}" th:object="${register}"
+                                          method="post">
+
+                                        <div class="mb-3">
+                                            <label for="firstName" class="form-label">First Name</label>
+                                            <input type="text" th:field="*{firstName}" class="form-control"
+                                                   id="firstName"
+                                                   placeholder="First Name">
+                                            <label class="error" th:errors="*{firstName}">First name error
+                                                placeholder</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="lastName" class="form-label">Last Name</label>
+                                            <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+                                                   placeholder="Last Name">
+                                            <label class="error" th:errors="*{lastName}">Last name error placeholder</label>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="userEmail" class="form-label">Email</label>
+                                            <input type="email" th:field="*{email}" class="form-control" id="userEmail"
+                                                   placeholder="Email">
+                                            <label class="error" th:errors="*{email}">Email error placeholder</label>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input type="text" th:field="*{username}" class="form-control" id="username"
+                                                   placeholder="Username">
+                                            <label class="error" th:errors="*{username}">Username error placeholder</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="userPasswordConfirm" class="form-label">Password</label>
+                                            <input type="password" th:field="*{password}" class="form-control"
+                                                   id="userPasswordConfirm" placeholder="Password">
+                                            <label class="error" th:errors="*{password}">Password error
+                                                placeholder</label>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="userPassword" class="form-label">Password Confirm</label>
+                                            <input type="password" th:field="*{passwordConfirm}" class="form-control"
+                                                   id="userPassword" placeholder="Password">
+                                            <label class="error" th:errors="*{passwordConfirm}">Password confirm error
+                                                placeholder</label>
+                                        </div>
+
+                                        <div>
+                                            <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Sign up
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
