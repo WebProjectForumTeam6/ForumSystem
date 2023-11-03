@@ -73,7 +73,8 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline mb-2">
-                                <h2><span class="badge rounded-pill bg-primary">Top 10 recently created posts</span></h2>
+                                <h2><span class="badge rounded-pill bg-primary">Top 10 recently created posts</span>
+                                </h2>
                             </div>
 
 
@@ -82,24 +83,29 @@
                                     <h3 class="text-muted mt-3">No Posts</h3>
                                 </div>
                                 <div th:each="post : ${recentlyAddedPosts}">
-                                    <a href="javascript:" class="d-flex align-items-center border-bottom pb-3">
+                                    <a href="PostView.html" th:attr="href=@{'/posts/' + ${post.id}}"
+                                       class="d-flex align-items-center border-bottom pb-3">
                                         <div class="me-3">
-<!--                                            TODO add picture-->
                                             <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35"
                                                  alt="user">
                                         </div>
                                         <div class="w-100">
                                             <div class="d-flex justify-content-between">
-                                                <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()}">Title</h6>
+                                                <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()} ">
+                                                    Title</h6>
                                                 <p class="text-muted tx-12 mt-2"
-                                                   th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">CreatedAt</p>
+                                                   th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">
+                                                    CreatedAt</p>
+
                                             </div>
                                             <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
-                                            overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">Content</p>
+                                            overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">
+                                                Content
+                                            </p>
                                         </div>
-                                    </a>
+                                        </a>
                                 </div>
-                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -114,26 +120,30 @@
                                     <h3 class="text-muted mt-3">No Posts</h3>
                                 </div>
                                 <div th:each="post : ${topCommented}">
-                                <a href="javascript:" class="d-flex align-items-center border-bottom pb-3">
-                                    <div class="me-3">
-                                        <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35"
-                                             alt="user">
-                                    </div>
-                                    <div class="w-100">
-                                        <div class="d-flex justify-content-between">
-                                            <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()}">Title</h6>
-                                            <p class="text-muted tx-12 mt-2" th:text="${post.getCreatedAt()}">CreatedAt</p>
+                                    <a href="javascript:" th:attr="href=@{'/posts/' + ${post.id}}"
+                                       class="d-flex align-items-center border-bottom pb-3">
+                                        <div class="me-3">
+                                            <img src="https://via.placeholder.com/35x35" class="rounded-circle wd-35"
+                                                 alt="user">
                                         </div>
-                                        <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
-                                        overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">Content</p>
-                                    </div>
-                                </a>
+                                        <div class="w-100">
+                                            <div class="d-flex justify-content-between">
+                                                <h6 class="text-body mb-2 mt-2" th:text="${post.getTitle()}">Title</h6>
+                                                <p class="text-muted tx-12 mt-2"
+                                                   th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">
+                                                    CreatedAt</p>
+                                            </div>
+                                            <p style="max-width: 500px;text-overflow: ellipsis; white-space: nowrap;
+                                        overflow: hidden" class="text-muted tx-13" th:text="${post.getContent()}">
+                                                Content</p>
+                                        </div>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> <!-- row -->
+            </div>
         </div>
 
         <!-- partial:../../partials/_footer.html -->
