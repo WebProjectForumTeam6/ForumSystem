@@ -6,8 +6,7 @@ import com.example.forummanagementsystem.models.User;
 import java.util.List;
 
 public interface UserRepository {
-
-    List<User> get();
+    List<User> getAll();
     User getByUsername(String username);
     AdminInfo getAdminInfo(User user);
     User create(User user);

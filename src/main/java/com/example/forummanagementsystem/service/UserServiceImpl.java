@@ -29,12 +29,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> get(User user) {
-        checkModifyPermissions(user);
-        if (userRepository.get().isEmpty()){
-            throw new EntityNotFoundException("User", "id", user.getId());
-        }
-        return userRepository.get();
+    public List<User> getAll() {
+        return userRepository.getAll();
     }
 
     @Override

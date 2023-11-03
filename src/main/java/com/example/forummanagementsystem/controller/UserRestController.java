@@ -39,7 +39,7 @@ public class UserRestController {
     public List<User> getAll(@RequestHeader HttpHeaders headers) {
         try {
             User user = authenticationHelper.tryGetUser(headers);
-            return userService.get(user);
+            return userService.getAll();
         } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }

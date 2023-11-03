@@ -46,15 +46,31 @@
         </div>
         <div class="sidebar-body">
             <ul class="nav">
-                <li class="nav-item nav-category">Main</li>
-                <li class="nav-item">
+                <li class="nav-item nav-category">Info</li>
 
-                    <!--        TODO navigation bar left -->
+
+                <li class="nav-item">
+                <li class="nav-item">
+                    <a href="../templates/AboutUs.html" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">AboutUs</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="../templates/ContactUs.html" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">ContactUs</span>
+                    </a>
+                </li>
+
+                <!--        TODO navigation bar left -->
 
             </ul>
         </div>
     </nav>
-
+    <!--    navbar-->
     <div class="page-wrapper">
         <nav class="navbar navbar-dark bg-primary">
             <nav class="navbar navbar-light bg-light">
@@ -66,8 +82,55 @@
                 </form>
             </nav>
         </nav>
-
+        <!--page content-->
         <div class="page-content">
+            <div class="row">
+                <div>
+                    <h2 class="d-flex mb-3 mb-md-3 justify-content-center">Welcome to CryptoForum</h2>
+                </div>
+            </div>
+            <div class="row">
+                <!--                TODO add statistic for users-->
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <h6 class="card-title mb-0">Number of customers</h6>
+                                <div class="dropdown mb-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-12 col-xl-5">
+                                    <h3 class="mb-2"  th:text="${allUsers.size()}">3,897</h3>
+                                </div>
+                                <div class="col-6 col-md-12 col-xl-7">
+                                    <div id="customersChart" class="mt-md-3 mt-xl-0"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
+                                <h6 class="card-title mb-0">Number of posts</h6>
+                                <div class="dropdown mb-2">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-md-12 col-xl-5">
+                                    <h3 class="mb-2"  th:text="${allPosts.size()}">3,897</h3>
+                                </div>
+                                <div class="col-6 col-md-12 col-xl-7">
+                                    <div id="customersChart1" class="mt-md-3 mt-xl-0"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-lg-5 col-xl-6 grid-margin grid-margin-xl-0 stretch-card">
                     <div class="card">
@@ -103,7 +166,7 @@
                                                 Content
                                             </p>
                                         </div>
-                                        </a>
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -155,15 +218,15 @@
 </div>
 
 <!-- core:js -->
-<script src="../static/vendors/core/core.js"></script>
+<script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
 <!-- endinject -->
 
 <!-- Plugin js for this page -->
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
-<script src="../static/vendors/feather-icons/feather.min.js"></script>
-<script src="../static/js/template.js"></script>
+<script src="../static/vendors/feather-icons/feather.min.js" th:src="@{/vendors/feather-icons/feather.min.js}"></script>
+<script src="../static/js/template.js" th:src="@{js/template.js}"></script>
 <!-- endinject -->
 
 <!-- Custom js for this page -->

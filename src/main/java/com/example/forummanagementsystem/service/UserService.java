@@ -7,8 +7,7 @@ import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import java.util.List;
 
 public interface UserService {
-
-   List<User> get(User user);
+   List<User> getAll();
    User getById(int id);
    User getByUsername(String username);
    User create(User user);
