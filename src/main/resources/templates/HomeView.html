@@ -29,7 +29,7 @@
 
     <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
 </head>
-<body>
+<body class="sidebar-dark">
 <div class="main-wrapper">
 
     <!-- partial:../../partials/_sidebar.html -->
@@ -50,8 +50,7 @@
 
 
                 <li class="nav-item">
-                <li class="nav-item">
-                    <a href="../templates/AboutUs.html" class="nav-link">
+                    <a href="../templates/AboutUs.html" th:href="@{/about}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
                         <span class="link-title">AboutUs</span>
                     </a>
@@ -61,7 +60,7 @@
                 <li class="nav-item">
                     <a href="../templates/ContactUs.html" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">ContactUs</span>
+                        <span class="link-title" th:href="@{/contact}">ContactUs</span>
                     </a>
                 </li>
 

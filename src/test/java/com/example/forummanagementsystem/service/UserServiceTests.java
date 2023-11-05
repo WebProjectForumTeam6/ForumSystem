@@ -35,22 +35,20 @@ public class UserServiceTests {
 
     @Test
     public void get_Should_ReturnListOfUsers_When_UserHasPermissions() {
-        User user = Helpers.createMockAdmin();
         List<User> users = new ArrayList<>();
         users.add(Helpers.createMockUser());
-        Mockito.when(mockRepository.get()).thenReturn(users);
+        Mockito.when(mockRepository.getAll()).thenReturn(users);
 
-        List<User> result = userService.get(user);
+        List<User> result = userService.getAll();
 
         Assertions.assertEquals(users, result);
     }
 
     @Test
     public void get_Should_ThrowEntityNotFoundException_When_NoUsersExist() {
-        User user = Helpers.createMockAdmin();
-        Mockito.when(mockRepository.get()).thenReturn(new ArrayList<>());
+        Mockito.when(mockRepository.getAll()).thenReturn(new ArrayList<>());
 
-        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.get(user));
+        Assertions.assertThrows(EntityNotFoundException.class, () -> userService.getAll());
     }
 
     @Test
@@ -60,9 +58,9 @@ public class UserServiceTests {
         User user = Helpers.createMockAdmin();
         User mockUser = Helpers.createMockUser();
         List<User>userList = Arrays.asList(mockUser,user1);
-        Mockito.when(mockRepository.get()).thenReturn(userList);
+        Mockito.when(mockRepository.getAll()).thenReturn(userList);
 
-        List<User>result = userService.get(user);
+        List<User>result = userService.getAll();
 
 
         Assertions.assertEquals(result, userList);

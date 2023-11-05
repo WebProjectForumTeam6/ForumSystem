@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>View Post</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+
+    <!-- core:css -->
+    <link rel="stylesheet" href="../static/vendors/core/core.css">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css">
+    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../static/css/demo1/style.css">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="../static/images/favicon.png" />
+
+    <!--  <a href="#" class="sidebar-brand">-->
+    <!--    Noble<span>UI</span>-->
+    <!--  </a>-->
+
+</head>
+<body>
+<div class="main-wrapper">
+
+    <!-- partial:../../partials/_sidebar.html -->
+
+    <nav class="sidebar">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                Forum<span>System</span>
+            </a>
+        </div>
+    </nav>
+    <!-- partial -->
+
+    <div class="page-wrapper">
+
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar navbar-dark bg-primary">
+            <nav class="navbar navbar-light bg-light">
+                <form class="d-flex ms-auto">
+                    <div class='myDiv'>
+                        <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Login</a>
+                        <a th:href="@{/auth/register}" class="btn btn-primary" style='margin-right:16px'>Register</a>
+                    </div>
+                </form>
+            </nav>
+        </nav>
+        <!-- partial -->
+
+        <div class="page-content">
+
+        </div>
+
+    </div>
+</div>
+
+<!-- core:js -->
+<script src="../../../assets/vendors/core/core.js"></script>
+<!-- endinject -->
+
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+
+<!-- inject:js -->
+<script src="../../../assets/vendors/feather-icons/feather.min.js"></script>
+<script src="../../../assets/js/template.js"></script>
+<!-- endinject -->
+
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->
+</body>
+</html>

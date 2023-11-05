@@ -1,28 +1,21 @@
 <!DOCTYPE html>
 
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
-	<meta name="author" content="NobleUI">
-	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
-	<title>NobleUI - HTML Bootstrap 5 Admin Dashboard Template</title>
+	<title>Error 404</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
-	<link rel="stylesheet" href="../static/vendors/core/core.css">
+	<link rel="stylesheet" href="../static/vendors/core/core.css" th:href="@{/vendors/core/core.css}">
 
-	<link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css">
-	<link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css" th:href="@{/fonts/feather-font/css/iconfont.css}">
+	<link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css" th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
 
-	<link rel="stylesheet" href="../static/css/demo1/style.css">
+	<link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
 
-  <link rel="shortcut icon" href="../static/images/favicon.png" />
+  <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
 </head>
 <body>
 	<div class="main-wrapper">
@@ -43,10 +36,10 @@
 		</div>
 	</div>
 
-	<script src="../static/vendors/core/core.js"></script>
+	<script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
 
-	<script src="../static/vendors/feather-icons/feather.min.js"></script>
-	<script src="../static/js/template.js"></script>
+	<script src="../static/vendors/feather-icons/feather.min.js" th:src="@{/vendors/feather-icons/feather.min.js}"></script>
+	<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
 
 
 </body>

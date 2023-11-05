@@ -1,25 +1,47 @@
 package com.example.forummanagementsystem.controller.mvc;
 
+import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
+import com.example.forummanagementsystem.helpers.AuthenticationHelper;
+import com.example.forummanagementsystem.helpers.PostMapper;
 import com.example.forummanagementsystem.models.Post;
+import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.PostService;
+import com.example.forummanagementsystem.service.PostTagService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/posts")
 public class PostMvcController {
     private final PostService postService;
+    private final AuthenticationHelper authenticationHelper;
+    private final PostMapper postMapper;
+    private final PostTagService postTagService;
 
     @Autowired
-    public PostMvcController(PostService postService) {
+    public PostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, PostTagService postTagService) {
         this.postService = postService;
+        this.authenticationHelper = authenticationHelper;
+        this.postMapper = postMapper;
+        this.postTagService = postTagService;
+    }
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
+    }
+
+    @ModelAttribute("requestURI")
+    public String requestURI(final HttpServletRequest request) {
+        return request.getRequestURI();
     }
 
     @GetMapping("/{id}")
@@ -29,6 +51,43 @@ public class PostMvcController {
             model.addAttribute("post", post);
             return "PostView";
         } catch (EntityNotFoundException e){
+            model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
+            model.addAttribute("error", e.getMessage());
+            return "Error404";
+        }
+    }
+    @GetMapping("/new")
+    public String showCreatePostView(Model model, HttpSession session) {
+        try {
+            authenticationHelper.tryGetCurrentUser(session);
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+
+        model.addAttribute("post", new PostDto());
+        return "CreatePostView";
+    }
+    @PostMapping("/new")
+    public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
+                             @RequestParam("tags") String tags,
+                             BindingResult bindingResult,
+                             Model model,
+                             HttpSession httpSession){
+        User user;
+        try {
+            user=authenticationHelper.tryGetCurrentUser(httpSession);
+        } catch (AuthorizationException e){
+            return "redirect:/auth/login";
+        }
+        if (bindingResult.hasErrors()) {
+            return "CreatePostView";
+        }
+        try {
+            Post post=postMapper.fromDtoIn(postDto, user);
+            postService.create(post, user);
+            postTagService.addTagToPost(tags, user, post);
+            return "redirect:/users";
+        }catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error404";
