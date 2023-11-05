@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    private void addPhoneNumberToAdmin(User user, String phoneNumber) {
+    public void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
             throw new AuthorizationException(PHONE_NUMBER_ERROR);
         }
@@ -180,4 +180,6 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
     }
+
+
 }

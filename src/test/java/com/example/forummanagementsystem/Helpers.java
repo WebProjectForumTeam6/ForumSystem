@@ -99,4 +99,12 @@ public class Helpers {
         return tag;
 
     }
+
+    public static Tag createMockTagToPost() {
+        Tag tag = new Tag();
+      Post post = new Post();
+      post.addTag(tag);
+      return tag;
+
+    }
 }
