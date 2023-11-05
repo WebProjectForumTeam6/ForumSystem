@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.example.forummanagementsystem.Helpers.*;
 import static org.mockito.Mockito.*;
@@ -29,6 +30,9 @@ public class PostTagServiceTests {
 
     @InjectMocks
     private PostTagServiceImpl postTagService;
+
+    @InjectMocks
+    private PostServiceImpl postService;
 
     @Mock
     private PostTagRepository postTagRepository;
@@ -64,8 +68,42 @@ public class PostTagServiceTests {
         Assertions.assertEquals(mockTag, result);
     }
 
+//    @Test
+//    public void addTagToPost_Should_AddTags_When_TagsExist(){
+//        String tags = "tag1, tag2, tag3";
+//        User user = createMockUser();
+//        Post post = createMockPost();
+//
+//    // Configure the PostTagRepository mock to return the corresponding tags
+//    when(postTagRepository.getTagByContent("tag1")).thenReturn(new Tag("tag1"));
+//    when(postTagRepository.getTagByContent("tag2")).thenReturn(new Tag("tag2"));
+//    when(postTagRepository.getTagByContent("tag3")).thenReturn(new Tag("tag3"));
+//
+//    // Act
+//    Post result = postTagService.addTagToPost(tags, user, post);
+//
+//
+//
+//    // Assert: Verify that the tags are added to the post
+//    verify(postTagRepository, times(3)).modifyPostTags(post);
+//}
 
 
+
+
+
+//    @Test
+//    public void deleteTagFromPost_Should_Remove_Tags_ifExist(){
+//    String tags = "tag1, tag2, tag3";
+//        User user = createMockUser();
+//        Post post = createPostWithTags(tags);
+//
+//        Mockito.when(postTagRepository.getTagByContent("tag1")).thenReturn(new Tag("tag1"));
+//
+//        Post result = postTagService.deleteTagFromPost(tags,user,post);
+//
+//        Mockito.verify(postTagRepository,Mockito.times(1)).modifyPostTags(result);
+//    }
 
 
 
