@@ -15,6 +15,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.example.forummanagementsystem.Helpers.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -218,5 +221,28 @@ public class PostServiceTests {
         Mockito.verify(mockRepository, Mockito.times(1))
                 .modifyLike(post);
     }
+    @Test
+    public void getTop10CommentedPosts_Should_Return_top10CommentedPosts(){
+        List<Post> expectedPosts = new ArrayList<>();
+
+        Mockito.when(mockRepository.getTop10MostCommentedPosts()).thenReturn(expectedPosts);
+
+       List<Post> result=  postService.getTop10MostCommentedPosts();
+
+        Assertions.assertEquals(expectedPosts,result);
+    }
+
+    @Test
+    public void getTop10RecentlyPosts_Should_Return_Top10RecentlyPosts(){
+        List<Post> recentlyPosts = new ArrayList<>();
+
+        Mockito.when(mockRepository.get10MostRecentlyCreatedPosts()).thenReturn(recentlyPosts);
+        List<Post> result = postService.get10MostRecentlyCreatedPosts();
+
+        Assertions.assertEquals(recentlyPosts,result);
+    }
+
+
+
 
 }

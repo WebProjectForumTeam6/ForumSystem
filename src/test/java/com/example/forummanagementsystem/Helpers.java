@@ -5,6 +5,9 @@ import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Helpers {
 
@@ -92,6 +95,17 @@ public class Helpers {
         return postDto;
     }
 
+    //    // Helper method to create a list of sample posts
+//    private List<Post> createSamplePosts() {
+//        // Create and populate a list of sample posts
+//        List<Post> samplePosts = new ArrayList<>();
+//        // Add your sample posts here
+//        return samplePosts;
+//    }
+
+
+
+
     public static Tag createMockTag() {
         Tag tag = new Tag();
         tag.setId(1);
@@ -99,4 +113,19 @@ public class Helpers {
         return tag;
 
     }
-}
+
+    public static Tag createMockTagToPost() {
+        Tag tag = new Tag();
+      Post post = new Post();
+      post.addTag(tag);
+      return tag;
+
+    }
+    public static Post createPostWithTags(String tags) {
+        Post post = new Post();
+        // Set post properties and tags if needed
+        post.addTag(createMockTag());
+        return post;
+    }
+
+    }

@@ -98,9 +98,6 @@ public class PostTagServiceImpl implements PostTagService {
                 if (post.getTags().contains(tagToRemove)){
                     post.removeTag(tagToRemove);
                 }
-
-
-
             } catch (EntityNotFoundException e) {
                 throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
             }
