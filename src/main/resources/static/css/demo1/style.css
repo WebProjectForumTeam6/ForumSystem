@@ -22469,4 +22469,7 @@ div.tox .tox-dialog__body {
 .wizard.vertical > .actions > ul > li {
   margin: 0 0 0 0.7em;
 }
+.tag {
+  margin-right: 5px !important;
+}
 /*# sourceMappingURL=../maps/demo1/style.css.map */

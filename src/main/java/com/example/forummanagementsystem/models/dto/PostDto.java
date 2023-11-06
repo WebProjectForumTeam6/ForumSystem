@@ -16,6 +16,7 @@ public class PostDto {
 
     @NotNull(message = "You should choose category.")
     private  int categoryId;
+    private String tags;
     public PostDto() {
     }
 
@@ -41,5 +42,13 @@ public class PostDto {
 
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
     }
 }

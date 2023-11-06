@@ -71,7 +71,7 @@ public class PostTagServiceImpl implements PostTagService {
 
     @Override
     public Post addTagToPost(String tags, User user, Post post) {
-        String[] array = tags.split(", ");
+        String[] array = tags.split(",");
         for (String tag : array) {
             try {
                 Tag tagToAdd = postTagRepository.getTagByContent(tag);

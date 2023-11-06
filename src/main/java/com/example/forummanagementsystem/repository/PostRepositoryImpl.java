@@ -173,6 +173,7 @@ public class PostRepositoryImpl implements PostRepository {
                             "FROM Post p " +
                             "ORDER BY SIZE(p.comments) DESC", Post.class
             );
+
             query.setMaxResults(10);
             return query.list();
         }

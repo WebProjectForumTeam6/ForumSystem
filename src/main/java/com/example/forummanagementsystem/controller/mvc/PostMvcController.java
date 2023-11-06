@@ -4,10 +4,11 @@ import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.PostMapper;
+import com.example.forummanagementsystem.models.Category;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
-import com.example.forummanagementsystem.models.dto.PathDto;
 import com.example.forummanagementsystem.models.dto.PostDto;
+import com.example.forummanagementsystem.service.CategoryService;
 import com.example.forummanagementsystem.service.PostService;
 import com.example.forummanagementsystem.service.PostTagService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -20,6 +21,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/posts")
 public class PostMvcController {
@@ -27,13 +30,15 @@ public class PostMvcController {
     private final AuthenticationHelper authenticationHelper;
     private final PostMapper postMapper;
     private final PostTagService postTagService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public PostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, PostTagService postTagService) {
+    public PostMvcController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper, PostTagService postTagService, CategoryService categoryService) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
         this.postMapper = postMapper;
         this.postTagService = postTagService;
+        this.categoryService = categoryService;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -44,6 +49,10 @@ public class PostMvcController {
     @ModelAttribute("requestURI")
     public String requestURI(final HttpServletRequest request) {
         return request.getRequestURI();
+    }
+    @ModelAttribute("categories")
+    public List<Category> populateCategories(){
+        return categoryService.getAll();
     }
 
     @GetMapping("/{id}")
