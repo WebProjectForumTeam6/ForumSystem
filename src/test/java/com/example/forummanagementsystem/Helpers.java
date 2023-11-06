@@ -6,6 +6,7 @@ import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -85,6 +86,7 @@ public class Helpers {
         post.setTitle("Title1234567891011");
         post.setContent("Content1234567891011");
         post.setCreatedBy(user);
+        post.setTags(new HashSet<>());
         return post;
     }
 
