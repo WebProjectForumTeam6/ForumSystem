@@ -123,9 +123,16 @@ public class Helpers {
     }
     public static Post createPostWithTags(String tags) {
         Post post = new Post();
-        // Set post properties and tags if needed
         post.addTag(createMockTag());
         return post;
     }
 
+    public static Category createMockCategory() {
+        Category category = new Category();
+        category.setId(1);
+        category.setName("MockCategoryName");
+        return category;
     }
+
+
+}

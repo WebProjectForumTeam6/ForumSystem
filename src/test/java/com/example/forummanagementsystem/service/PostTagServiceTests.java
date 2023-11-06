@@ -94,7 +94,7 @@ public class PostTagServiceTests {
         @Test
     void deleteTagFromPost_ShouldThrowResponseStatusException_WhenTagNotFound() {
         // Arrange
-        String tags = "tag1, tag2";
+        String tags = "tag1";
         User user = new User();
         Post post = new Post();
         when(postTagRepository.getTagByContent("tag1")).thenThrow(EntityNotFoundException.class);

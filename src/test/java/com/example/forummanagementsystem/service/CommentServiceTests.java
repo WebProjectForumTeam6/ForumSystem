@@ -82,12 +82,7 @@ public class CommentServiceTests {
         User adminUser = createMockAdmin();
         Comment comment = createCommentByUser();
 
- //       when(commentRepository.getCommentById(Mockito.anyInt()))
-  //              .thenReturn(comment);
-
       commentService.update(comment,adminUser);
-
-     //   assertEquals(adminUser, updatedComment);
 
         Mockito.verify(commentRepository, Mockito.times(1))
                 .update(comment);
