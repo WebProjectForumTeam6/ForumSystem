@@ -18,6 +18,7 @@ public class PostMapper {
         post.setContent(postDto.getContent());
         post.setCreatedBy(creator);
         post.setCreatedAt(LocalDateTime.now());
+//        post.setCategory(postDto.getCategoryId());
 
         return post;
     }

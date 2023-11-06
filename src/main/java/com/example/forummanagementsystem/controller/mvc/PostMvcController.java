@@ -6,6 +6,7 @@ import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.PostMapper;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.dto.PathDto;
 import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.PostService;
 import com.example.forummanagementsystem.service.PostTagService;
@@ -34,6 +35,7 @@ public class PostMvcController {
         this.postMapper = postMapper;
         this.postTagService = postTagService;
     }
+
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
@@ -47,15 +49,16 @@ public class PostMvcController {
     @GetMapping("/{id}")
     public String showSinglePost(@PathVariable int id, Model model) {
         try {
-            Post post=postService.getById(id);
+            Post post = postService.getById(id);
             model.addAttribute("post", post);
             return "PostView";
-        } catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error404";
         }
     }
+
     @GetMapping("/new")
     public String showCreatePostView(Model model, HttpSession session) {
         try {
@@ -67,30 +70,48 @@ public class PostMvcController {
         model.addAttribute("post", new PostDto());
         return "CreatePostView";
     }
+
     @PostMapping("/new")
     public String createPost(@Valid @ModelAttribute("post") PostDto postDto,
                              @RequestParam("tags") String tags,
                              BindingResult bindingResult,
                              Model model,
-                             HttpSession httpSession){
+                             HttpSession httpSession) {
         User user;
         try {
-            user=authenticationHelper.tryGetCurrentUser(httpSession);
-        } catch (AuthorizationException e){
+            user = authenticationHelper.tryGetCurrentUser(httpSession);
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
         if (bindingResult.hasErrors()) {
             return "CreatePostView";
         }
         try {
-            Post post=postMapper.fromDtoIn(postDto, user);
+            Post post = postMapper.fromDtoIn(postDto, user);
             postService.create(post, user);
             postTagService.addTagToPost(tags, user, post);
             return "redirect:/users";
-        }catch (EntityNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             model.addAttribute("statusCode", HttpStatus.NOT_FOUND.getReasonPhrase());
             model.addAttribute("error", e.getMessage());
             return "Error404";
+        } catch (AuthorizationException e) {
+            return "redirect:/";
         }
     }
+
+    @PostMapping("/{postId}/like")
+    public String modifyLike(@PathVariable int postId,
+                             HttpSession httpSession,
+                             @RequestParam("path") String path) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            postService.modifyLike(postId, user);
+            return "redirect:/" + path;
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
+
+
 }

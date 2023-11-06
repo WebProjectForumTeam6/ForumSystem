@@ -30,10 +30,10 @@ public class PostRestController {
     private final AuthenticationHelper authenticationHelper;
 
     @Autowired
-    public PostRestController(PostService postService,AuthenticationHelper authenticationHelper, PostMapper postMapper) {
+    public PostRestController(PostService postService, AuthenticationHelper authenticationHelper, PostMapper postMapper) {
         this.postService = postService;
         this.authenticationHelper = authenticationHelper;
-        this.postMapper=postMapper;
+        this.postMapper = postMapper;
     }
 
     @GetMapping()
@@ -43,10 +43,10 @@ public class PostRestController {
             @RequestParam(required = false) String content,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy,title,content,sortBy,sortOrder);
-        List<Post> posts = postService.getAll(filterOptions);
-        return posts;
+        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, sortBy, sortOrder);
+        return postService.getAll(filterOptions);
     }
+
     @GetMapping("/{id}")
     public Post get(@PathVariable int id) {
         try {
@@ -55,6 +55,7 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
+
     @PostMapping()
     public Post create(@RequestHeader HttpHeaders headers, @Valid @RequestBody PostDto postDto) {
         try {
@@ -70,14 +71,15 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, e.getMessage());
         }
     }
+
     @PutMapping("/{postId}")
-    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int postId, @Valid @RequestBody PostDto postDto){
+    public Post update(@RequestHeader HttpHeaders headers, @PathVariable int postId, @Valid @RequestBody PostDto postDto) {
         try {
-            User user=authenticationHelper.tryGetUser(headers);
+            User user = authenticationHelper.tryGetUser(headers);
             return postService.update(postDto, user, postId);
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
-        }catch (EntityNotFoundException e){
+        } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
@@ -99,7 +101,6 @@ public class PostRestController {
         try {
             User user = authenticationHelper.tryGetUser(headers);
             postService.modifyLike(postId, user);
-
         } catch (EntityNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         } catch (EntityDuplicateException e) {
@@ -108,17 +109,15 @@ public class PostRestController {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
         }
     }
+
     @GetMapping("/top-commented")
     public List<Post> getTop10MostCommentedPosts() {
-        List<Post> mostCommentedPosts = postService.getTop10MostCommentedPosts();
-        return mostCommentedPosts;
+        return postService.getTop10MostCommentedPosts();
     }
 
     @GetMapping("/recently-created")
     public List<Post> get10MostRecentlyCreatedPosts() {
-        List<Post> recentlyCreatedPosts = postService.get10MostRecentlyCreatedPosts();
-        return recentlyCreatedPosts;
+        return postService.get10MostRecentlyCreatedPosts();
     }
-
-    }
+}
 

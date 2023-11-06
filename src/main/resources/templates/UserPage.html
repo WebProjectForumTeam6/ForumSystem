@@ -67,7 +67,7 @@
                 <li class="nav-item">
                     <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
                        aria-controls="categories">
-                        <i class="link-icon" data-feather="mail"></i>
+                        <i class="link-icon" data-feather="more-horizontal"></i>
                         <span class="link-title">Categories</span>
                         <i class="link-arrow" data-feather="chevron-down"></i>
                     </a>
@@ -180,10 +180,18 @@
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex post-actions">
-                                        <a href="javascript:" class="d-flex align-items-center text-muted me-4">
-                                            <i class="icon-md" data-feather="heart"></i>
-                                            <p class="d-none d-md-block ms-2">Like</p>
-                                        </a>
+                                        <form th:action="@{/posts/{postId}/like(postId=${post.getId()})}" method="post">
+                                            <input type="hidden" value="users" name="path">
+                                            <button type="submit" class="d-flex align-items-center text-muted me-4" style="background: none; padding: 0; border: none">
+                                                <i class="icon-md" th:if="${post.isLikedByUser(loggedIn) == true}"
+                                                   th:attr="data-feather='thumbs-down'" data-feather="thumbs-down"></i>
+                                                <i class="icon-md" th:if="${post.isLikedByUser(loggedIn) == false}"
+                                                   th:attr="data-feather='thumbs-up'" data-feather="thumbs-up"></i>
+                                                <p class="d-none d-md-block ms-2"
+                                                   th:text="${post.isLikedByUser(loggedIn) ? 'Downvote' : 'Upvote'}">
+                                                    Like</p>
+                                            </button>
+                                        </form>
                                         <a href="javascript:" class="d-flex align-items-center text-muted me-4">
                                             <i class="icon-md" data-feather="message-square"></i>
                                             <p class="d-none d-md-block ms-2">Comment</p>

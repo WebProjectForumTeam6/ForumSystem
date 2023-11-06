@@ -30,6 +30,10 @@ public class Post {
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
     private Set<Comment> comments;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "posts_tags",
             joinColumns = @JoinColumn(name = "post_id"),
@@ -98,6 +102,14 @@ public class Post {
         this.createdAt = createdAt;
     }
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     public Set<Tag> getTags() {
         return tags;
     }
@@ -127,6 +139,9 @@ public class Post {
     }
     public void removeTag(Tag tag){
         tags.remove(tag);
+    }
+    public boolean isLikedByUser(User user){
+        return likes.contains(user);
     }
 
     @Override

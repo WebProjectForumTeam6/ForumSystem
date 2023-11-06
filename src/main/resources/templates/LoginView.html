@@ -19,7 +19,8 @@
     <!-- End plugin css for this page -->
 
 
-    <!--  <link rel="shortcut icon" href="../assets/images/favicon.png" />-->
+    <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
+
 </head>
 <body>
 
@@ -58,6 +59,7 @@
                                         </div>
                                         <div>
                                             <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Login</button>
+                                            <a class="btn btn-primary me-2 mb-2 mb-md-0 text-white" th:href="@{/auth/register}"> Sign up</a>
                                         </div>
                                     </form>
                                 </div>

@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.models.dto;
 
+import com.example.forummanagementsystem.models.Category;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -13,6 +14,8 @@ public class PostDto {
     @Size(min = 32, max = 8192, message = "Content should be between 32 and 8193 symbols.")
     private String content;
 
+    @NotNull(message = "You should choose category.")
+    private  int categoryId;
     public PostDto() {
     }
 
@@ -32,5 +35,11 @@ public class PostDto {
         this.content = content;
     }
 
+    public int getCategoryId() {
+        return categoryId;
+    }
 
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 }
