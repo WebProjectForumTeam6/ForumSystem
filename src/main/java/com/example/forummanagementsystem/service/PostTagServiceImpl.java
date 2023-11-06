@@ -2,12 +2,10 @@ package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
-import com.example.forummanagementsystem.helpers.TagMapper;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
-import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,14 +20,12 @@ public class PostTagServiceImpl implements PostTagService {
     public static final String PERMISSION_ERROR = "You don't have permission.";
     public static final String ERROR_MESSAGE = "Only Admin or tag creator can modify the tag.";
     private final PostTagRepository postTagRepository;
-    private final PostRepository postRepository;
-    private final TagMapper tagMapper;
+
 
     @Autowired
-    public PostTagServiceImpl(PostTagRepository postTagRepository, PostRepository postRepository, TagMapper tagMapper) {
+    public PostTagServiceImpl(PostTagRepository postTagRepository) {
         this.postTagRepository = postTagRepository;
-        this.postRepository = postRepository;
-        this.tagMapper = tagMapper;
+
     }
 
     @Override
@@ -54,16 +50,17 @@ public class PostTagServiceImpl implements PostTagService {
         if (duplicateExists) {
             throw new EntityDuplicateException("Tag", "content", tagDto.getContent());
         }
-        Tag tag = tagMapper.fromTagDto(tagDto);
+        Tag tag= new Tag();
+        tag.setContent(tagDto.getContent());
         return postTagRepository.create(tag);
     }
 
-    @Override
     public Tag updateTag(int tagId, TagDto tagDto) {
-        Tag tag = getTagById(tagId);
-        tag.setContent(tag.getContent());
+        Tag tag = postTagRepository.getTagById(tagId);
+        tag.setContent(tagDto.getContent());
         return postTagRepository.update(tag);
     }
+
 
     @Override
     public void delete(int tagId) {
@@ -88,6 +85,7 @@ public class PostTagServiceImpl implements PostTagService {
         }
         return postTagRepository.modifyPostTags(post);
     }
+
 
     @Override
     public Post deleteTagFromPost(String tags, User user, Post post) {

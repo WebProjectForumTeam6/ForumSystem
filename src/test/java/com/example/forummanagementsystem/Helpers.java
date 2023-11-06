@@ -2,10 +2,12 @@ package com.example.forummanagementsystem;
 
 import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.models.dto.PostDto;
+import com.example.forummanagementsystem.models.dto.TagDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -85,6 +87,7 @@ public class Helpers {
         post.setTitle("Title1234567891011");
         post.setContent("Content1234567891011");
         post.setCreatedBy(user);
+        post.setTags(new HashSet<>());
         return post;
     }
 
@@ -95,14 +98,6 @@ public class Helpers {
         return postDto;
     }
 
-    //    // Helper method to create a list of sample posts
-//    private List<Post> createSamplePosts() {
-//        // Create and populate a list of sample posts
-//        List<Post> samplePosts = new ArrayList<>();
-//        // Add your sample posts here
-//        return samplePosts;
-//    }
-
 
 
 
@@ -111,6 +106,11 @@ public class Helpers {
         tag.setId(1);
         tag.setContent("mockTag");
         return tag;
+    }
+    public static TagDto createTagDto(String content){
+        TagDto tagDto = new TagDto();
+        tagDto.setContent(content);
+        return tagDto;
 
     }
 
