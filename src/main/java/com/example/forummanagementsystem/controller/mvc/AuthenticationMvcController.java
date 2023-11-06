@@ -30,7 +30,10 @@ public class AuthenticationMvcController {
         this.userService = userService;
         this.userMapper = userMapper;
     }
-
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
+    }
     @GetMapping("/login")
     public String showLoginPage(Model model){
         model.addAttribute("login", new LoginDto());
@@ -47,11 +50,16 @@ public class AuthenticationMvcController {
         try {
             authenticationHelper.verifyAuthentication(loginDto.getUsername(), loginDto.getPassword());
             httpSession.setAttribute("currentUser", loginDto.getUsername());
-            return "redirect:/";
+            return "redirect:/users";
         }catch (AuthorizationException e) {
             bindingResult.rejectValue("password", "auth_error", e.getMessage());
             return "LoginView";
         }
+    }
+    @GetMapping("/logout")
+    public String handleLogout(HttpSession session) {
+        session.removeAttribute("currentUser");
+        return "redirect:/";
     }
     @GetMapping("/register")
     public String showRegisterPage(Model model) {
