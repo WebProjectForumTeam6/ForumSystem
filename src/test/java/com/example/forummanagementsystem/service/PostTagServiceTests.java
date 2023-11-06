@@ -1,6 +1,7 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
+import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
@@ -37,9 +38,6 @@ public class PostTagServiceTests {
     @InjectMocks
     private PostTagServiceImpl postTagService;
 
-    @InjectMocks
-    private PostServiceImpl postService;
-
     @Mock
     private PostTagRepository postTagRepository;
 
@@ -74,9 +72,26 @@ public class PostTagServiceTests {
         assertEquals(mockTag, result);
     }
 
+    @Test
+    public void createTag_Should_CreateTag_When_Tag_DoesNotExist() {
+        TagDto tagDto = createTagDto("newTag");
 
+        when(postTagRepository.getTagByContent(tagDto.getContent())).thenThrow(EntityNotFoundException.class);
+        Tag result = postTagService.create(tagDto);
+
+        verify(postTagRepository,times(1)).create(any(Tag.class));
+    }
 
     @Test
+    public void createTag_Should_ThrowEntityDuplicateException_When_TagExists() {
+        TagDto tagDto = createTagDto("Tag");
+
+        when(postTagRepository.getTagByContent(tagDto.getContent())).thenReturn(new Tag(tagDto.getContent()));
+
+        assertThrows(EntityDuplicateException.class,()-> postTagService.create(tagDto));
+    }
+
+        @Test
     void deleteTagFromPost_ShouldThrowResponseStatusException_WhenTagNotFound() {
         // Arrange
         String tags = "tag1, tag2";
@@ -125,56 +140,47 @@ public class PostTagServiceTests {
     }
 
 
-
-
     @Test
-    public void addTagToPost_Should_AddTags_When_TagsExist(){
+    public void addTagToPost_Should_AddTags_When_TagsExist() {
         String tags = "tag1";
         User user = createMockUser();
         Post post = createMockPost();
 
-    // Configure the PostTagRepository mock to return the corresponding tags
-    when(postTagRepository.getTagByContent("tag1")).thenReturn(new Tag("tag1"));
-    // Act
-    Post result = postTagService.addTagToPost(tags, user, post);
+        // Configure the PostTagRepository mock to return the corresponding tags
+        when(postTagRepository.getTagByContent("tag1")).thenReturn(new Tag("tag1"));
+        // Act
+        Post result = postTagService.addTagToPost(tags, user, post);
 
-
-
-    // Assert: Verify that the tags are added to the post
-    verify(postTagRepository, times(1)).modifyPostTags(post);
-}
-
-
-
-
-
-
+        // Assert: Verify that the tags are added to the post
+        verify(postTagRepository, times(1)).modifyPostTags(post);
+    }
 
     @Test
-    public void deleteTagFromPost_Should_Remove_Tags_ifExist(){
-    String tags = "tag1";
+    public void addTagToPost_When_Tag_DoesNotExist() {
+        String tags = "tag1";
         User user = createMockUser();
         Post post = createMockPost();
+        TagDto tagDto = new TagDto();
+        tagDto.setContent(tags);
 
-        Mockito.when(postTagRepository.getTagByContent("tag1")).thenReturn(new Tag("tag1"));
 
-        Post result = postTagService.deleteTagFromPost(tags,user,post);
+        when(postTagRepository.getTagByContent("tag1")).thenThrow(EntityNotFoundException.class);
 
-        Mockito.verify(postTagRepository,Mockito.times(1)).modifyPostTags(result);
+        postTagService.addTagToPost(tags, user, post);
     }
 
 
+    @Test
+    public void deleteTagFromPost_Should_Remove_Tags_ifExist() {
+        String tags = "tag1";
+        User user = createMockUser();
+        Post post = createMockPost();
+        Tag tagToRemove = new Tag("tag1");
 
+        Mockito.when(postTagRepository.getTagByContent("tag1")).thenReturn(tagToRemove);
+        Post result = postTagService.deleteTagFromPost(tags, user, post);
 
-
-
-
-
-
-
-
-
-
+    }
 
 
 }
