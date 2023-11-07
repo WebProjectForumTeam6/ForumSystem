@@ -1,96 +1,117 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Contact us</title>
+    <title>Contact Us</title>
 
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <!-- End fonts -->
-
-    <!-- core:css -->
-    <link rel="stylesheet" href="../static/vendors/core/core.css">
-    <!-- endinject -->
-
-    <!-- Plugin css for this page -->
-    <!-- End plugin css for this page -->
-
-    <!-- inject:css -->
-    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css">
-    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css">
-    <!-- endinject -->
-
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="../static/css/demo1/style.css">
-    <!-- End layout styles -->
-
+    <!-- Add your CSS styles here (similar to User Page) -->
+    <link rel="stylesheet" href="../static/vendors/core/core.css" th:href="@{/vendors/core/core.css}">
+    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css" th:href="@{/fonts/feather-font/css/iconfont.css}">
+    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css" th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
+    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
     <link rel="shortcut icon" href="../static/images/favicon.png" />
 
-    <!--  <a href="#" class="sidebar-brand">-->
-    <!--    Noble<span>UI</span>-->
-    <!--  </a>-->
+    <!-- You can include additional CSS or custom styles as needed -->
 
 </head>
-<body>
+<body class="sidebar-dark">
 <div class="main-wrapper">
-
+    <!-- Navigation Sidebar -->
     <nav class="sidebar">
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
                 Forum<span>System</span>
             </a>
+            <div class="sidebar-toggler not-active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
+        <div class = "sidebar-body">
+        <ul class="nav">
+            <li class="nav-item nav-category">Info</li>
+            <li class="nav-item">
+                <a href="../templates/AboutUs.html" th:href="@{/about}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">AboutUs</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="../templates/ContactUs.html" th:href="@{/contact}" class="nav-link">
+                    <i class="link-icon" data-feather="box"></i>
+                    <span class="link-title">ContactUs</span>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Posts</li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#categories" role="button" aria-expanded="false" aria-controls="categories">
+                    <i class="link-icon" data-feather="more-horizontal"></i>
+                    <span class="link-title">Categories</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="categories">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="../templates/AllPosts.html" th:href="@{/posts/all}" class="nav-link">All</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../templates/ReadPosts.html" th:href="@{/posts/read}" class="nav-link">Read</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../templates/ComposePost.html" th:href="@{/posts/compose}" class="nav-link">Compose</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+</div>
+</nav>
+
+<!-- Main Content -->
+<div class="page-wrapper">
+    <nav class="navbar navbar-dark bg-primary">
+        <nav class = "navbar navbar-light bg-light">
+        <form class="d-flex ms-auto">
+            <div class='myDiv'>
+                <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Login</a>
+                <a th:href="@{/auth/register}" class="btn btn-primary" style='margin-right:16px'>Register</a>
+            </div>
+        </form>
     </nav>
-    <!-- partial -->
+    </nav>
 
-    <div class="page-wrapper">
+    <!-- Content Section -->
+    <div class="page-content">
+        <div class="container">
+            <h1>Contact Us</h1>
+            <br></br>
+            <section>
+                <h3>About Us</h3>
 
-        <!-- partial:../../partials/_navbar.html -->
-        <nav class="navbar navbar-dark bg-primary">
-            <nav class="navbar navbar-light bg-light">
-                <form class="d-flex ms-auto">
-                    <div class='myDiv'>
-                        <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Login</a>
-                        <a th:href="@{/auth/register}" class="btn btn-primary" style='margin-right:16px'>Register</a>
-                    </div>
-                </form>
-            </nav>
-        </nav>
-        <!-- partial -->
-
-        <div class="page-content">
-            <div class="container">
-                <h1>Contact us</h1>
-                <br>
-                <br/>
-                <section>
-                    <h3>Contact Information</h3>
-                    <br>
-                    <p>Have questions or suggestions? Our team is always here to assist you.
-                        Feel free to reach out to us at <strong><a href="mailto:admins.cryptoforum@gmail.com">admins.cryptoforum@gmail.com</a></strong>
-                        for inquiries, feedback, or support.
-                        We're just an email away, and we value your input as we continuously improve our forum.</p>
-                    <br>
-                </section>
+                <p>
+                    Introduction
+                    Welcome to Crypto Forum, the central hub for cryptocurrency enthusiasts. We're excited to introduce you to our platform, where the global cryptocurrency community comes together to learn, share, and connect. At Crypto Forum, we believe in the power of knowledge and the strength of community. Join us on this exciting journey into the world of cryptocurrencies.
+                </p>
+            </section>
+            <!-- Include your contact form or information here -->
         </div>
-
     </div>
 </div>
+</div>
+
+<!-- You can include any JavaScript scripts you need here -->
 <!-- core:js -->
-<script src="../../../assets/vendors/core/core.js"></script>
+<script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
 <!-- endinject -->
 
 <!-- Plugin js for this page -->
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
-<script src="../../../assets/vendors/feather-icons/feather.min.js"></script>
-<script src="../../../assets/js/template.js"></script>
+<script src="../static/vendors/feather-icons/feather.min.js"
+        th:src="@{/vendors/feather-icons/feather.min.js}"></script>
+<script src="../static/js/template.js" th:src="@{js/template.js}"></script>
 <!-- endinject -->
-
-<!-- Custom js for this page -->
-<!-- End custom js for this page -->
-</div>
 </body>
 </html>
+
