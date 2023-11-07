@@ -15,8 +15,9 @@ public class PostDto {
     private String content;
 
     @NotNull(message = "You should choose category.")
-    private  int categoryId;
+    private int categoryId;
     private String tags;
+
     public PostDto() {
     }
 

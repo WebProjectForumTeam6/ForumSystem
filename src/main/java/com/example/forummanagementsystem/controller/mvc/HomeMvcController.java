@@ -38,6 +38,7 @@ public class HomeMvcController {
                 filterDto.getCreatedBy(),
                 filterDto.getTitle(),
                 filterDto.getContent(),
+                filterDto.getCategory(),
                 filterDto.getSortBy(),
                 filterDto.getSortOrder()
         );

@@ -5,6 +5,7 @@ public class FilterDto {
     private String createdBy;
     private String title;
     private String content;
+    private String category;
     private String sortBy;
     private String sortOrder;
 
@@ -33,6 +34,14 @@ public class FilterDto {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public String getSortBy() {

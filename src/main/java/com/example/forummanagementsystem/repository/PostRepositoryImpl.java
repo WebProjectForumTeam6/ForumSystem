@@ -55,6 +55,11 @@ public class PostRepositoryImpl implements PostRepository {
                 params.put("content", String.format("%%%s%%", value));
             });
 
+            FilterOptions.getCategory().ifPresent(value -> {
+                filters.add("name like :category");
+                params.put("name", String.format("%%%s%%", value));
+            });
+
             FilterOptions.getCreatedBy().ifPresent(value -> {
                 filters.add("createdBy.username like :createdBy");
                 params.put("createdBy", String.format("%%%s%%", value));
