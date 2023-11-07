@@ -1,10 +1,11 @@
-DROP DATABASE IF EXISTS `forum`;
-CREATE DATABASE IF NOT EXISTS `forum`;
-
-use `forum`;
+create table categories
+(
+    category_id   int auto_increment
+        primary key,
+    category_name varchar(255) null
+);
 
 create table tags
-
 (
     tag_id  int auto_increment
         primary key,
@@ -43,6 +44,9 @@ create table posts
     content        varchar(8192) not null,
     post_timestamp datetime      not null,
     user_id        int           not null,
+    category_id    int           not null,
+    constraint posts_categories_category_id_fk
+        foreign key (category_id) references categories (category_id),
     constraint posts_users_user_id_fk
         foreign key (user_id) references users (user_id)
 );

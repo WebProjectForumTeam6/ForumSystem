@@ -21,13 +21,15 @@ VALUES (1, '1234567890'),
        (5, '9876543210'),
        (7, '1245789552');
 
-INSERT INTO posts (title, content,post_timestamp, user_id)
-VALUES ('Trade only Bitcoin','Trading is a lifetime skill that is always beneficial if you know what you are doing, the biggest mistake of traders is trading alt that most times doesn''t obey market structure,
-when it comes to cryptocurrency, trade only Bitcoin.','2023-05-01 19:09:24', 1),
-       ('How long to learn trading?', 'Do you think that trading can be learnt well in a short time like three weeks for a quick trader?','2023-07-24 19:09:14', 2),
-       ('Binance is Rolling Out Copy Trading?', 'did Binance just announce they''re finally jumping on the copy trading feature?','2023-10-21 19:09:10', 3),
-       ('App for crypto indicators', 'I try to find some apps for indicators. ','2023-07-24 19:09:14', 4),
-       ('For funded traders / my top 3 prop firm', '1-Crypto fund trader 2-Funded next 3-The Funded Trader','2023-10-21 19:09:10', 2);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (1, 'Trade only Bitcoin', 'Trading is a lifetime skill that is always beneficial if you know what you are doing, the biggest mistake of traders is trading alt that most times doesn\'t obey market structure,
+                                                                                                   when it comes to cryptocurrency, trade only Bitcoin.', '2023-05-01 19:09:24', 1, 1);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (2, 'How long to learn trading?', 'Do you think that trading can be learnt well in a short time like three weeks for a quick trader?', '2023-07-24 19:09:14', 2, 1);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (3, 'Binance is Rolling Out Copy Trading?', 'did Binance just announce they\'re finally jumping on the copy trading feature?', '2023-10-21 19:09:10', 3, 1);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (4, 'App for crypto indicators', 'I try to find some apps for indicators. ', '2023-07-24 19:09:14', 4, 1);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (5, 'For funded traders / my top 3 prop firm', '1-Crypto fund trader 2-Funded next 3-The Funded Trader', '2023-10-21 19:09:10', 2, 1);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (25, 'ddddddddddddddddddddddddddddddddddd', 'ddddddddddddddddddddddddddddddddddddddddddd', '2023-11-06 21:28:04', 1, 2);
+INSERT INTO forum.posts (post_id, title, content, post_timestamp, user_id, category_id) VALUES (26, 'xbdgnsdzklmbg,nhtfdikfmxl,.b;nhfnfd', 'sdjngkf.mv,fdujkflk,gbgdhftdgdth', '2023-11-06 21:29:00', 1, 3);
+
 
 INSERT INTO comments (user_id, post_id, content,comment_timestamp)
 VALUES (1, 1, 'Bitcoin is always safer than ALT coins so trading with bitcoins will have less chance of loss ','2023-06-21 19:12:00'),
@@ -55,3 +57,7 @@ VALUES (1, 2),
        (2,4),
        (2,5),
        (3,3);
+INSERT INTO forum.categories (category_id, category_name) VALUES (1, 'investing');
+INSERT INTO forum.categories (category_id, category_name) VALUES (2, 'trading');
+INSERT INTO forum.categories (category_id, category_name) VALUES (3, 'discussion');
+
