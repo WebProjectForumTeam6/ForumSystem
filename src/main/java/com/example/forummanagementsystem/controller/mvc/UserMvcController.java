@@ -37,6 +37,7 @@ public class UserMvcController {
                 filterDto.getCreatedBy(),
                 filterDto.getTitle(),
                 filterDto.getContent(),
+                filterDto.getCategory(),
                 filterDto.getSortBy(),
                 filterDto.getSortOrder()
         );

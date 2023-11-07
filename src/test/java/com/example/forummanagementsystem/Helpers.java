@@ -76,6 +76,7 @@ public class Helpers {
                 "mockCreatedBy",
                 "mockTitle",
                 "mockContent",
+                "mockCategory",
                 "MockSortBY",
                 "sort");
     }

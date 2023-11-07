@@ -41,9 +41,10 @@ public class PostRestController {
             @RequestParam(required = false) String createdBy,
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String content,
+            @RequestParam(required = false) String category,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, sortBy, sortOrder);
+        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category, sortBy, sortOrder);
         return postService.getAll(filterOptions);
     }
 

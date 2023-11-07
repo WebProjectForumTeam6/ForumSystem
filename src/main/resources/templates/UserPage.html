@@ -33,7 +33,7 @@
 <div class="main-wrapper">
 
     <!-- partial:../../partials/_sidebar.html -->
-    <nav class="sidebar">
+    <nav class="sidebar" th:fragment="sidebar">
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
                 Forum<span>System</span>
@@ -78,12 +78,7 @@
                             <li class="nav-item">
                                 <a href="pages/email/inbox.html" class="nav-link">All</a>
                             </li>
-                            <li class="nav-item">
-                                <a href="pages/email/read.html" class="nav-link">Read</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="pages/email/compose.html" class="nav-link">Compose</a>
-                            </li>
+
                         </ul>
                     </div>
             </ul>
@@ -91,7 +86,6 @@
 
         </div>
     </nav>
-
     <div class="page-wrapper">
 
         <!-- partial:../../partials/_navbar.html -->
@@ -155,11 +149,14 @@
                         th:text="'Welcome, ' + ${session.currentUser}">
                         Welcome to CryptoForum</h2>
                 </div>
+
             </div>
+
             <div class="col-md-8 col-xl-6 mx-auto">
                 <div class="row">
                     <div th:each="post : ${allPosts}">
                         <div class="col-md-12 grid-margin">
+
                             <div class="card rounded">
                                 <div class="card-header">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -182,7 +179,8 @@
                                     <div class="d-flex post-actions">
                                         <form th:action="@{/posts/{postId}/like(postId=${post.getId()})}" method="post">
                                             <input type="hidden" value="users" name="path">
-                                            <button type="submit" class="d-flex align-items-center text-muted me-4" style="background: none; padding: 0; border: none">
+                                            <button type="submit" class="d-flex align-items-center text-muted me-4"
+                                                    style="background: none; padding: 0; border: none">
                                                 <i class="icon-md" th:if="${post.isLikedByUser(loggedIn) == true}"
                                                    th:attr="data-feather='thumbs-down'" data-feather="thumbs-down"></i>
                                                 <i class="icon-md" th:if="${post.isLikedByUser(loggedIn) == false}"
@@ -203,7 +201,10 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
+
     </div>
 </div>
 
