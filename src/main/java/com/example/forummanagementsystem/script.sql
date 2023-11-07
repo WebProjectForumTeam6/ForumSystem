@@ -1,3 +1,9 @@
+drop database if exists forum;
+
+create database forum;
+
+use forum;
+
 create table categories
 (
     category_id   int auto_increment
