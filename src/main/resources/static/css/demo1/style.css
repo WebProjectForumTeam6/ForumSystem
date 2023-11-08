@@ -22473,3 +22473,10 @@ div.tox .tox-dialog__body {
   margin-right: 5px !important;
 }
 /*# sourceMappingURL=../maps/demo1/style.css.map */
+
+.container {
+  text-align: left; /* Set text alignment to the left */
+  margin: 0 auto;   /* Center the container horizontally on the page (optional) */
+  max-width: 100%;   /* Optional: Ensure the container spans the full width */
+}
+
