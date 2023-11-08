@@ -9,8 +9,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- End fonts -->
 
+
     <!-- core:css -->
-    <link rel="stylesheet" href="../static/vendors/core/core.css">
+    <link rel="stylesheet" href="../static/vendors/core/core.css" th:href="@{/vendors/core/core.css}">
     <!-- endinject -->
 
     <!-- Plugin css for this page -->
@@ -29,21 +30,14 @@
 
     <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
 
-    <!--  <a href="#" class="sidebar-brand">-->
-    <!--    Noble<span>UI</span>-->
-    <!--  </a>-->
 
 </head>
-<body>
+<body class="sidebar-dark">
 <div class="main-wrapper">
 
     <!--     partial:../../partials/_sidebar.html -->
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <a href="#" class="sidebar-brand">
-                Forum<span>System</span>
-            </a>
-        </div>
+    <nav class="sidebar" th:replace="~{HomeView.html :: sidebar-not-logged}">
+
     </nav>
     <!-- partial -->
 
@@ -92,21 +86,15 @@
     </div>
 
 </div>
-
-
-<!-- core:js -->
 <script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
-<!-- endinject -->
 
 <!-- Plugin js for this page -->
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
 <script src="../static/vendors/feather-icons/feather.min.js" th:src="@{/vendors/feather-icons/feather.min.js}"></script>
-<script src="../static/js/template.js" th:src="@{/static/js/template.js}"></script>
-<!-- endinject -->
+<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
 
-<!-- Custom js for this page -->
 <!-- End custom js for this page -->
 </body>
 </html>
