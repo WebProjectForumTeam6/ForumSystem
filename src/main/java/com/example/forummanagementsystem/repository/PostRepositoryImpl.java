@@ -49,15 +49,14 @@ public class PostRepositoryImpl implements PostRepository {
             });
 
 
-
             FilterOptions.getContent().ifPresent(value -> {
                 filters.add("content like :content");
                 params.put("content", String.format("%%%s%%", value));
             });
 
             FilterOptions.getCategory().ifPresent(value -> {
-                filters.add("name like :category");
-                params.put("name", String.format("%%%s%%", value));
+                filters.add("category.name like :category");
+                params.put("category", String.format("%%%s%%", value));
             });
 
             FilterOptions.getCreatedBy().ifPresent(value -> {
@@ -73,7 +72,7 @@ public class PostRepositoryImpl implements PostRepository {
 
             queryString.append(generateOrderBy(FilterOptions));
 
-            Query<Post> query = session.createQuery(queryString.toString(),Post.class);
+            Query<Post> query = session.createQuery(queryString.toString(), Post.class);
             query.setProperties(params);
             return query.list();
         }
