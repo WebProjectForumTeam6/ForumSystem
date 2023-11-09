@@ -15,7 +15,8 @@
 
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
-
+    <link rel="stylesheet" href="../static/vendors/flatpickr/flatpickr.min.css"
+          th:href="@{/vendors/flatpickr/flatpickr.min.css}">
     <!-- inject:css -->
     <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css"
           th:href="@{/fonts/feather-font/css/iconfont.css}">
@@ -181,7 +182,7 @@
                                         <label for="exampleInputUsername" class="form-label">Category</label>
                                         <select class="js-example-basic-single form-select" th:field="*{category}"
                                                 data-width="100%">
-                                            <option value="All">Category</option>
+                                            <option value="">All</option>
                                             <option value="TX" th:each="category : ${categories}"
                                                     th:value="${category.getName()}"
                                                     th:text="${category.getName()}">Category
@@ -191,19 +192,40 @@
                                 </div>
 
 
-<!--                                    <div class="row">-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <label for="exampleInputUsername" class="form-label">SortBy</label>-->
-<!--                                            <select class="js-example-basic-single form-select"-->
-<!--                                                    th:field="*{sortBy}" data-width="100%">-->
-<!--                                                <option value="">Category</option>-->
-<!--                                                <option value="Title" th:value="title">Title</option>-->
-<!--                                                <option value="Content" th:value="content">Content</option>-->
-<!--                                            </select>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label for="exampleInputUsername" class="form-label">SortBy</label>
+                                        <select class="js-example-basic-single form-select"
+                                                th:field="*{sortBy}" data-width="100%">
+                                            <option value="">Choose</option>
+                                            <option value="title" th:value="title">Title</option>
+                                            <option value="content" th:value="content">Content</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="flatpickr mb-3" id="flatpickr-date">
+                                    <label for="exampleInputUsername" class="form-label">Start date</label>
+                                    <div class="input-group">
+                                        <input type="text" th:field="*{minDate}" class="form-control"
+                                               placeholder="Select start date" data-input>
+                                        <span class="input-group-text input-group-addon" data-toggle><i
+                                                data-feather="calendar"></i></span>
+                                    </div>
+                                </div>
+
+                                <div class="input-group flatpickr mb-3" id="flatpickr-date1">
+                                    <label for="exampleInputUsername" class="form-label">End date</label>
+                                    <div class="input-group">
+                                        <input type="text" th:field="*{maxDate}" class="form-control"
+                                               placeholder="Select end date" data-input>
+                                        <span class="input-group-text input-group-addon" data-toggle><i
+                                                data-feather="calendar"></i></span>
+                                    </div>
+                                </div>
+
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                <a th:action="@{/users}" class="btn btn-danger">Reset</a>
+                                <a th:href="@{/users}" class="btn btn-danger">Reset</a>
                             </form>
                         </div>
                     </div>
@@ -270,12 +292,24 @@
 <!-- endinject -->
 
 <!-- Plugin js for this page -->
+<script src="../static/vendors/flatpickr/flatpickr.min.js" th:src="@{/vendors/flatpickr/flatpickr.min.js}"></script>
+<script src="../static/vendors/apexcharts/apexcharts.min.js" th:src="@{/vendors/apexcharts/apexcharts.min.js}"></script>
+<script src="../static/js/flatpickr.js" th:src="@{/js/flatpickr.js}"></script>
+
+
 <!-- End plugin js for this page -->
 
 <!-- inject:js -->
 <script src="../static/vendors/feather-icons/feather.min.js"
         th:src="@{/vendors/feather-icons/feather.min.js}"></script>
 <script src="../static/js/template.js" th:src="@{js/template.js}"></script>
+<!-- endinject -->
+<script src="../static/js/dashboard-light.js" th:src="@{/js/dashboard-light.js}"></script>
+
+<!-- core:js -->
+<!-- End plugin js for this page -->
+
+<!-- inject:js -->
 <!-- endinject -->
 
 <!-- Custom js for this page -->

@@ -42,6 +42,8 @@ public class UserMvcController {
                 filterDto.getTitle(),
                 filterDto.getContent(),
                 filterDto.getCategory(),
+                filterDto.getMinDate(),
+                filterDto.getMaxDate(),
                 filterDto.getSortBy(),
                 filterDto.getSortOrder()
         );

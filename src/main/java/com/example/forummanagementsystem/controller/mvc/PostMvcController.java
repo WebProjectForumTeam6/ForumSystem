@@ -82,6 +82,7 @@ public class PostMvcController {
         } catch (AuthorizationException e) {
             Post post = postService.getById(id);
             model.addAttribute("post", post);
+            model.addAttribute("comments", post.getComments());
             return "PostView";
         }
     }

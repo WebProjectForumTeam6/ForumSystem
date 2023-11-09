@@ -34,24 +34,26 @@ public class HomeMvcController {
 
     @GetMapping
     public String showHomePage(Model model, FilterDto filterDto, HttpSession httpSession) {
-        FilterOptions filterOptions = new FilterOptions(
-                filterDto.getCreatedBy(),
-                filterDto.getTitle(),
-                filterDto.getContent(),
-                filterDto.getCategory(),
-                filterDto.getSortBy(),
-                filterDto.getSortOrder()
-        );
-        List<Post> posts = postService.getAll(filterOptions);
-        List<User> users = userService.getAll();
-        model.addAttribute("topCommented", postService.getTop10MostCommentedPosts());
-        model.addAttribute("recentlyAddedPosts", postService.get10MostRecentlyCreatedPosts());
-        model.addAttribute("allPosts", posts);
-        model.addAttribute("allUsers", users);
         try{
             authenticationHelper.tryGetCurrentUser(httpSession);
             return "redirect:/users";
         }catch (AuthorizationException e) {
+            FilterOptions filterOptions = new FilterOptions(
+                    filterDto.getCreatedBy(),
+                    filterDto.getTitle(),
+                    filterDto.getContent(),
+                    filterDto.getCategory(),
+                    filterDto.getMinDate(),
+                    filterDto.getMaxDate(),
+                    filterDto.getSortBy(),
+                    filterDto.getSortOrder()
+            );
+            List<Post> posts = postService.getAll(filterOptions);
+            List<User> users = userService.getAll();
+            model.addAttribute("topCommented", postService.getTop10MostCommentedPosts());
+            model.addAttribute("recentlyAddedPosts", postService.get10MostRecentlyCreatedPosts());
+            model.addAttribute("allPosts", posts);
+            model.addAttribute("allUsers", users);
             return "HomeView";
         }
     }
