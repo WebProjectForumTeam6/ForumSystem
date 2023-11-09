@@ -39,7 +39,19 @@ public class User {
     @JsonIgnore
     private Set<Post> usersPosts;
 
+    //todo
+    @Column(name = "profile_picture_url")
+    private String profilePhoto =
+            "https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg";
     public User() {
+    }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
     }
 
     public int getId() {

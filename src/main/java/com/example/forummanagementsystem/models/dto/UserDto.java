@@ -18,6 +18,7 @@ public class UserDto extends LoginDto{
     @NotNull(message = "Password can't be empty.")
     private String passwordConfirm;
 
+
     public UserDto() {
     }
 
