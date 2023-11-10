@@ -16,68 +16,14 @@
 <body class="sidebar-dark">
 <div class="main-wrapper">
     <!-- Navigation Sidebar -->
-    <nav class="sidebar">
-        <div class="sidebar-header">
-            <a href="#" class="sidebar-brand">
-                Forum<span>System</span>
-            </a>
-            <div class="sidebar-toggler not-active">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
-        <div class="sidebar-body">
-            <ul class="nav">
-                <li class="nav-item nav-category">INFO</li>
-                <li class="nav-item">
-                    <a href="../templates/AboutUs.html" th:href="@{/about}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">AboutUs</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="../templates/ContactUs.html" th:href="@{/contact}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title">ContactUs</span>
-                    </a>
-                </li>
-                <li class="nav-item nav-category">POSTS</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="categories">
-                        <i class="link-icon" data-feather="more-horizontal"></i>
-                        <span class="link-title">Categories</span>
-                        <i class="link-arrow" data-feather="chevron-down"></i>
-                    </a>
-                    <div class="collapse" id="emails">
-                        <ul class="nav sub-menu">
-                            <li class="nav-item">
-                                <a href="../templates/AllPosts.html" th:href="@{/posts/all}" class="nav-link">All</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../templates/ReadPosts.html" th:href="@{/posts/read}" class="nav-link">Read</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="../templates/ComposePost.html" th:href="@{/posts/compose}" class="nav-link">Compose</a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-            </ul>
-        </div>
+    <nav class="sidebar"
+         th:replace="${isAuthenticated} ? ~{UserPage.html :: sidebar} : ~{HomeView.html :: sidebarNotLogged}">
     </nav>
 
     <!-- Main Content -->
     <div class="page-wrapper">
-        <nav class="navbar navbar-dark bg-primary">
-            <nav class="navbar navbar-light bg-light">
-                <form class="d-flex ms-auto">
-                    <div class='myDiv'>
-                        <a th:href="@{/auth/login}" class="btn btn-primary" style='margin-right:16px'>Login</a>
-                        <a th:href="@{/auth/register}" class="btn btn-primary" style='margin-right:16px'>Register</a>
-                    </div>
-                </form>
-            </nav>
+        <nav class="navbar navbar-dark bg-primary"
+             th:replace="${isAuthenticated} ? ~{UserPage.html :: navbar} : ~{HomeView.html :: navbarNotLogged}">
         </nav>
         <!-- Content Section -->
         <div class="page-content">

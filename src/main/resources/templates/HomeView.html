@@ -33,7 +33,7 @@
 <div class="main-wrapper">
 
     <!-- partial:../../partials/_sidebar.html -->
-    <nav class="sidebar" th:fragment="sidebar-not-logged">
+    <nav class="sidebar" th:fragment="sidebarNotLogged">
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
                 Forum<span>System</span>
@@ -58,20 +58,17 @@
 
 
                 <li class="nav-item">
-                    <a href="../templates/ContactUs.html" class="nav-link">
+                    <a href="../templates/ContactUs.html" th:href="@{/contact}" class="nav-link">
                         <i class="link-icon" data-feather="box"></i>
-                        <span class="link-title" th:href="@{/contact}">ContactUs</span>
+                        <span class="link-title" >ContactUs</span>
                     </a>
                 </li>
-
-                <!--        TODO navigation bar left -->
-
             </ul>
         </div>
     </nav>
     <!--    navbar-->
     <div class="page-wrapper">
-        <nav class="navbar navbar-dark bg-primary">
+        <nav class="navbar navbar-dark bg-primary" th:fragment="navbarNotLogged">
             <nav class="navbar navbar-light bg-light">
                 <form class="d-flex ms-auto">
                     <div class='myDiv'>

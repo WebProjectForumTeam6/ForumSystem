@@ -28,7 +28,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.EAGER)
-    private Set<Comment> comments;
+    private Set<Comment> comments= new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -90,7 +90,7 @@ public class Post {
         this.comments = comments;
     }
 
-    public int getLikes() {
+    public int getLikesCount() {
         return likes.size();
     }
 
@@ -118,7 +118,7 @@ public class Post {
         this.tags = tags;
     }
 
-    public Set<User> likesSet() {
+    public Set<User> getLikes() {
         return likes;
     }
 

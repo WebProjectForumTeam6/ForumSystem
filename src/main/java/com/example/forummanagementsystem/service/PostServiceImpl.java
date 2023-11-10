@@ -1,8 +1,6 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
-import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
-import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
@@ -63,7 +61,7 @@ public class PostServiceImpl implements PostService {
     public void modifyLike(int id, User user) {
         isUserBlocked(user);
         Post postToModify = postRepository.getById(id);
-        if (postToModify.likesSet().contains(user)) {
+        if (postToModify.getLikes().contains(user)) {
             postToModify.removeLikes(user);
         } else {
             postToModify.addLikes(user);

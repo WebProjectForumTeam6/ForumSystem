@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -42,9 +43,11 @@ public class PostRestController {
             @RequestParam(required = false) String title,
             @RequestParam(required = false) String content,
             @RequestParam(required = false) String category,
+            @RequestParam(required = false) String minDate,
+            @RequestParam(required = false) String maxDate,
             @RequestParam(required = false) String sortBy,
             @RequestParam(required = false) String sortOrder) {
-        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category, sortBy, sortOrder);
+        FilterOptions filterOptions = new FilterOptions(createdBy, title, content, category,minDate, maxDate, sortBy, sortOrder);
         return postService.getAll(filterOptions);
     }
 

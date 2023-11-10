@@ -21543,11 +21543,11 @@ div.tox .btn-group-lg > .btn-icon-text.tox-button .btn-icon-append,
   align-items: center;
   border-bottom: 1px solid #e9ecef;
   padding: 10px 20px;
-  cursor: pointer;
+  /*cursor: pointer;*/
 }
-.email-list-item:hover {
-  background: rgba(101, 113, 255, 0.08);
-}
+/*.email-list-item:hover {*/
+/*  background: rgba(101, 113, 255, 0.08);*/
+/*}*/
 .email-list-item:last-child {
   margin-bottom: 5px;
 }
