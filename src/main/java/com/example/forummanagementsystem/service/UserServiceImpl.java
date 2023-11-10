@@ -107,20 +107,20 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate) {
         checkAccessPermission(user, updatedUser);
-        if (userDtoUpdate.getFirstName() != null) {
+        if (userDtoUpdate.getFirstName() != null && !userDtoUpdate.getFirstName().equals("")) {
             updatedUser.setFirstName(userDtoUpdate.getFirstName());
         }
-        if (userDtoUpdate.getLastName() != null) {
+        if (userDtoUpdate.getLastName() != null && !userDtoUpdate.getFirstName().equals("")) {
             updatedUser.setLastName(userDtoUpdate.getLastName());
         }
-        if (userDtoUpdate.getEmail() != null) {
+        if (userDtoUpdate.getEmail() != null && !userDtoUpdate.getFirstName().equals("")) {
             updatedUser.setEmail(userDtoUpdate.getEmail());
         }
-        if (userDtoUpdate.getPassword() != null) {
+        if (userDtoUpdate.getPassword() != null && !userDtoUpdate.getFirstName().equals("")) {
             updatedUser.setPassword(userDtoUpdate.getPassword());
         }
-        if (userDtoUpdate.getPhoneNumber() != null &&
-                user.getId() == updatedUser.getId()) {
+        if ((userDtoUpdate.getPhoneNumber() != null &&
+                user.getId() == updatedUser.getId()) && !userDtoUpdate.getFirstName().isEmpty()) {
             addPhoneNumberToAdmin(updatedUser, userDtoUpdate.getPhoneNumber());
         }
         userRepository.updateUser(updatedUser);

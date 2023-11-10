@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
     <!-- End layout styles -->
 
-    <link rel="shortcut icon" href="../static/images/favicon.png"/>
+    <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
 </head>
 <body class="sidebar-dark">
 <div class="main-wrapper">
@@ -37,7 +37,7 @@
     <nav class="sidebar" th:fragment="sidebar">
         <div class="sidebar-header">
             <a href="#" class="sidebar-brand">
-                Forum<span>System</span>
+                Crypto<span>Forum</span>
             </a>
             <div class="sidebar-toggler not-active">
                 <span></span>
@@ -47,41 +47,41 @@
         </div>
         <div class="sidebar-body">
             <ul class="nav">
-                <li class="nav-item nav-category">Info</li>
+                <li class="nav-item nav-category">Home</li>
+                <li class="nav-item">
+                    <a href="../templates/HomeView.html" th:href="@{/users}" class="nav-link">
+                        <i class="link-icon" data-feather="home"></i>
+                        <span class="link-title">Home</span>
+                    </a>
+                </li>
 
+                <li class="nav-item nav-category">User</li>
+
+                <li class="nav-item">
+                    <a href="../templates/ProfileInformation.html" th:href="@{users/profile}" class="nav-link">
+                        <i class="link-icon" data-feather="info"></i>
+                        <span class="link-title">Profile</span>
+                    </a>
+                </li>
+
+                <li class="nav-item nav-category">Info</li>
 
                 <li class="nav-item">
                     <a href="../templates/AboutUs.html" th:href="@{/about}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="info"></i>
                         <span class="link-title">AboutUs</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="../templates/ContactUs.html" th:href="@{/contact}" class="nav-link">
-                        <i class="link-icon" data-feather="box"></i>
+                        <i class="link-icon" data-feather="smartphone"></i>
                         <span class="link-title">ContactUs</span>
                     </a>
                 </li>
 
-                <li class="nav-item nav-category">Posts</li>
-                <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
-                       aria-controls="categories">
-                        <i class="link-icon" data-feather="more-horizontal"></i>
-                        <span class="link-title">Categories</span>
-                        <i class="link-arrow" data-feather="chevron-down"></i>
-                    </a>
 
-                    <!--TODO submenu for categories-->
-                    <div class="collapse" id="emails">
-                        <ul class="nav sub-menu">
-                            <li class="nav-item">
-                                <a href="pages/email/inbox.html" class="nav-link">All</a>
-                            </li>
 
-                        </ul>
-                    </div>
             </ul>
 
 
@@ -121,7 +121,8 @@
                             <ul class="list-unstyled p-1">
 
                                 <li class="dropdown-item py-2">
-                                    <a href="ProfileInformation.html" th:href="@{/users/profile}" class="text-body ms-0">
+                                    <a href="ProfileInformation.html" th:href="@{/users/profile}"
+                                       class="text-body ms-0">
                                         <i class="me-2 icon-md" data-feather="user"></i>
                                         <span>Profile</span>
                                     </a>
@@ -214,15 +215,15 @@
                                     </div>
                                 </div>
 
-<!--                                <div class="input-group flatpickr mb-3" id="flatpickr-date1">-->
-<!--                                    <label for="exampleInputUsername" class="form-label">End date</label>-->
-<!--                                    <div class="input-group">-->
-<!--                                        <input type="text" th:field="*{maxDate}" class="form-control"-->
-<!--                                               placeholder="Select end date" data-input>-->
-<!--                                        <span class="input-group-text input-group-addon" data-toggle><i-->
-<!--                                                data-feather="calendar"></i></span>-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <!--                                <div class="input-group flatpickr mb-3" id="flatpickr-date1">-->
+                                <!--                                    <label for="exampleInputUsername" class="form-label">End date</label>-->
+                                <!--                                    <div class="input-group">-->
+                                <!--                                        <input type="text" th:field="*{maxDate}" class="form-control"-->
+                                <!--                                               placeholder="Select end date" data-input>-->
+                                <!--                                        <span class="input-group-text input-group-addon" data-toggle><i-->
+                                <!--                                                data-feather="calendar"></i></span>-->
+                                <!--                                    </div>-->
+                                <!--                                </div>-->
 
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                                 <a th:href="@{/users}" class="btn btn-danger">Reset</a>
@@ -302,7 +303,7 @@
 <!-- inject:js -->
 <script src="../static/vendors/feather-icons/feather.min.js"
         th:src="@{/vendors/feather-icons/feather.min.js}"></script>
-<script src="../static/js/template.js" th:src="@{js/template.js}"></script>
+<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
 <!-- endinject -->
 <script src="../static/js/dashboard-light.js" th:src="@{/js/dashboard-light.js}"></script>
 

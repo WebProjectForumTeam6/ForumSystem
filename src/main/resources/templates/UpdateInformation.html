@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Update information</title>
+    <title>Profile information</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -10,72 +9,192 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <!-- End fonts -->
 
+    <!-- core:css -->
+    <!-- core:css -->
+    <link rel="stylesheet" href="../static/vendors/core/core.css" th:href="@{/vendors/core/core.css}">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <link rel="stylesheet" href="../static/vendors/flatpickr/flatpickr.min.css"
+          th:href="@{/vendors/flatpickr/flatpickr.min.css}">
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css"
+          th:href="@{/fonts/feather-font/css/iconfont.css}">
+    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css"
+          th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
+    <!-- endinject -->
+
     <!-- Layout styles -->
     <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
     <!-- End layout styles -->
-    <!--    TODO add picture-->
-    <link rel="shortcut icon" href="../static/images/favicon.png" href="@{/images/favicon.png}">
+
+
+    <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
 </head>
-<body>
+<body class="sidebar-dark">
 <div class="main-wrapper">
-    <div class="page-wrapper full-page">
-        <div class="page-content d-flex align-items-center justify-content-center">
 
-            <div class="row w-100 mx-0 auth-page">
-                <div class="col-md-8 col-xl-6 mx-auto">
-                    <div class="card">
-                        <div class="row">
-                            <div class="col-md-4 pe-md-0">
-                                <div class="auth-side-wrapper">
+    <!-- partial:../../partials/_sidebar.html -->
+    <nav class="sidebar" th:replace="~{UserPage.html :: sidebar}">
+    </nav>
 
+
+    <div class="navbar-content">
+        <div class="page-wrapper">
+            <nav class="navbar navbar-dark bg-primary">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="d-flex ms-auto">
+                        <div class='myDiv'>
+                            <a href="UserPage.html" th:href="@{/users}" class="btn btn-primary"
+                               style='margin-right:16px'>Back to home page</a>
+                            <a href="HomeView.html" th:href="@{/auth/logout}" class="btn btn-primary"
+                               style='margin-right:16px'>Log out</a>
+                        </div>
+                    </form>
+                </nav>
+            </nav>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="position-relative">
+                                <figure class="overflow-hidden mb-0 d-flex justify-content-center">
+                                    <img src="https://t3.ftcdn.net/jpg/04/12/82/16/360_F_412821610_95RpjzPXCE2LiWGVShIUCGJSktkJQh6P.jpg"
+                                         class="rounded-top" alt="profile cover" style="width: 1400px; height: 300px;">
+                                </figure>
+                                <div class="d-flex justify-content-between align-items-center position-absolute top-90 w-100 px-2 px-md-4 mt-n4">
+                                    <div>
+                                        <img class="wd-70 rounded-circle" th:src="${session.currentUser}" alt="profile">
+                                        <span class="h4 ms-3 text-dark" th:text="${session.currentUser}"></span>
+                                    </div>
+
+                                    <div class="d-none d-md-block">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-8 ps-md-0">
-                                <div class="auth-form-wrapper px-4 py-5">
-                                    <a href="#" class="noble-ui-logo d-block mb-2">Forum<span>System</span></a>
-                                    <h5 class="text-muted fw-normal mb-4">You can change your information</h5>
+                            <div class="d-flex justify-content-center p-3 rounded-bottom">
+                                <ul class="d-flex align-items-center m-0 p-0">
+                                    <li class="d-flex align-items-center active">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-columns me-1 icon-md text-primary">
+                                            <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
+                                        </svg>
+                                        <a class="pt-1px d-none d-md-block text-primary" href="#" th:href="@{users/profile}">Timeline</a>
+                                    </li>
+                                    <li class="ms-3 ps-3 border-start d-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                             viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round"
+                                             class="feather feather-user me-1 icon-md">
+                                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                            <circle cx="12" cy="7" r="4"></circle>
+                                        </svg>
+                                        <a class="pt-1px d-none d-md-block text-body" href="#" th:href="@{/users/update}">Edit
+                                            profile</a>
+                                    </li>
 
-                                    <form class="forms-sample" th:action="@{/auth/register}" th:object="${register}"
-                                          method="post">
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row profile-body">
 
-                                        <div class="mb-3">
-                                            <label for="firstName" class="form-label">First Name</label>
-                                            <input type="text" th:field="*{firstName}" class="form-control"
-                                                   id="firstName"
-                                                   placeholder="First Name">
-                                            <label class="error" th:errors="*{firstName}"></label>
+                        <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
+                            <div class="card rounded">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-1">
+                                        <h1 class="card-title larger-text">About</h1>
+                                        <div class="dropdown">
+
                                         </div>
-                                        <div class="mb-3">
-                                            <label for="lastName" class="form-label">Last Name</label>
-                                            <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
-                                                   placeholder="Last Name">
-                                            <label class="error" th:errors="*{lastName}"></label>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="tx-15 fw-bolder mb-0 text-uppercase">Joined:</label>
+                                        <p class="text-muted">September 15, 2023</p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="tx-15 fw-bolder mb-0 text-uppercase">Email:</label>
+                                        <p class="text-muted" th:text="${userToUpdate.getEmail()}"></p>
+                                        <div class="mt-3">
+                                            <label class="tx-15 fw-bolder mb-0 text-uppercase">Posts:</label>
+                                            <p class="text-muted" th:text="${userToUpdate.getUsersPosts().size()}"></p>
                                         </div>
 
-                                        <div class="mb-3">
-                                            <label for="userEmail" class="form-label">Email</label>
-                                            <input type="email" th:field="*{email}" class="form-control" id="userEmail"
-                                                   placeholder="Email">
-                                            <label class="error" th:errors="*{email}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 align-items-center justify-content-center">
+
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="col-md-12 ps-md-0">
+                                        <div class="auth-form-wrapper px-4 py-5">
+                                            <a href="#" class="noble-ui-logo d-block mb-2">Forum<span>System</span></a>
+                                            <h5 class="text-muted fw-normal mb-4">You can change your information</h5>
+
+                                            <form class="forms-sample" th:action="@{/users/update}"
+                                                  th:object="${updateDto}"
+                                                  method="post">
+
+                                                <div class="mb-3">
+                                                    <label for="firstName" class="form-label">First Name</label>
+                                                    <input type="text" th:field="*{firstName}" class="form-control"
+                                                           id="firstName"
+                                                           placeholder="First Name">
+                                                    <label class="error" th:errors="*{firstName}"></label>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="lastName" class="form-label">Last Name</label>
+                                                    <input type="text" th:field="*{lastName}" class="form-control"
+                                                           id="lastName"
+                                                           placeholder="Last Name">
+                                                    <label class="error" th:errors="*{lastName}"></label>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="userEmail" class="form-label">Email</label>
+                                                    <input type="email" th:field="*{email}" class="form-control"
+                                                           id="userEmail"
+                                                           placeholder="Email">
+                                                    <label class="error" th:errors="*{email}"></label>
+                                                </div>
+
+                                                <div class="mb-3">
+                                                    <label for="userPasswordConfirm" class="form-label">New
+                                                        password</label>
+                                                    <input type="password" th:field="*{password}" class="form-control"
+                                                           id="userPasswordConfirm" placeholder="Password">
+                                                    <label class="error" th:errors="*{password}"></label>
+                                                </div>
+                                                <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Login</button>
+                                            </form>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <div class="mb-3">
-                                            <label for="userPasswordConfirm" class="form-label">New password</label>
-                                            <input type="password" th:field="*{password}" class="form-control"
-                                                   id="userPasswordConfirm" placeholder="Password">
-                                            <label class="error" th:errors="*{password}"></label>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="userPassword" class="form-label">New password confirm</label>
-                                            <input type="password" th:field="*{passwordConfirm}" class="form-control"
-                                                   id="userPassword" placeholder="Password">
-                                            <label class="error" th:errors="*{passwordConfirm}"></label>
-                                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
-        </form>
-<body>
+<script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
+<script src="../static/vendors/apexcharts/apexcharts.min.js" th:src="@{/vendors/apexcharts/apexcharts.min.js}"></script>
+<script src="../static/vendors/feather-icons/feather.min.js"
+        th:src="@{/vendors/feather-icons/feather.min.js}"></script>
+<script src="../static/js/template.js" th:src="@{/js/template.js}"></script>
+<script src="../static/js/dashboard-light.js" th:src="@{/js/dashboard-light.js}"></script>
 
 </body>
 </html>

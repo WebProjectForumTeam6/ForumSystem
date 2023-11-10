@@ -7,15 +7,17 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.FilterDto;
 import com.example.forummanagementsystem.models.dto.PathDto;
+import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.service.CategoryService;
 import com.example.forummanagementsystem.service.PostService;
+import com.example.forummanagementsystem.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -26,15 +28,27 @@ public class UserMvcController {
     private final PostService postService;
     private final CategoryService categoryService;
     private final AuthenticationHelper authenticationHelper;
+    private final UserService userService;
 
-    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper) {
+    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper, UserService userService) {
         this.postService = postService;
         this.categoryService = categoryService;
         this.authenticationHelper = authenticationHelper;
+        this.userService = userService;
     }
+
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
+    }
+    @GetMapping("/about")
+    public String showAboutPage() {
+        return "AboutUs";
+    }
+
+    @GetMapping("/contact")
+    public String showContactPage() {
+        return "ContactUs";
     }
     @GetMapping
     public String showUserPage(@ModelAttribute("filter") FilterDto filterDto, Model model, HttpSession httpSession) {
@@ -62,25 +76,39 @@ public class UserMvcController {
             return "redirect:/auth/login";
         }
     }
-@GetMapping("/profile")
-public String showProfilePage(Model model,HttpSession httpSession){
+
+    @GetMapping("/profile")
+    public String showProfilePage(Model model, HttpSession httpSession) {
         try {
 
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
-            model.addAttribute("userPosts", user);
-        } catch (AuthorizationException e){
+            model.addAttribute("user", user);
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
         return "ProfileInformation";
-}
-
-    @GetMapping("/about")
-    public String showAboutPage() {
-        return "AboutUs";
+    }
+    @GetMapping("/update")
+    public String showUpdateProfilePage(Model model, HttpSession httpSession){
+        try {
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            model.addAttribute("userToUpdate", user);
+            model.addAttribute("updateDto", new UserDtoUpdate());
+        }catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+        return "UpdateInformation";
+    }
+    @PostMapping("/update")
+    public String updateProfilePage(@ModelAttribute("updateDto")UserDtoUpdate userDtoUpdate, Model model, HttpSession httpSession){
+        try {
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            model.addAttribute("userToUpdate", user);
+            userService.updateUser(user, user, userDtoUpdate);
+        }catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+        return "UpdateInformation";
     }
 
-    @GetMapping("/contact")
-    public String showContactPage() {
-        return "ContactUs";
-    }
 }

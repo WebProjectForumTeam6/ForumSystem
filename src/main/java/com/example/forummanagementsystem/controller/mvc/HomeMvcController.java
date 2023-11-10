@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -31,7 +32,10 @@ public class HomeMvcController {
         this.userService = userService;
         this.authenticationHelper = authenticationHelper;
     }
-
+    @ModelAttribute("isAuthenticated")
+    public boolean populateIsAuthenticated(HttpSession session) {
+        return session.getAttribute("currentUser") != null;
+    }
     @GetMapping
     public String showHomePage(Model model, FilterDto filterDto, HttpSession httpSession) {
         try{
