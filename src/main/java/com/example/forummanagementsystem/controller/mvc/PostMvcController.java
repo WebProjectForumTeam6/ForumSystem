@@ -72,6 +72,7 @@ public class PostMvcController {
             List<Comment> comments = commentService.getPostComments(post);
             model.addAttribute("post", post);
             model.addAttribute("comments", comments);
+            model.addAttribute("comment",new Comment());
             model.addAttribute("commentDto", new CommentDto());
             model.addAttribute("loggedIn", user);
             return "PostView";
@@ -90,7 +91,8 @@ public class PostMvcController {
     @GetMapping("/new")
     public String showCreatePostView(Model model, HttpSession session) {
         try {
-            authenticationHelper.tryGetCurrentUser(session);
+            User user = authenticationHelper.tryGetCurrentUser(session);
+            model.addAttribute("loggedIn",user);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
@@ -110,6 +112,7 @@ public class PostMvcController {
         }
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            model.addAttribute("loggedIn",user);
             Post post = postMapper.fromDtoIn(postDto, user);
             postService.create(post, user);
             postTagService.addTagToPost(postDto.getTags(), user, post);
