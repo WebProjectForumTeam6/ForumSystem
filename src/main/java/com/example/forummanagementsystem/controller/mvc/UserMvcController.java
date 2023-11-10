@@ -47,6 +47,7 @@ public class UserMvcController {
                 filterDto.getSortBy(),
                 filterDto.getSortOrder()
         );
+
         List<Post> posts = postService.getAll(filterOptions);
         model.addAttribute("filterOptions", filterDto);
         model.addAttribute("allPosts", posts);

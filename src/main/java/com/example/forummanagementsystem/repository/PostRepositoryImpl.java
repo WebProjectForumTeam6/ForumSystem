@@ -81,10 +81,11 @@ public class PostRepositoryImpl implements PostRepository {
                 params.put("minDate", LocalDateTime.parse(value, formatter));
             });
 
-            filterOptions.getMinDate().ifPresent(value -> {
+            filterOptions.getMaxDate().ifPresent(value -> {
                 filters.add("createdAt <= :maxDate");
-                params.put("minDate", LocalDateTime.parse(value, formatter));
+                params.put("maxDate", LocalDateTime.parse(value, formatter));
             });
+
 
             StringBuilder queryString = new StringBuilder("FROM Post");
 
