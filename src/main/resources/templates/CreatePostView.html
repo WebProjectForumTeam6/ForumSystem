@@ -32,65 +32,15 @@
 <body class="sidebar-dark">
 <div class="main-wrapper">
 
-    <!-- partial:../../partials/_sidebar.html -->
     <nav class="sidebar" th:replace="~{UserPage.html :: sidebar}">
     </nav>
 
-
     <div class="page-wrapper">
 
-
-        <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar navbar-dark bg-primary"
              th:replace="${isAuthenticated} ? ~{UserPage.html :: navbar} : ~{HomeView.html :: navbarNotLogged}">
 
-<!--            <a href="#" class="sidebar-toggler">-->
-<!--                <i data-feather="menu"></i>-->
-<!--            </a>-->
-<!--            <div class="navbar-content">-->
-<!--                <ul class="navbar-nav">-->
-<!--                    <li class="nav-item dropdown">-->
-
-<!--                        <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"-->
-<!--                           data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-<!--                            <img class="wd-30 ht-30 rounded-circle" th:src="${loggedIn.getProfilePhoto()}"-->
-<!--                                 alt="profile">-->
-<!--                        </a>-->
-<!--                        <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">-->
-<!--                            <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">-->
-<!--                                <div class="mb-3">-->
-<!--                                    <img class="wd-80 ht-80 rounded-circle" th:src="${loggedIn.getProfilePhoto()}"-->
-<!--                                         alt="">-->
-<!--                                </div>-->
-<!--                                <div class="text-center">-->
-<!--                                    <p class="tx-16 fw-bolder" th:text="${loggedIn.getFirstName() +' '+ loggedIn.getLastName()}"></p>-->
-<!--                                    <p class="tx-12 text-muted" th:text="${loggedIn.getEmail()}"></p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <ul class="list-unstyled p-1">-->
-
-<!--                                <li class="dropdown-item py-2">-->
-<!--                                    <a href="../../pages/general/profile.html" class="text-body ms-0">-->
-<!--                                        <i class="me-2 icon-md" data-feather="user"></i>-->
-<!--                                        <span>Profile</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-
-<!--                                <li class="dropdown-item py-2">-->
-<!--                                    <a href="javascript:" class="text-body ms-0" th:href="@{/auth/logout}">-->
-<!--                                        <i class="me-2 icon-md" data-feather="log-out"></i>-->
-<!--                                        <span>Log Out</span>-->
-<!--                                    </a>-->
-<!--                                </li>-->
-<!--                            </ul>-->
-<!--                        </div>-->
-<!--                    </li>-->
-
-<!--                </ul>-->
-<!--            </div>-->
         </nav>
-        <!-- partial -->
-
         <div class="page-content">
             <div class="row">
 
@@ -112,7 +62,6 @@
                                                 between 16 and 64 symbols</label>
                                         </div>
                                     </div>
-
                                     <div class="row mb-3">
                                         <div class="col-lg-3">
                                             <label class="col-form-label">Content of
@@ -122,19 +71,16 @@
                                         <textarea th:field="*{content}" id="maxlength-textarea1" class="form-control"
                                                   maxlength="8192" rows="16"
                                                   placeholder="Content a limit of 8192 chars.">
-
                                         </textarea>
                                             <label class="error" style="color: red" th:errors="*{content}">Content
                                                 should be up to 8192 symbols.</label>
                                         </div>
                                     </div>
-
                                     <div class="row mb-3">
                                         <div class="col-lg-3">
                                             <label class="col-form-label">Choose
                                                 category</label>
                                         </div>
-
                                         <div class="col-md-6 grid-margin stretch-card">
                                             <div class="dropdown">
                                                 <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -197,24 +143,10 @@
     </div>
 </div>
 
-<!-- core:js -->
-<!-- endinject -->
-
-<!-- Plugin js for this page -->
-<!-- End plugin js for this page -->
-
-<!-- inject:js -->
-<!-- core:js -->
-<!-- endinject -->
-
-<!-- Plugin js for this page -->
 <script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
-
 <script src="../static/vendors/jquery-tags-input/jquery.tagsinput.min.js"
         th:src="@{/vendors/jquery-tags-input/jquery.tagsinput.min.js}"></script>
-
 <script src="../static/js/tags-input.js" th:src="@{/js/tags-input.js}"></script>
-<!-- End plugin js for this page -->
 <script src="../static/vendors/feather-icons/feather.min.js"
         th:src="@{/vendors/feather-icons/feather.min.js}"></script>
 <script src="../static/js/template.js" th:src="@{/js/template.js}"></script>

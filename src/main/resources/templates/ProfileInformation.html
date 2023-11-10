@@ -115,8 +115,8 @@
                                 </figure>
                                 <div class="d-flex justify-content-between align-items-center position-absolute top-90 w-100 px-2 px-md-4 mt-n4">
                                     <div>
-                                        <img class="wd-70 rounded-circle" th:src="${session.currentUser}" alt="profile">
-                                        <span class="h4 ms-3 text-dark" th:text="${session.currentUser}"></span>
+                                        <img class="wd-90-f rounded" th:src="${userPosts.getProfilePhoto()}" alt="profile">
+                                        <span class="h3 ms-3 text-dark" th:text="${userPosts.getFirstName()+ ' ' + userPosts.getLastName()}"></span>
                                     </div>
 
                                     <div class="d-none d-md-block">
@@ -151,7 +151,7 @@
                             <div class="card rounded">
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between mb-2">
-                                        <h1 class="card-title larger-text">About</h1>
+                                        <h1 class="card-title larger-text ">About</h1>
                                         <div class="dropdown">
 
                                         </div>

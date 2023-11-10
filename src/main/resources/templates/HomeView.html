@@ -145,7 +145,7 @@
                                     <a href="PostView.html" th:attr="href=@{'/posts/' + ${post.id}}"
                                        class="d-flex align-items-center border-bottom pb-3">
                                         <div class="me-3">
-                                            <img src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" class="rounded-circle wd-35"
+                                            <img th:src="${post.getCreatedBy().getProfilePhoto()}" class="img-xs rounded-circle"
                                                  alt="user">
                                         </div>
                                         <div class="w-100">
@@ -182,7 +182,7 @@
                                     <a href="javascript:" th:attr="href=@{'/posts/' + ${post.id}}"
                                        class="d-flex align-items-center border-bottom pb-3">
                                         <div class="me-3">
-                                            <img src="https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg" class="rounded-circle wd-35"
+                                            <img th:src="${post.getCreatedBy().getProfilePhoto()}" class="img-xs rounded-circle"
                                                  alt="user">
                                         </div>
                                         <div class="w-100">
