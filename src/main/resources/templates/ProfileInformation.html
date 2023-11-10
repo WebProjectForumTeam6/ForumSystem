@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profile information</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
+
+    <!-- core:css -->
+    <link rel="stylesheet" href="../static/vendors/core/core.css" th:href="@{/vendors/core/core.css}">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../static/fonts/feather-font/css/iconfont.css"
+          th:href="@{/fonts/feather-font/css/iconfont.css}">
+    <link rel="stylesheet" href="../static/vendors/flag-icon-css/css/flag-icon.min.css"
+          th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="../static/css/demo1/style.css" th:href="@{/css/demo1/style.css}">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="../static/images/favicon.png" th:href="@{/images/favicon.png}">
+</head>
+<body class="sidebar-dark">
+<div class="main-wrapper">
+
+    <!-- partial:../../partials/_sidebar.html -->
+    <nav class="sidebar" th:fragment="sidebar-not-logged">
+        <div class="sidebar-header">
+            <a href="#" class="sidebar-brand">
+                Forum<span>System</span>
+            </a>
+            <div class="sidebar-toggler not-active">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div class="sidebar-body">
+            <ul class="nav">
+                <li class="nav-item nav-category">Info</li>
+
+
+                <li class="nav-item">
+                    <a href="../templates/AboutUs.html" th:href="@{/about}" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title">AboutUs</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <a href="../templates/ContactUs.html" class="nav-link">
+                        <i class="link-icon" data-feather="box"></i>
+                        <span class="link-title" th:href="@{/contact}">ContactUs</span>
+                    </a>
+                </li>
+                <li class="nav-item nav-category">Posts</li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false"
+                       aria-controls="categories">
+                        <i class="link-icon" data-feather="more-horizontal"></i>
+                        <span class="link-title">Categories</span>
+                        <i class="link-arrow" data-feather="chevron-down"></i>
+                    </a>
+
+                    <!--TODO submenu for categories-->
+                    <div class="collapse" id="emails">
+                        <ul class="nav sub-menu">
+                            <li class="nav-item">
+                                <a href="pages/email/inbox.html" class="nav-link">All</a>
+                            </li>
+
+                        </ul>
+                    </div>
+            </ul>
+
+        </div>
+    </nav>
+
+
+    <div class="navbar-content">
+
+
+
+
+
+        <div class="page-wrapper">
+            <nav class="navbar navbar-dark bg-primary">
+                <nav class="navbar navbar-light bg-light">
+                    <form class="d-flex ms-auto">
+                        <div class='myDiv'>
+                            <a href="UserPage.html" th:href="@{/users}" class="btn btn-primary" style='margin-right:16px'>Back to home page</a>
+                            <a href="HomeView.html"  th:href="@{/auth/logout}"  class="btn btn-primary" style='margin-right:16px'>Log out</a>
+                        </div>
+                    </form>
+                </nav>
+            </nav>
+
+            <div class="page-content">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="position-relative">
+                                <figure class="overflow-hidden mb-0 d-flex justify-content-center">
+                                    <img src="https://t3.ftcdn.net/jpg/04/12/82/16/360_F_412821610_95RpjzPXCE2LiWGVShIUCGJSktkJQh6P.jpg" class="rounded-top" alt="profile cover" style="width: 1400px; height: 300px;">
+                                </figure>
+                                <div class="d-flex justify-content-between align-items-center position-absolute top-90 w-100 px-2 px-md-4 mt-n4">
+                                    <div>
+                                        <img class="wd-70 rounded-circle" th:src="${session.currentUser}" alt="profile">
+                                        <span class="h4 ms-3 text-dark" th:text="${session.currentUser}"></span>
+                                    </div>
+
+                                    <div class="d-none d-md-block">
+<!--                                        <button class="btn btn-primary btn-icon-text">-->
+<!--                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit btn-icon-prepend"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg> Edit profile-->
+<!--                                        </button>-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-center p-3 rounded-bottom">
+                                <ul class="d-flex align-items-center m-0 p-0">
+                                    <li class="d-flex align-items-center active">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-columns me-1 icon-md text-primary"><path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path></svg>
+                                        <a class="pt-1px d-none d-md-block text-primary" href="#">Timeline</a>
+                                    </li>
+                                    <li class="ms-3 ps-3 border-start d-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-user me-1 icon-md"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                                        <a class="pt-1px d-none d-md-block text-body" href="#">Edit profile</a>
+                                    </li>
+<!--                                    <li class="ms-3 ps-3 border-start d-flex align-items-center">-->
+<!--                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users me-1 icon-md"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>-->
+<!--                                        <a class="pt-1px d-none d-md-block text-body" href="#">Posts <span class="text-muted tx-12">Counter</span></a>-->
+<!--                                    </li>-->
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row profile-body">
+                        <!-- left wrapper start -->
+                        <div class="d-none d-md-block col-md-4 col-xl-3 left-wrapper">
+                            <div class="card rounded">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-center justify-content-between mb-2">
+                                        <h1 class="card-title larger-text">About</h1>
+                                        <div class="dropdown">
+
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="tx-15 fw-bolder mb-0 text-uppercase">Joined:</label>
+                                        <p class="text-muted">September 15, 2023</p>
+                                    </div>
+                                    <div class="mt-3">
+                                        <label class="tx-15 fw-bolder mb-0 text-uppercase">Email:</label>
+                                        <p class="text-muted"> email </p>
+                                        <div class="mt-3">
+                                            <label class="tx-15 fw-bolder mb-0 text-uppercase">Posts:</label>
+                                            <p class="text-muted"> 15 </p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- left wrapper end -->
+                        <!-- middle wrapper start -->
+                        <div class="col-md-8 col-xl-6 middle-wrapper">
+                            <div class="row">
+                                <div class="col-md-12 grid-margin">
+                                    <div class="card rounded">
+                                        <div class="card-header">
+                                            <div class="d-flex align-items-center justify-content-between">
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="card rounded">
+                                            <div class="card-header">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <div>
+
+                                                    </div>
+<!--                                                    <div class="d-flex align-items-right">-->
+<!--                                                        <img class="img-xs rounded-circle" src="../../../assets/images/faces/face1.jpg" alt="">-->
+<!--                                                        <div class="ms-2">-->
+<!--                                                            <p>Posts</p>-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="dropdown">-->
+<!--                                                        <a type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal icon-lg pb-3px"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>-->
+<!--                                                        </a>-->
+
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                            <div class="card-body">-->
+<!--                                                <p class="mb-3 tx-14">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>-->
+<!--                                                <img class="img-fluid" src="../../../assets/images/photos/img1.jpg" alt="">-->
+<!--                                            </div>-->
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+
+                    <!--page content-->
+                    <div class="page-content">
+                        <div class="row">
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+
+
+        <!-- core:js -->
+    <script src="../static/vendors/core/core.js" th:src="@{/vendors/core/core.js}"></script>
+    <!-- endinject -->
+
+    <!-- Plugin js for this page -->
+    <!-- End plugin js for this page -->
+
+    <!-- inject:js -->
+    <script src="../static/vendors/feather-icons/feather.min.js" th:src="@{/vendors/feather-icons/feather.min.js}"></script>
+    <script src="../static/js/template.js" th:src="@{js/template.js}"></script>
+    <!-- endinject -->
+
+    <!-- Custom js for this page -->
+    <!-- End custom js for this page -->
+    </div>
+</div>
+</div>
+    </div>
+
+</body>
+</html>
