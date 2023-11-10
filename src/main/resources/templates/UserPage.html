@@ -104,18 +104,18 @@
                         </form>
                         <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img class="wd-30 ht-30 rounded-circle" src="https://via.placeholder.com/30x30"
+                            <img class="wd-30 ht-30 rounded-circle" th:src="${loggedIn.getProfilePhoto()}"
                                  alt="profile">
                         </a>
                         <div class="dropdown-menu p-0" aria-labelledby="profileDropdown">
                             <div class="d-flex flex-column align-items-center border-bottom px-5 py-3">
                                 <div class="mb-3">
-                                    <img class="wd-80 ht-80 rounded-circle" src="https://via.placeholder.com/80x80"
+                                    <img class="wd-80 ht-80 rounded-circle" th:src="${loggedIn.getProfilePhoto()}"
                                          alt="">
                                 </div>
                                 <div class="text-center">
-                                    <p class="tx-16 fw-bolder">Username</p>
-                                    <p class="tx-12 text-muted">Email@gmail.com</p>
+                                    <p class="tx-16 fw-bolder" th:text="${loggedIn.getFirstName() +' '+ loggedIn.getLastName()}"></p>
+                                    <p class="tx-12 text-muted" th:text="${loggedIn.getEmail()}"></p>
                                 </div>
                             </div>
                             <ul class="list-unstyled p-1">
@@ -241,7 +241,7 @@
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="d-flex align-items-center">
                                             <img class="img-xs rounded-circle"
-                                                 src="https://via.placeholder.com/37x37"
+                                                 th:src="${post.getCreatedBy().getProfilePhoto()}"
                                                  alt="">
                                             <div class="ms-2">
                                                 <p th:text="${post.getTitle()}">Title</p>
