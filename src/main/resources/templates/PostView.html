@@ -42,7 +42,7 @@
     <!-- partial -->
 
     <div class="page-wrapper">
-        <!-- partial:../../partials/_navbar.html -->
+         partial:../../partials/_navbar.html
         <nav class="navbar navbar-dark bg-primary"
              th:replace="${isAuthenticated} ? ~{UserPage.html :: navbar} : ~{HomeView.html :: navbarNotLogged}">
         </nav>
@@ -108,6 +108,7 @@
                                                     <i data-feather="send"></i>
                                                 </button>
                                             </div>
+
                                         </div>
                                         <label class="error ms-1 mt-2" style="color: red" th:errors="*{content}">Content
                                             should be between 32 and 8192 symbols</label>

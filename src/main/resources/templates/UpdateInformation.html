@@ -135,8 +135,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <div class="col-md-12 ps-md-0">
-                                        <div class="auth-form-wrapper px-4 py-5">
-                                            <a href="#" class="noble-ui-logo d-block mb-2">Forum<span>System</span></a>
+                                        <div class=" px-4 py-5">
                                             <h5 class="text-muted fw-normal mb-4">You can change your information</h5>
 
                                             <form class="forms-sample" th:action="@{/users/update}"
@@ -145,9 +144,9 @@
 
                                                 <div class="mb-3">
                                                     <label for="firstName" class="form-label">First Name</label>
-                                                    <input type="text" th:field="*{firstName}" class="form-control"
-                                                           id="firstName"
-                                                           placeholder="First Name">
+                                                    <input type="text" th:value="${userToUpdate.getFirstName()}"
+                                                           th:field="*{firstName}" class="form-control" id="firstName"
+                                                    placeholder="First Name">
                                                     <label class="error" th:errors="*{firstName}"></label>
                                                 </div>
                                                 <div class="mb-3">
@@ -167,12 +166,20 @@
                                                 </div>
 
                                                 <div class="mb-3">
-                                                    <label for="userPasswordConfirm" class="form-label">New
-                                                        password</label>
-                                                    <input type="password" th:field="*{password}" class="form-control"
-                                                           id="userPasswordConfirm" placeholder="Password">
+                                                    <label for="userPasswordConfirm" class="form-label">Enter
+                                                        Password</label>
+                                                    <input type="password" th:field="*{password}" class="form-control" id="userPasswordConfirm" placeholder="Password">
+                                                    <!--th:text="${updateDto.getPassword()}" TODO сложи си две полета: Enter password и Confirm password. Трябва да са празни като зареждаш страницата. Ако се различават двете полета да връща label с th:errors -->
                                                     <label class="error" th:errors="*{password}"></label>
                                                 </div>
+
+                                                <div class="mb-3">
+                                                    <label for="userPasswordConfirm1" class="form-label">Confirm
+                                                        Password</label>
+                                                    <input type="password" th:field="*{passwordConfirm}" class="form-control" id="userPasswordConfirm1" placeholder="Password">
+                                                    <label class="error" th:errors="*{passwordConfirm}"></label>
+                                                </div>
+
                                                 <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Login</button>
                                             </form>
                                         </div>

@@ -19,6 +19,9 @@ public class UserDtoUpdate {
     @NotNull(message = "Password can't be empty.")
     private String password;
 
+    @NotNull(message = "Confirm password should matches password field.")
+    private String passwordConfirm;
+
     private String phoneNumber;
 
     private String profilePhoto;
@@ -60,6 +63,14 @@ public class UserDtoUpdate {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 
     public String getPhoneNumber() {

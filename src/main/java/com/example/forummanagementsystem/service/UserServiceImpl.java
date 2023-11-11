@@ -120,7 +120,7 @@ public class UserServiceImpl implements UserService {
             updatedUser.setPassword(userDtoUpdate.getPassword());
         }
         if ((userDtoUpdate.getPhoneNumber() != null &&
-                user.getId() == updatedUser.getId()) && !userDtoUpdate.getFirstName().isEmpty()) {
+                user.getId() == updatedUser.getId())) {
             addPhoneNumberToAdmin(updatedUser, userDtoUpdate.getPhoneNumber());
         }
         if((userDtoUpdate.getProfilePhoto() !=null && userDtoUpdate.getProfilePhoto().isEmpty())){
@@ -146,7 +146,6 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteUser(userToDelete);
 
     }
-
 
     public void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
