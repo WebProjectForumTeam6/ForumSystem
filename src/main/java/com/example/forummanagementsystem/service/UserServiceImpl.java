@@ -107,21 +107,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate) {
         checkAccessPermission(user, updatedUser);
-        if (userDtoUpdate.getFirstName() != null && !userDtoUpdate.getFirstName().equals("")) {
+        if (userDtoUpdate.getFirstName() != null && !userDtoUpdate.getFirstName().isEmpty()) {
             updatedUser.setFirstName(userDtoUpdate.getFirstName());
         }
-        if (userDtoUpdate.getLastName() != null && !userDtoUpdate.getFirstName().equals("")) {
+        if (userDtoUpdate.getLastName() != null && !userDtoUpdate.getFirstName().isEmpty()) {
             updatedUser.setLastName(userDtoUpdate.getLastName());
         }
-        if (userDtoUpdate.getEmail() != null && !userDtoUpdate.getFirstName().equals("")) {
+        if (userDtoUpdate.getEmail() != null && !userDtoUpdate.getFirstName().isEmpty()) {
             updatedUser.setEmail(userDtoUpdate.getEmail());
         }
-        if (userDtoUpdate.getPassword() != null && !userDtoUpdate.getFirstName().equals("")) {
+        if (userDtoUpdate.getPassword() != null && !userDtoUpdate.getFirstName().isEmpty()) {
             updatedUser.setPassword(userDtoUpdate.getPassword());
         }
         if ((userDtoUpdate.getPhoneNumber() != null &&
                 user.getId() == updatedUser.getId()) && !userDtoUpdate.getFirstName().isEmpty()) {
             addPhoneNumberToAdmin(updatedUser, userDtoUpdate.getPhoneNumber());
+        }
+        if((userDtoUpdate.getProfilePhoto() !=null && userDtoUpdate.getProfilePhoto().isEmpty())){
+            updatedUser.setProfilePhoto(user.getProfilePhoto());
         }
         userRepository.updateUser(updatedUser);
         return updatedUser;
@@ -143,6 +146,7 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteUser(userToDelete);
 
     }
+
 
     public void addPhoneNumberToAdmin(User user, String phoneNumber) {
         if (!user.isAdmin()) {
