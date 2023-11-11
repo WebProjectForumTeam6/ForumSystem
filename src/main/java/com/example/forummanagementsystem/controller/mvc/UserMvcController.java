@@ -14,6 +14,7 @@ import com.example.forummanagementsystem.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,13 +43,23 @@ public class UserMvcController {
         return session.getAttribute("currentUser") != null;
     }
     @GetMapping("/about")
-    public String showAboutPage() {
-        return "AboutUs";
+    public String showAboutPage(Model model, HttpSession httpSession) {
+        try {
+            model.addAttribute("loggedIn", authenticationHelper.tryGetCurrentUser(httpSession));
+            return "AboutUs";
+        }catch (AuthorizationException e){
+            return "AboutUs";
+        }
     }
 
     @GetMapping("/contact")
-    public String showContactPage() {
-        return "ContactUs";
+    public String showContactPage(Model model, HttpSession httpSession) {
+        try {
+            model.addAttribute("loggedIn", authenticationHelper.tryGetCurrentUser(httpSession));
+            return "ContactUs";
+        }catch (AuthorizationException e){
+            return "ContactUs";
+        }
     }
     @GetMapping
     public String showUserPage(@ModelAttribute("filter") FilterDto filterDto, Model model, HttpSession httpSession) {
@@ -80,9 +91,9 @@ public class UserMvcController {
     @GetMapping("/profile")
     public String showProfilePage(Model model, HttpSession httpSession) {
         try {
-
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("user", user);
+            model.addAttribute("loggedIn", user);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
@@ -94,21 +105,23 @@ public class UserMvcController {
             User user=authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("userToUpdate", user);
             model.addAttribute("updateDto", new UserDtoUpdate());
+            model.addAttribute("loggedIn", user);
         }catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
         return "UpdateInformation";
     }
     @PostMapping("/update")
-    public String updateProfilePage(@ModelAttribute("updateDto")UserDtoUpdate userDtoUpdate, Model model, HttpSession httpSession){
+    public String updateProfilePage(@ModelAttribute("updateDto")UserDtoUpdate userDtoUpdate, Model model, HttpSession httpSession, BindingResult bindingResult){
         try {
             User user=authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("userToUpdate", user);
+            model.addAttribute("user", user);
+            model.addAttribute("loggedIn", user);
             userService.updateUser(user, user, userDtoUpdate);
+            return "ProfileInformation";
         }catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
-        return "UpdateInformation";
     }
-
 }

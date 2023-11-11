@@ -67,12 +67,11 @@ public class PostMvcController {
     @GetMapping("/{id}")
     public String showSinglePost(@PathVariable int id, Model model, HttpSession httpSession) {
         try {
-            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
             Post post = postService.getById(id);
             List<Comment> comments = commentService.getPostComments(post);
             model.addAttribute("post", post);
             model.addAttribute("comments", comments);
-            model.addAttribute("comment",new Comment());
             model.addAttribute("commentDto", new CommentDto());
             model.addAttribute("loggedIn", user);
             return "PostView";
@@ -92,7 +91,7 @@ public class PostMvcController {
     public String showCreatePostView(Model model, HttpSession session) {
         try {
             User user = authenticationHelper.tryGetCurrentUser(session);
-            model.addAttribute("loggedIn",user);
+            model.addAttribute("loggedIn", user);
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
@@ -108,11 +107,12 @@ public class PostMvcController {
                              HttpSession httpSession) {
 
         if (bindingResult.hasErrors()) {
+            model.addAttribute("loggedIn", authenticationHelper.tryGetCurrentUser(httpSession));
             return "CreatePostView";
         }
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
-            model.addAttribute("loggedIn",user);
+            model.addAttribute("loggedIn", user);
             Post post = postMapper.fromDtoIn(postDto, user);
             postService.create(post, user);
             postTagService.addTagToPost(postDto.getTags(), user, post);
@@ -140,23 +140,34 @@ public class PostMvcController {
     }
 
     @PostMapping("/{postId}/comment")
-    public String commentPost(@Valid @ModelAttribute("comment") CommentDto commentDto,
+    public String commentPost(@Valid @ModelAttribute("commentDto") CommentDto commentDto,
                               BindingResult bindingResult,
                               @PathVariable int postId,
+                              Model model,
                               HttpSession httpSession) {
-        if (bindingResult.hasErrors()){
+        if (bindingResult.hasErrors()) {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            Post post = postService.getById(postId);
+            List<Comment> comments = commentService.getPostComments(post);
+            model.addAttribute("post", post);
+            model.addAttribute("comments", comments);
+            model.addAttribute("loggedIn", user);
             return "PostView";
         }
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
-            Post post = postService.getById(postId);
+            Post post = postService.getById(commentDto.getPostId());
             Comment comment = commentMapper.fromDto(commentDto, user, post);
             commentService.create(comment);
-            return "redirect:/posts/" + postId;
+            return "redirect:/posts/" + commentDto.getPostId();
         } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
     }
 
+//    @GetMapping
+//    public String showUpdatePostPage(@Valid @ModelAttribute("postDto") PostDto postDto){
+//
+//    }
 
 }

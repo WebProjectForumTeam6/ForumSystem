@@ -59,7 +59,7 @@
 
                 <li class="nav-item">
                     <a href="../templates/ProfileInformation.html" th:href="@{users/profile}" class="nav-link">
-                        <i class="link-icon" data-feather="info"></i>
+                        <i class="link-icon" data-feather="key"></i>
                         <span class="link-title">Profile</span>
                     </a>
                 </li>
@@ -254,6 +254,10 @@
                                 </div>
                                 <div class="card-body">
                                     <p class="mb-3 tx-14" th:text="${post.getContent()}">Content of the post</p>
+                                </div>
+                                <br>
+                                <div class="card-footer" th:if="${post.getTags().isEmpty()==false}">
+                                    <ul th:each="tag : ${post.getTags()}" th:text="'#' + ${tag.getContent()} + ' '"></ul>
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex post-actions">
