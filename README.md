@@ -65,6 +65,10 @@ A tag is additional information that can be put under each post after creating t
 * Javascript
 * HTML
 * CSS
+* DataBase and SQL
+
+![database.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2Fdatabase.png)
+
 
 ## Notes
 * Mockito and JUnit for testing
