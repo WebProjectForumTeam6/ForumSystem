@@ -58,7 +58,7 @@
                 <li class="nav-item nav-category">User</li>
 
                 <li class="nav-item">
-                    <a href="../templates/ProfileInformation.html" th:href="@{users/profile}" class="nav-link">
+                    <a href="../templates/ProfileInformation.html" th:href="@{/users/profile}" class="nav-link">
                         <i class="link-icon" data-feather="key"></i>
                         <span class="link-title">Profile</span>
                     </a>
@@ -95,6 +95,14 @@
                 <ul class="navbar-nav">
 
                     <li class="nav-item dropdown">
+                        <div th:if="${loggedIn.isAdmin()==true}">
+                            <form class="d-flex ms-auto">
+                                <div class='myDiv'>
+                                    <a class="btn btn-primary" style='margin-right:16px' th:href="@{/users/admin}">Admin
+                                        portal</a>
+                                </div>
+                            </form>
+                        </div>
                         <form class="d-flex ms-auto">
                             <div class='myDiv'>
                                 <a th:href="@{/posts/new}" class="btn btn-primary" style='margin-right:16px'>Create New
@@ -224,9 +232,10 @@
                                                 data-feather="calendar"></i></span>
                                     </div>
                                 </div>
-
-                                <button type="submit" class="btn btn-primary me-2">Submit</button>
-                                <a th:href="@{/users}" class="btn btn-danger">Reset</a>
+                                <div class="d-flex align-items-center">
+                                    <button type="submit" class="btn btn-primary me-2">Submit</button>
+                                    <a th:href="@{/users}" class="btn btn-danger">Reset</a>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -292,7 +301,8 @@
                                 </div>
                                 <br>
                                 <div class="card-footer" th:if="${post.getTags().isEmpty()==false}">
-                                        <span style="color: royalblue" th:each="tag : ${post.getTags()}" th:text="'#' + ${tag.getContent()} + ' '">#tag</span>
+                                    <span style="color: royalblue" th:each="tag : ${post.getTags()}"
+                                          th:text="'#' + ${tag.getContent()} + ' '">#tag</span>
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex post-actions">

@@ -41,15 +41,15 @@ public class UserRepositoryImpl implements UserRepository {
             Map<String, Object> params = new HashMap<>();
 
             userFilterOptions.getFirstName().ifPresent(value -> {
-                filters.add(" firstName like :firstName ");
+                filters.add("firstName like :firstName ");
                 params.put("firstName", String.format("%%%s%%", value));
             });
             userFilterOptions.getEmail().ifPresent(value -> {
-                filters.add(" email = :email ");
-                params.put("email", value);
+                filters.add("email like :email ");
+                params.put("email", String.format("%%%s%%", value));
             });
             userFilterOptions.getUsername().ifPresent(value -> {
-                filters.add(" username like :username ");
+                filters.add("username like :username ");
                 params.put("username", String.format("%%%s%%", value));
             });
             StringBuilder queryString = new StringBuilder("from User ");
@@ -60,6 +60,7 @@ public class UserRepositoryImpl implements UserRepository {
 
             Query<User> query = session.createQuery(queryString.toString(), User.class);
             query.setProperties(params);
+            List <User> users=query.list();
             return query.list();
         }
     }

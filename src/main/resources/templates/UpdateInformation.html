@@ -42,17 +42,7 @@
 
     <div class="navbar-content">
         <div class="page-wrapper">
-            <nav class="navbar navbar-dark bg-primary">
-                <nav class="navbar navbar-light bg-light">
-                    <form class="d-flex ms-auto">
-                        <div class='myDiv'>
-                            <a href="UserPage.html" th:href="@{/users}" class="btn btn-primary"
-                               style='margin-right:16px'>Back to home page</a>
-                            <a href="HomeView.html" th:href="@{/auth/logout}" class="btn btn-primary"
-                               style='margin-right:16px'>Log out</a>
-                        </div>
-                    </form>
-                </nav>
+            <nav class="navbar navbar-dark bg-primary" th:replace="~{UserPage.html :: navbar}">
             </nav>
 
             <div class="page-content">
@@ -64,9 +54,9 @@
                                     <img src="https://t3.ftcdn.net/jpg/04/12/82/16/360_F_412821610_95RpjzPXCE2LiWGVShIUCGJSktkJQh6P.jpg"
                                          class="rounded-top" alt="profile cover" style="width: 1400px; height: 300px;">
                                 </figure>
-                                <div class="d-flex justify-content-between align-items-center position-absolute top-90 w-100 px-2 px-md-4 mt-n4">
+                                <div class="d-flex justify-content-between align-items-center position-absolute top-90 px-2 px-md-4 mt-n4">
                                     <div>
-                                        <img class="wd-70 circle" th:src="${userToUpdate.getProfilePhoto()}" alt="profile">
+                                        <img class="wd-70 rounded-circle" th:src="${userToUpdate.getProfilePhoto()}" alt="profile">
                                         <span class="h4 ms-3 text-dark" th:text="${userToUpdate.getFirstName()+ ' '+ userToUpdate.getLastName()}"></span>
                                     </div>
 
@@ -83,20 +73,18 @@
                                              class="feather feather-columns me-1 icon-md text-primary">
                                             <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18"></path>
                                         </svg>
-                                        <a class="pt-1px d-none d-md-block text-primary" href="#" th:href="@{users/profile}">Timeline</a>
+                                        <a class="pt-2px d-none d-md-block text-primary" th:href="@{/users/profile}">Timeline</a>
                                     </li>
                                     <li class="ms-3 ps-3 border-start d-flex align-items-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                                              viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                                              stroke-linecap="round" stroke-linejoin="round"
-                                             class="feather feather-user me-1 icon-md">
+                                             class="feather feather-user me-1 icon-md text-primary">
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <a class="pt-1px d-none d-md-block text-body" href="#" th:href="@{/users/update}">Edit
-                                            profile</a>
+                                        <a class="pt-2px d-none d-md-block text-primary" th:href="@{/users/update}">Edit profile</a>
                                     </li>
-
                                 </ul>
                             </div>
                         </div>
@@ -108,13 +96,7 @@
                                 <div class="card-body">
                                     <div class="d-flex align-items-center justify-content-between mb-1">
                                         <h1 class="card-title larger-text">About</h1>
-                                        <div class="dropdown">
 
-                                        </div>
-                                    </div>
-                                    <div class="mt-3">
-                                        <label class="tx-15 fw-bolder mb-0 text-uppercase">Joined:</label>
-                                        <p class="text-muted">September 15, 2023</p>
                                     </div>
                                     <div class="mt-3">
                                         <label class="tx-15 fw-bolder mb-0 text-uppercase">Email:</label>
@@ -164,6 +146,15 @@
                                                     <label class="error" th:errors="*{email}"></label>
                                                 </div>
 
+                                                <div class="mb-3" th:if="${loggedIn.isAdmin()==true}">
+                                                    <label for="userPhone" class="form-label">Phone Number</label>
+                                                    <input type="text" th:field="*{phoneNumber}" class="form-control"
+                                                           id="userPhone"
+                                                           maxlength="10"
+                                                           placeholder="Email">
+                                                    <label class="error" th:errors="*{phoneNumber}"></label>
+                                                </div>
+
                                                 <div class="mb-3">
                                                     <label for="userPasswordConfirm" class="form-label">Enter
                                                         Password</label>
@@ -178,7 +169,7 @@
                                                     <label class="error" th:errors="*{passwordConfirm}"></label>
                                                 </div>
 
-                                                <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Login</button>
+                                                <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Edit</button>
                                             </form>
                                         </div>
                                     </div>

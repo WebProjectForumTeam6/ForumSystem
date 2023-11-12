@@ -7,6 +7,7 @@ public class UserFilterOptions {
     private Optional<String> email;
     private Optional<String> firstName;
 
+
     public UserFilterOptions(
             String username,
             String email,
