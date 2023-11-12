@@ -206,5 +206,36 @@ public class UserRepositoryImpl implements UserRepository {
         }
     }
 
+    @Override
+    public List<User> get(UserFilterOptions userFilterOptions) {
+        try (
+                Session session = sessionFactory.openSession()) {
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            userFilterOptions.getFirstName().ifPresent(value -> {
+                filters.add(" firstName like :firstName ");
+                params.put("firstName", String.format("%%%s%%", value));
+            });
+            userFilterOptions.getEmail().ifPresent(value -> {
+                filters.add(" email = :email ");
+                params.put("email", value);
+            });
+            userFilterOptions.getUsername().ifPresent(value -> {
+                filters.add(" username like :username ");
+                params.put("username", String.format("%%%s%%", value));
+            });
+            StringBuilder queryString = new StringBuilder("from User ");
+            if (!filters.isEmpty()) {
+                queryString.append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+
+            Query<User> query = session.createQuery(queryString.toString(), User.class);
+            query.setProperties(params);
+            return query.list();
+        }
+    }
+
 }
 

@@ -24,6 +24,12 @@ public class UserDtoUpdate {
 
     private String phoneNumber;
 
+    private String profilePhoto;
+
+
+
+
+
     public UserDtoUpdate() {
     }
 
@@ -74,4 +80,13 @@ public class UserDtoUpdate {
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
+
+    public String getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(String profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
 }

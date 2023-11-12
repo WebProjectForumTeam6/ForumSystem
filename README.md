@@ -20,7 +20,7 @@ Design and implements a Forum System, where the users can create posts,add comme
 created posts. They can see the core features of the platform as well how many people are using it and how many posts 
 have been created so far.
 
-! [photo]
+![HomePage.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2FHomePage.png)! [photo]
 
 * Anonymous users can register.
 ![registerUser.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2FregisterUser.png)
