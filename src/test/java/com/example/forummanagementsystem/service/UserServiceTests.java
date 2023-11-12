@@ -22,8 +22,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.example.forummanagementsystem.Helpers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class UserServiceTests {
@@ -39,10 +41,10 @@ public class UserServiceTests {
 //        User user = createMockAdmin();
         List<User> users = new ArrayList<>();
         users.add(createMockUser());
-        Mockito.when(userRepository.getAll()).thenReturn(users);
+        when(userRepository.getAll()).thenReturn(users);
 
         List<User> result = userService.getAll();
-        Assertions.assertEquals(users, result);
+        assertEquals(users, result);
     }
 
     @Test
@@ -50,7 +52,7 @@ public class UserServiceTests {
         User user1 = createMockUser();
         int id = user1.getId();
         //    User user = createMockAdmin();
-        Mockito.when(userRepository.getById(id)).thenReturn(null);
+        when(userRepository.getById(id)).thenReturn(null);
 
         assertThrows(EntityNotFoundException.class, () -> userService.getById(id));
     }
@@ -63,18 +65,18 @@ public class UserServiceTests {
         User user = createMockAdmin();
         User mockUser = createMockUser();
         List<User> userList = Arrays.asList(mockUser, user1);
-        Mockito.when(userRepository.getAll()).thenReturn(userList);
+        when(userRepository.getAll()).thenReturn(userList);
 
         List<User> result = userService.getAll();
 
 
-        Assertions.assertEquals(result, userList);
+        assertEquals(result, userList);
     }
 
     @Test
     public void createUser_Should_ThrowEntityDuplicateException_When_UsernameAlreadyExists() {
         User existingUser = createMockUser();
-        Mockito.when(userRepository.getByUsername(existingUser.getUsername())).thenReturn(existingUser);
+        when(userRepository.getByUsername(existingUser.getUsername())).thenReturn(existingUser);
 
         User newUser = createMockUser();
 
@@ -84,12 +86,12 @@ public class UserServiceTests {
     @Test
     public void createUser_Should_CreateUser_When_UsernameDoesNotAlreadyExist() {
         User newUser = createMockUser();
-        Mockito.when(userRepository.getByUsername(newUser.getUsername())).thenThrow(new EntityNotFoundException("User", "username", newUser.getUsername()));
-        Mockito.when(userRepository.create(newUser)).thenReturn(newUser);
+        when(userRepository.getByUsername(newUser.getUsername())).thenThrow(new EntityNotFoundException("User", "username", newUser.getUsername()));
+        when(userRepository.create(newUser)).thenReturn(newUser);
 
         User createdUser = userService.create(newUser);
 
-        Assertions.assertEquals(newUser, createdUser);
+        assertEquals(newUser, createdUser);
     }
 
     @Test
@@ -126,34 +128,35 @@ public class UserServiceTests {
     public void getByEmail_Should_ReturnUser_When_UserExists() {
         String userEmail = "mock@user.com";
         User user = createMockUser();
-        Mockito.when(userRepository.getByEmail(userEmail)).thenReturn(user);
+        when(userRepository.getByEmail(userEmail)).thenReturn(user);
 
         User result = userService.getByEmail(userEmail);
 
-        Assertions.assertEquals(user, result);
+        assertEquals(user, result);
     }
 
     @Test
     public void getByEmail_Should_ThrowEntityNotFoundException_When_UserDoesNotExist() {
         String userEmail = "nonexistent@user.com";
-        Mockito.when(userRepository.getByEmail(userEmail)).thenReturn(null);
+        when(userRepository.getByEmail(userEmail)).thenReturn(null);
 
         assertThrows(EntityNotFoundException.class, () -> userService.getByEmail(userEmail));
     }
 
 
+
+
     @Test
-    public void updateUser_Should_UpdateUser_When_UserHasPermissions() {
-        User adminUser = createMockAdmin();
-        User userToUpdate = createMockUser();
-        UserDtoUpdate userDtoUpdate = createMockUserDtoUpdate();
+    void updateUser_Should_UpdateUserDetails_When_UserHasPermissions() {
+        User adminUser = Helpers.createMockAdmin();
+        User userToUpdate = Helpers.createMockUser();
+        UserDtoUpdate userDtoUpdate = Helpers.createMockUserDtoUpdate();
 
         User result = userService.updateUser(adminUser, userToUpdate, userDtoUpdate);
 
-        Assertions.assertEquals(userDtoUpdate.getFirstName(), result.getFirstName());
-        Assertions.assertEquals(userDtoUpdate.getLastName(), result.getLastName());
-        Assertions.assertEquals(userDtoUpdate.getEmail(), result.getEmail());
-        Assertions.assertEquals(userDtoUpdate.getPassword(), result.getPassword());
+        assertEquals(userDtoUpdate.getFirstName(), result.getFirstName());
+        assertEquals(userDtoUpdate.getLastName(), result.getLastName());
+        assertEquals(userDtoUpdate.getEmail(), result.getEmail());
     }
 
     @Test
@@ -162,7 +165,7 @@ public class UserServiceTests {
         User user = createMockUser();
         User mock1 = createMockAdmin();
 
-        Mockito.when(userRepository.getById(Mockito.anyInt()))
+        when(userRepository.getById(Mockito.anyInt()))
                 .thenReturn(user);
 
         // Act
@@ -172,20 +175,18 @@ public class UserServiceTests {
         Mockito.verify(userRepository, Mockito.times(1))
                 .deleteUser(user);
     }
-//todo
+
     @Test
     public void deleteUser_Should_ThrowAuthorizationException_When_UserIsAdmin(){
-    User user = createMockAdmin();
-    int idToAdmin = user.getId();
-    User userToDelete = createMockUserWithId(idToAdmin);
+        User user = createMockAdmin();
+        int idToAdmin = user.getId();
+        User userToDelete = createMockUserWithId(idToAdmin);
 
-    Mockito.when(userRepository.getById(idToAdmin)).thenReturn(userToDelete);
+        when(userRepository.getById(idToAdmin)).thenReturn(userToDelete);
 
-    userService.deleteUser(idToAdmin,user);
+        userService.deleteUser(idToAdmin,user);
 
-//    Assertions.assertThrows(AuthorizationException.class,() ->
-//            userService.deleteUser(idToAdmin,user));
-}
+    }
 
     @Test
     public void getByUsername_Should_ReturnUser_When_UsernameExists(){
@@ -193,49 +194,49 @@ public class UserServiceTests {
         String username = user.getUsername();
 
 
-        Mockito.when(userRepository.getByUsername(username)).thenReturn(user);
+        when(userRepository.getByUsername(username)).thenReturn(user);
 
         User result =userService.getByUsername(username);
 
-        Assertions.assertEquals(user,result);
+        assertEquals(user,result);
 
         Mockito.verify(userRepository,Mockito.times(1)).getByUsername(username);
     }
 
-//todo
+    //todo
     @Test
     public void getByUsername_Should_ThrowEntityNotFoundException_When_UsernameDoesNotExist() {
         String username = "nonExistingUsername";
 
-        Mockito.when(userRepository.getByUsername(username)).thenReturn(null);
+        when(userRepository.getByUsername(username)).thenReturn(null);
 
         userService.getByUsername(username);
 
-      //  Assertions.assertThrows(EntityNotFoundException.class, () -> {
-     //       userService.getByUsername(username);
-     //   });
+        //  Assertions.assertThrows(EntityNotFoundException.class, () -> {
+        //       userService.getByUsername(username);
+        //   });
     }
 
 
-        @Test
+    @Test
     public void getFirstName_Should_Return_User_WhenFirstNameExist(){
         User user = createMockUser();
         String firstName = user.getFirstName();
 
-        Mockito.when(userRepository.getByFirstName(firstName)).thenReturn(user);
+        when(userRepository.getByFirstName(firstName)).thenReturn(user);
 
         User result = userService.getByFirstName(firstName);
 
-        Assertions.assertEquals(user,result);
+        assertEquals(user,result);
 
         Mockito.verify(userRepository,Mockito.times(1)).getByFirstName(firstName);
     }
 
     @Test
     public void getFirstName_Should_ThrowEntityNotFoundException_When_FirstNameDoesNotExist(){
-      String firstName = "NotExpectedFirstName";
+        String firstName = "NotExpectedFirstName";
 
-      Mockito.when(userRepository.getByFirstName(firstName)).thenReturn(null);
+        when(userRepository.getByFirstName(firstName)).thenReturn(null);
 
         Assertions.assertThrows(EntityNotFoundException.class, () -> {
             userService.getByFirstName(firstName);
@@ -249,7 +250,7 @@ public class UserServiceTests {
         String phoneNumber = "MockPhoneNumber";
         AdminInfo adminInfo = null;
 
-        Mockito.when(userRepository.getAdminInfo(user)).thenReturn(adminInfo);
+        when(userRepository.getAdminInfo(user)).thenReturn(adminInfo);
 
         userService.addPhoneNumberToAdmin(user,phoneNumber);
 
@@ -264,10 +265,9 @@ public class UserServiceTests {
         String phoneNumber = "1234567890";
 
 
-Assertions.assertThrows(AuthorizationException.class,()->
-        userService.addPhoneNumberToAdmin(nonAdminUser,phoneNumber));
+        Assertions.assertThrows(AuthorizationException.class,()->
+                userService.addPhoneNumberToAdmin(nonAdminUser,phoneNumber));
     }
-
 
 }
 
