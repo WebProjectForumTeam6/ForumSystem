@@ -77,13 +77,17 @@ public class PostRepositoryImpl implements PostRepository {
             });
 
             filterOptions.getMinDate().ifPresent(value -> {
-                filters.add("createdAt >= :minDate");
-                params.put("minDate", LocalDateTime.parse(value, formatter));
+                if (!value.equals("")) {
+                    filters.add("createdAt >= :minDate");
+                    params.put("minDate", LocalDateTime.parse(value, formatter));
+                }
             });
 
             filterOptions.getMaxDate().ifPresent(value -> {
-                filters.add("createdAt <= :maxDate");
-                params.put("maxDate", LocalDateTime.parse(value, formatter));
+                if (!value.equals("")) {
+                    filters.add("createdAt <= :maxDate");
+                    params.put("maxDate", LocalDateTime.parse(value, formatter));
+                }
             });
 
 

@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.controller.mvc;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
+import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
@@ -31,17 +32,20 @@ public class UserMvcController {
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
 
-    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper, UserService userService) {
+    private final UserMapper userMapper;
+    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper, UserService userService, UserMapper userMapper) {
         this.postService = postService;
         this.categoryService = categoryService;
         this.authenticationHelper = authenticationHelper;
         this.userService = userService;
+        this.userMapper = userMapper;
     }
 
     @ModelAttribute("isAuthenticated")
     public boolean populateIsAuthenticated(HttpSession session) {
         return session.getAttribute("currentUser") != null;
     }
+
     @GetMapping("/about")
     public String showAboutPage(Model model, HttpSession httpSession) {
         try {
@@ -100,11 +104,11 @@ public class UserMvcController {
         return "ProfileInformation";
     }
     @GetMapping("/update")
-    public String showUpdateProfilePage(Model model, HttpSession httpSession){
+    public String showUpdateProfilePage(Model model, HttpSession httpSession, UserDtoUpdate userDtoUpdate){
         try {
             User user=authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("userToUpdate", user);
-            model.addAttribute("updateDto", new UserDtoUpdate());
+            model.addAttribute("updateDto", userMapper.toDto(user));
             model.addAttribute("loggedIn", user);
         }catch (AuthorizationException e) {
             return "redirect:/auth/login";

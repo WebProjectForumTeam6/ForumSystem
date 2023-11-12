@@ -5,11 +5,9 @@ import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
 import com.example.forummanagementsystem.helpers.CommentMapper;
 import com.example.forummanagementsystem.helpers.PostMapper;
-import com.example.forummanagementsystem.models.Category;
-import com.example.forummanagementsystem.models.Comment;
-import com.example.forummanagementsystem.models.Post;
-import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.models.dto.CommentDto;
+import com.example.forummanagementsystem.models.dto.PathDto;
 import com.example.forummanagementsystem.models.dto.PostDto;
 import com.example.forummanagementsystem.service.CategoryService;
 import com.example.forummanagementsystem.service.CommentService;
@@ -26,6 +24,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 @Controller
 @RequestMapping("/posts")
@@ -165,9 +166,53 @@ public class PostMvcController {
         }
     }
 
-//    @GetMapping
-//    public String showUpdatePostPage(@Valid @ModelAttribute("postDto") PostDto postDto){
-//
-//    }
+    @PostMapping("/{postId}/delete")
+    public String deletePost(HttpSession httpSession,
+                             @PathVariable int postId,
+                             @RequestParam("path") String path){
+        try{
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            postService.delete(postId, user);
+            return "redirect:/users" + path;
+        }catch (AuthorizationException e){
+            return "redirect:/auth/login";
+        }
+    }
 
+    @GetMapping("/{postId}/update")
+    public String showUpdatePostPage(@PathVariable int postId, PostDto postDto,
+                                     HttpSession httpSession, Model model){
+        try {
+            Post post=postService.getById(postId);
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            model.addAttribute("loggedIn", user);
+            postDto.setTitle(post.getTitle());
+            postDto.setContent(post.getContent());
+            postDto.setCategoryId(post.getCategory().getId());
+            postDto.setTags(post.getTags().stream().map(Tag::getContent).collect(Collectors.joining(",")));
+            model.addAttribute("postDto", postDto);
+            return "UpdatePostView";
+        }catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
+    @PostMapping("/{postId}/update")
+    public String updatePost(@PathVariable int postId, PostDto postDto,
+                                     HttpSession httpSession, Model model){
+        try {
+            Post post=postService.getById(postId);
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            postTagService.deleteAllTagsFromPost(user, post);
+            model.addAttribute("loggedIn", user);
+            model.addAttribute("postDto", postDto);
+            model.addAttribute("post", post);
+            model.addAttribute("commentDto", new CommentDto());
+            model.addAttribute("comments", post.getComments());
+            postService.update(postDto, user, postId);
+            postTagService.addTagToPost(postDto.getTags(), user, post);
+            return "PostView";
+        }catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
 }

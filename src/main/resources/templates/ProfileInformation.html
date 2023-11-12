@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
 <head>
     <title>Profile information</title>
 
@@ -145,17 +145,35 @@
                                                             CreatedAt</p>
                                                     </div>
                                                 </div>
-                                                <div class="dropdown">
+
+                                                <div class="dropdown" th:if="${post.createdBy.equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
                                                     <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
                                                     </a>
+
+
                                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                                        <a class="dropdown-item d-flex align-items-center" href="javascript:" th:href="">
-                                                            <i data-feather="edit" class="icon-sm me-2"></i> <span class="">Update</span></a>
-                                                        <a class="dropdown-item d-flex align-items-center" href="javascript:">
-                                                            <i data-feather="delete" class="icon-sm me-2"></i> <span class="">Remove</span></a>
+                                                        <form th:action="@{/posts/{postId}/update(postId=${post.getId()})}" method="get">
+                                                            <button type="submit" class="d-flex align-items-center text-muted me-4"
+                                                                    style="background: none; padding: 0; border: none">
+                                                                <a class="dropdown-item d-flex align-items-center" href="javascript:">
+                                                                    <i data-feather="edit" class="icon-sm me-2"></i> <span class="">Edit</span></a>
+                                                            </button>
+                                                        </form>
+
+                                                        <form th:action="@{/posts/{postId}/delete(postId=${post.getId()})}" method="post">
+                                                            <button type="submit" class="d-flex align-items-center text-muted me-4"
+                                                                    style="background: none; padding: 0; border: none">
+                                                                <input type="hidden" value="" name="path">
+                                                                <a class="dropdown-item d-flex align-items-center" href="javascript:">
+                                                                    <i data-feather="delete" class="icon-sm me-2"></i> <span class="">Remove</span></a>
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
+
+
+
                                             </div>
                                         </div>
                                         <div class="card-body">

@@ -6,11 +6,10 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
+import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,11 +19,13 @@ public class PostTagServiceImpl implements PostTagService {
     public static final String PERMISSION_ERROR = "You don't have permission.";
     public static final String ERROR_MESSAGE = "Only Admin or tag creator can modify the tag.";
     private final PostTagRepository postTagRepository;
+    private final PostRepository postRepository;
 
 
     @Autowired
-    public PostTagServiceImpl(PostTagRepository postTagRepository) {
+    public PostTagServiceImpl(PostTagRepository postTagRepository, PostRepository postRepository) {
         this.postTagRepository = postTagRepository;
+        this.postRepository = postRepository;
 
     }
 
@@ -50,7 +51,7 @@ public class PostTagServiceImpl implements PostTagService {
         if (duplicateExists) {
             throw new EntityDuplicateException("Tag", "content", tagDto.getContent());
         }
-        Tag tag= new Tag();
+        Tag tag = new Tag();
         tag.setContent(tagDto.getContent());
         return postTagRepository.create(tag);
     }
@@ -77,10 +78,12 @@ public class PostTagServiceImpl implements PostTagService {
                 Tag tagToAdd = postTagRepository.getTagByContent(tag);
                 post.addTag(tagToAdd);
             } catch (EntityNotFoundException e) {
-                Tag tagToAdd = new Tag();
-                tagToAdd.setContent(tag);
-                postTagRepository.create(tagToAdd);
-                post.addTag(tagToAdd);
+                if (!post.getTags().stream().map(Tag::getContent).toList().contains(tag)) {
+                    Tag tagToAdd = new Tag();
+                    tagToAdd.setContent(tag);
+                    postTagRepository.create(tagToAdd);
+                    post.addTag(tagToAdd);
+                }
             }
         }
         return postTagRepository.modifyPostTags(post);
@@ -93,14 +96,23 @@ public class PostTagServiceImpl implements PostTagService {
         for (String tag : array) {
             try {
                 Tag tagToRemove = postTagRepository.getTagByContent(tag);
-                if (post.getTags().contains(tagToRemove)){
+                if (post.getTags().contains(tagToRemove)) {
                     post.removeTag(tagToRemove);
                 }
-            } catch (EntityNotFoundException e) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
+
+                if (tagToRemove.getPosts().contains(post)){
+                    tagToRemove.removePost(post);
+                }
+            } catch (EntityNotFoundException ignored) {
             }
         }
         return postTagRepository.modifyPostTags(post);
+    }
+
+    @Override
+    public Post deleteAllTagsFromPost(User user, Post post) {
+        post.getTags().clear();
+        return postRepository.update(post);
     }
 }
 

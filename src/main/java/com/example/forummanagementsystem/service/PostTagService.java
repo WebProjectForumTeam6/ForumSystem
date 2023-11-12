@@ -20,5 +20,6 @@ public interface PostTagService {
 
     Post addTagToPost(String tags, User user, Post post);
     Post deleteTagFromPost(String tags, User user, Post post);
+    Post deleteAllTagsFromPost(User user, Post post);
 
 }

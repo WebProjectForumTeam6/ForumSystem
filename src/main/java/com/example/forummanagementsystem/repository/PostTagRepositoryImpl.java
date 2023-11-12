@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.repository;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
+import com.example.forummanagementsystem.models.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

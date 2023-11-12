@@ -144,8 +144,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="firstName" class="form-label">First Name</label>
-                                                    <input type="text" th:value="${userToUpdate.getFirstName()}"
-                                                           th:field="*{firstName}" class="form-control" id="firstName"
+                                                    <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
                                                     placeholder="First Name">
                                                     <label class="error" th:errors="*{firstName}"></label>
                                                 </div>
@@ -169,7 +168,6 @@
                                                     <label for="userPasswordConfirm" class="form-label">Enter
                                                         Password</label>
                                                     <input type="password" th:field="*{password}" class="form-control" id="userPasswordConfirm" placeholder="Password">
-                                                    <!--th:text="${updateDto.getPassword()}" TODO сложи си две полета: Enter password и Confirm password. Трябва да са празни като зареждаш страницата. Ако се различават двете полета да връща label с th:errors -->
                                                     <label class="error" th:errors="*{password}"></label>
                                                 </div>
 

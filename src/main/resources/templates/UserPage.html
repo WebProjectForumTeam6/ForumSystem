@@ -81,7 +81,6 @@
                 </li>
 
 
-
             </ul>
 
 
@@ -114,7 +113,8 @@
                                          alt="">
                                 </div>
                                 <div class="text-center">
-                                    <p class="tx-16 fw-bolder" th:text="${loggedIn.getFirstName() +' '+ loggedIn.getLastName()}"></p>
+                                    <p class="tx-16 fw-bolder"
+                                       th:text="${loggedIn.getFirstName() +' '+ loggedIn.getLastName()}"></p>
                                     <p class="tx-12 text-muted" th:text="${loggedIn.getEmail()}"></p>
                                 </div>
                             </div>
@@ -205,7 +205,7 @@
                                     </div>
                                 </div>
 
-                                <div class="flatpickr mb-3" id="flatpickr-date">
+                                <div class="flatpickr mb-3" id="flatpickr-date1">
                                     <label for="exampleInputUsername" class="form-label">Start date</label>
                                     <div class="input-group">
                                         <input type="text" th:field="*{minDate}" class="form-control"
@@ -215,15 +215,15 @@
                                     </div>
                                 </div>
 
-                                <!--                                <div class="input-group flatpickr mb-3" id="flatpickr-date1">-->
-                                <!--                                    <label for="exampleInputUsername" class="form-label">End date</label>-->
-                                <!--                                    <div class="input-group">-->
-                                <!--                                        <input type="text" th:field="*{maxDate}" class="form-control"-->
-                                <!--                                               placeholder="Select end date" data-input>-->
-                                <!--                                        <span class="input-group-text input-group-addon" data-toggle><i-->
-                                <!--                                                data-feather="calendar"></i></span>-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
+                                <div class="flatpickr mb-3" id="flatpickr-date">
+                                    <label for="exampleInputUsername" class="form-label">End date</label>
+                                    <div class="input-group">
+                                        <input type="text" th:field="*{maxDate}" class="form-control"
+                                               placeholder="Select end date" data-input>
+                                        <span class="input-group-text input-group-addon" data-toggle><i
+                                                data-feather="calendar"></i></span>
+                                    </div>
+                                </div>
 
                                 <button type="submit" class="btn btn-primary me-2">Submit</button>
                                 <a th:href="@{/users}" class="btn btn-danger">Reset</a>
@@ -250,6 +250,41 @@
                                                     CreatedAt</p>
                                             </div>
                                         </div>
+                                        <div class="dropdown"
+                                             th:if="${post.createdBy.equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
+                                            <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
+                                            </a>
+
+
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                                <form th:action="@{/posts/{postId}/update(postId=${post.getId()})}"
+                                                      method="get">
+                                                    <button type="submit"
+                                                            class="d-flex align-items-center text-muted me-4"
+                                                            style="background: none; padding: 0; border: none">
+                                                        <a class="dropdown-item d-flex align-items-center"
+                                                           href="javascript:">
+                                                            <i data-feather="edit" class="icon-sm me-2"></i> <span
+                                                                class="">Edit</span></a>
+                                                    </button>
+                                                </form>
+
+                                                <form th:action="@{/posts/{postId}/delete(postId=${post.getId()})}"
+                                                      method="post">
+                                                    <button type="submit"
+                                                            class="d-flex align-items-center text-muted me-4"
+                                                            style="background: none; padding: 0; border: none">
+                                                        <input type="hidden" value="" name="path">
+                                                        <a class="dropdown-item d-flex align-items-center"
+                                                           href="javascript:">
+                                                            <i data-feather="delete" class="icon-sm me-2"></i> <span
+                                                                class="">Remove</span></a>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -257,7 +292,7 @@
                                 </div>
                                 <br>
                                 <div class="card-footer" th:if="${post.getTags().isEmpty()==false}">
-                                    <ul th:each="tag : ${post.getTags()}" th:text="'#' + ${tag.getContent()} + ' '"></ul>
+                                        <span style="color: royalblue" th:each="tag : ${post.getTags()}" th:text="'#' + ${tag.getContent()} + ' '">#tag</span>
                                 </div>
                                 <div class="card-footer">
                                     <div class="d-flex post-actions">

@@ -6,6 +6,7 @@ import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.UserFilterOptions;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userRepository.getAll();
+    }
+    @Override
+    public List<User> get(UserFilterOptions userFilterOptions) {
+        return userRepository.get(userFilterOptions);
     }
 
     @Override

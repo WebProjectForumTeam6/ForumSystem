@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
+import com.example.forummanagementsystem.models.User;
 
 import java.util.List;
 

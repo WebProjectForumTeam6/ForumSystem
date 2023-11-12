@@ -5,8 +5,10 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "posts")
@@ -112,6 +114,9 @@ public class Post {
 
     public Set<Tag> getTags() {
         return tags;
+    }
+    public Set<String> getTagsToString() {
+        return tags.stream().map(Tag :: getContent).collect(Collectors.toSet());
     }
 
     public void setTags(Set<Tag> tags) {
