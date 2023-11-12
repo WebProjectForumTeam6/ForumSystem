@@ -65,7 +65,7 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div th:if="isAuthenticated==true">
+                                    <div th:if="${isAuthenticated==true}">
                                         <div class="dropdown"
                                              th:if="${post.createdBy.equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
                                             <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
@@ -164,12 +164,60 @@
                                          alt="">
                                 </div>
                                 <div class="content">
+                                    <div class="mb-0" style="display: flex ; justify-content: end">
+
+
+
+                                        <div th:if="${isAuthenticated==true}">
+                                            <div class="dropdown"
+                                                 th:if="${comment.getUser().equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
+                                                <a type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown"
+                                                   aria-haspopup="true" aria-expanded="false">
+                                                    <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                                                    <form th:action="@{/posts/comment/{commentId}/update(commentId=${comment.getId()})}"
+                                                          method="get">
+                                                        <button type="submit"
+                                                                class="d-flex align-items-center text-muted me-4"
+                                                                style="background: none; padding: 0; border: none">
+                                                            <a class="dropdown-item d-flex align-items-center"
+                                                               href="javascript:">
+                                                                <i data-feather="edit" class="icon-sm me-2"></i> <span
+                                                                    class="">Edit</span></a>
+                                                        </button>
+                                                    </form>
+
+                                                    <form th:action="@{/posts/comment/{commentId}/delete(commentId=${comment.getId()})}"
+                                                          method="post">
+                                                        <button type="submit"
+                                                                class="d-flex align-items-center text-muted me-4"
+                                                                style="background: none; padding: 0; border: none">
+                                                            <input type="hidden" value="" name="path">
+                                                            <a class="dropdown-item d-flex align-items-center"
+                                                               href="javascript:">
+                                                                <i data-feather="delete" class="icon-sm me-2"></i> <span
+                                                                    class="">Remove</span></a>
+                                                        </button>
+                                                    </form>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
                                     <div style="display: flex ; justify-content: space-between">
                                         <span class="from" style="font-size: medium"
                                               th:text="${comment.getUser().getUsername()}"><b>Brenden Wagner</b></span>
                                         <span class="date align-self-end"
                                               th:text="${#temporals.format(comment.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">Data</span>
+
                                     </div>
+
                                     <p class="msg" th:text="${comment.getContent()}">Hot dogs, Armour hot dogs. What
                                         kind of kids eat Armour hot dogs? Fat
                                         kids, skinny kids, kids who climb on rocks. Tough kids, sissy kids, even kids

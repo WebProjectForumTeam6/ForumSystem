@@ -17,6 +17,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -166,25 +167,68 @@ public class PostMvcController {
         }
     }
 
+    @GetMapping("/comment/{commentId}/update")
+    public String showUpdateCommentView(Model model, @PathVariable int commentId, CommentDto commentDto, HttpSession httpSession) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            Comment comment=commentService.getCommentById(commentId);
+            model.addAttribute("loggedIn", user);
+            model.addAttribute("commentToUpdate", commentService.getCommentById(commentId));
+            model.addAttribute("user", user);
+            commentDto.setContent(comment.getContent());
+            model.addAttribute("commentDto", commentDto);
+            model.addAttribute("comment", comment);
+            return "UpdateCommentView";
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
+
+    @PostMapping("/comment/{commentId}/update")
+    public String updateComment(@Valid @ModelAttribute("updateDto") CommentDto commentDto, @PathVariable int commentId, Model model, HttpSession httpSession) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            Comment comment=commentService.getCommentById(commentId);
+            model.addAttribute("loggedIn", user);
+            model.addAttribute("commentToUpdate", comment);
+            model.addAttribute("user", user);
+            comment.setContent(commentDto.getContent());
+            commentService.update(comment, user);
+            return "redirect:/posts/" + comment.getPost().getId();
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
+    @PostMapping("/comment/{commentId}/delete")
+    public String deleteComment(@PathVariable int commentId, HttpSession httpSession) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
+            Comment comment=commentService.getCommentById(commentId);
+            commentService.delete(user, commentId);
+            return "redirect:/posts/" + comment.getPost().getId();
+        } catch (AuthorizationException e) {
+            return "redirect:/auth/login";
+        }
+    }
     @PostMapping("/{postId}/delete")
     public String deletePost(HttpSession httpSession,
                              @PathVariable int postId,
-                             @RequestParam("path") String path){
-        try{
-            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+                             @RequestParam("path") String path) {
+        try {
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
             postService.delete(postId, user);
             return "redirect:/users" + path;
-        }catch (AuthorizationException e){
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
     }
 
     @GetMapping("/{postId}/update")
     public String showUpdatePostPage(@PathVariable int postId, PostDto postDto,
-                                     HttpSession httpSession, Model model){
+                                     HttpSession httpSession, Model model) {
         try {
-            Post post=postService.getById(postId);
-            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            Post post = postService.getById(postId);
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("loggedIn", user);
             postDto.setTitle(post.getTitle());
             postDto.setContent(post.getContent());
@@ -192,16 +236,17 @@ public class PostMvcController {
             postDto.setTags(post.getTags().stream().map(Tag::getContent).collect(Collectors.joining(",")));
             model.addAttribute("postDto", postDto);
             return "UpdatePostView";
-        }catch (AuthorizationException e) {
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
     }
+
     @PostMapping("/{postId}/update")
     public String updatePost(@PathVariable int postId, PostDto postDto,
-                                     HttpSession httpSession, Model model){
+                             HttpSession httpSession, Model model) {
         try {
-            Post post=postService.getById(postId);
-            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            Post post = postService.getById(postId);
+            User user = authenticationHelper.tryGetCurrentUser(httpSession);
             postTagService.deleteAllTagsFromPost(user, post);
             model.addAttribute("loggedIn", user);
             model.addAttribute("postDto", postDto);
@@ -211,7 +256,7 @@ public class PostMvcController {
             postService.update(postDto, user, postId);
             postTagService.addTagToPost(postDto.getTags(), user, post);
             return "PostView";
-        }catch (AuthorizationException e) {
+        } catch (AuthorizationException e) {
             return "redirect:/auth/login";
         }
     }

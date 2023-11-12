@@ -104,7 +104,7 @@
                             </form>
                         </div>
                         <form class="d-flex ms-auto">
-                            <div class='myDiv'>
+                            <div class='myDiv' th:if="${loggedIn.isBlocked()==false}">
                                 <a th:href="@{/posts/new}" class="btn btn-primary" style='margin-right:16px'>Create New
                                     Post</a>
                             </div>
@@ -304,7 +304,7 @@
                                     <span style="color: royalblue" th:each="tag : ${post.getTags()}"
                                           th:text="'#' + ${tag.getContent()} + ' '">#tag</span>
                                 </div>
-                                <div class="card-footer">
+                                <div class="card-footer" th:if="${loggedIn.isBlocked()==false}">
                                     <div class="d-flex post-actions">
                                         <form th:action="@{/posts/{postId}/like(postId=${post.getId()})}"
                                               method="post">
