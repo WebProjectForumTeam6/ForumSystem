@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.UserFilterOptions;
 
 import java.util.List;
 
@@ -20,5 +21,5 @@ public interface UserRepository {
     void updatePhoneNumber(AdminInfo adminInfo);
     User getById(int id);
     void deleteUser(User user);
-
+    List<User> get(UserFilterOptions filterUserOptions);
 }

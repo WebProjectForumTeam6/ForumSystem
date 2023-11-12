@@ -3,9 +3,7 @@ package com.example.forummanagementsystem.service;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
-import com.example.forummanagementsystem.models.AdminInfo;
-import com.example.forummanagementsystem.models.Post;
-import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +30,12 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         return userRepository.getAll();
     }
+
+    @Override
+    public List<User> get(UserFilterOptions userFilterOptions) {
+        return userRepository.get(userFilterOptions);
+    }
+
 
     @Override
     public User getById(int id) {
@@ -180,6 +184,5 @@ public class UserServiceImpl implements UserService {
             throw new AuthorizationException(NOT_AN_ADMIN_ERROR);
         }
     }
-
 
 }

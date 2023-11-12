@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.UserFilterOptions;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 
 import java.util.List;
@@ -19,5 +20,6 @@ public interface UserService {
    User getByFirstName(String firstName);
    User updateUser(User user, User updatedUser, UserDtoUpdate userDtoUpdate);
    void deleteUser(int id, User user);
+   List<User> get(UserFilterOptions userFilterOptions);
   
 }

@@ -3,6 +3,7 @@ package com.example.forummanagementsystem.repository;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
+import com.example.forummanagementsystem.models.UserFilterOptions;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,10 @@ import org.springframework.stereotype.Repository;
 
 import org.hibernate.query.Query;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -170,6 +174,37 @@ public class UserRepositoryImpl implements UserRepository {
             session.beginTransaction();
             session.merge(user);
             session.getTransaction().commit();
+        }
+    }
+
+    @Override
+    public List<User> get(UserFilterOptions userFilterOptions) {
+        try (
+                Session session = sessionFactory.openSession()) {
+            List<String> filters = new ArrayList<>();
+            Map<String, Object> params = new HashMap<>();
+
+            userFilterOptions.getFirstName().ifPresent(value -> {
+                filters.add(" firstName like :firstName ");
+                params.put("firstName", String.format("%%%s%%", value));
+            });
+            userFilterOptions.getEmail().ifPresent(value -> {
+                filters.add(" email = :email ");
+                params.put("email", value);
+            });
+            userFilterOptions.getUsername().ifPresent(value -> {
+                filters.add(" username like :username ");
+                params.put("username", String.format("%%%s%%", value));
+            });
+            StringBuilder queryString = new StringBuilder("from User ");
+            if (!filters.isEmpty()) {
+                queryString.append(" where ")
+                        .append(String.join(" and ", filters));
+            }
+
+            Query<User> query = session.createQuery(queryString.toString(), User.class);
+            query.setProperties(params);
+            return query.list();
         }
     }
 
