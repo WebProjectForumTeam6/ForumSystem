@@ -127,7 +127,7 @@
                                                             class="" style="color: red">Block/Unblock</span></a>
                                                 </button>
                                             </form>
-                                            <div>
+                                            <div th:if="${user.isAdmin()==false}">
                                                 <form th:action="@{/users/{userId}/makeAdmin(userId=${user.getId()})}"
                                                       method="post">
                                                     <button type="submit"
@@ -147,6 +147,7 @@
                             <i class="icon-lg text-muted pb-3px" th:if="${user.isAdmin()}"
                                data-feather="award" style="color: blueviolet"></i>
                             <a th:if="${user.isAdmin()}" style="color: blueviolet" th:text="${'Admin'}"></a>
+                            <a th:if="${user.isBlocked()}" style="color: red" th:text="${'Blocked'}"></a>
                         </div>
                     </div>
                 </div>

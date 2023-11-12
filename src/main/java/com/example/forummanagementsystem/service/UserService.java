@@ -32,4 +32,5 @@ public interface UserService {
 
     void deleteUser(int id, User user);
 
+    User addProfilePhoto(User user, String url);
 }

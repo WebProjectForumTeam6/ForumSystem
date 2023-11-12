@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.controller.mvc;
 
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.helpers.AuthenticationHelper;
+import com.example.forummanagementsystem.helpers.ImageHelper;
 import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
@@ -15,12 +16,13 @@ import com.example.forummanagementsystem.service.CategoryService;
 import com.example.forummanagementsystem.service.PostService;
 import com.example.forummanagementsystem.service.UserService;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -31,15 +33,16 @@ public class UserMvcController {
     private final CategoryService categoryService;
     private final AuthenticationHelper authenticationHelper;
     private final UserService userService;
-
     private final UserMapper userMapper;
+    private final ImageHelper imageHelper;
 
-    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper, UserService userService, UserMapper userMapper) {
+    public UserMvcController(PostService postService, CategoryService categoryService, AuthenticationHelper authenticationHelper, UserService userService, UserMapper userMapper, ImageHelper imageHelper) {
         this.postService = postService;
         this.categoryService = categoryService;
         this.authenticationHelper = authenticationHelper;
         this.userService = userService;
         this.userMapper = userMapper;
+        this.imageHelper = imageHelper;
     }
 
     @ModelAttribute("isAuthenticated")
@@ -175,5 +178,19 @@ public class UserMvcController {
             return "redirect:/auth/login";
         }
         return "redirect:/users/admin";
+    }
+
+    @PostMapping("/{userId}/picture")
+    public String addPicture(@RequestParam("file") MultipartFile file, @PathVariable int userId, HttpSession httpSession){
+        try {
+            User user=authenticationHelper.tryGetCurrentUser(httpSession);
+            String url= imageHelper.uploadImage(file);
+            userService.addProfilePhoto(userService.getById(userId), url);
+            return "redirect:/users/update";
+        }catch (AuthorizationException e){
+            return "redirect:/auth/login";
+        } catch (IOException e){
+            return "Error404";
+        }
     }
 }

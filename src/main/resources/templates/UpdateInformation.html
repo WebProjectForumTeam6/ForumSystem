@@ -56,8 +56,10 @@
                                 </figure>
                                 <div class="d-flex justify-content-between align-items-center position-absolute top-90 px-2 px-md-4 mt-n4">
                                     <div>
-                                        <img class="wd-70 rounded-circle" th:src="${userToUpdate.getProfilePhoto()}" alt="profile">
-                                        <span class="h4 ms-3 text-dark" th:text="${userToUpdate.getFirstName()+ ' '+ userToUpdate.getLastName()}"></span>
+                                        <img class="wd-70 rounded-circle" th:src="${userToUpdate.getProfilePhoto()}"
+                                             alt="profile">
+                                        <span class="h4 ms-3 text-dark"
+                                              th:text="${userToUpdate.getFirstName()+ ' '+ userToUpdate.getLastName()}"></span>
                                     </div>
 
                                     <div class="d-none d-md-block">
@@ -83,7 +85,8 @@
                                             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                                             <circle cx="12" cy="7" r="4"></circle>
                                         </svg>
-                                        <a class="pt-2px d-none d-md-block text-primary" th:href="@{/users/update}">Edit profile</a>
+                                        <a class="pt-2px d-none d-md-block text-primary" th:href="@{/users/update}">Edit
+                                            profile</a>
                                     </li>
                                 </ul>
                             </div>
@@ -109,9 +112,21 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div class="col-md-12 stretch-card grid-margin grid-margin-md-0 mt-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Add profile picture</h6>
+                                        <form id="exampleDropzone" th:action="@{/users/{userId}/picture(userId=${userToUpdate.getId()})}" method="post" enctype="multipart/form-data">
+                                            <input type="file" name="file">
+                                            <button type="submit" class="btn btn-primary me-2 mb-2 mb-md-0 text-white mt-3"> Add photo
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+
+
                         <div class="col-md-6 align-items-center justify-content-center">
 
                             <div class="card">
@@ -126,8 +141,9 @@
 
                                                 <div class="mb-3">
                                                     <label for="firstName" class="form-label">First Name</label>
-                                                    <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
-                                                    placeholder="First Name">
+                                                    <input type="text" th:field="*{firstName}" class="form-control"
+                                                           id="firstName"
+                                                           placeholder="First Name">
                                                     <label class="error" th:errors="*{firstName}"></label>
                                                 </div>
                                                 <div class="mb-3">
@@ -151,30 +167,35 @@
                                                     <input type="text" th:field="*{phoneNumber}" class="form-control"
                                                            id="userPhone"
                                                            maxlength="10"
-                                                           placeholder="Email">
+                                                           placeholder="Phone number">
                                                     <label class="error" th:errors="*{phoneNumber}"></label>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="userPasswordConfirm" class="form-label">Enter
                                                         Password</label>
-                                                    <input type="password" th:field="*{password}" class="form-control" id="userPasswordConfirm" placeholder="Password">
+                                                    <input type="password" th:field="*{password}" class="form-control"
+                                                           id="userPasswordConfirm" placeholder="Password">
                                                     <label class="error" th:errors="*{password}"></label>
                                                 </div>
 
                                                 <div class="mb-3">
                                                     <label for="userPasswordConfirm1" class="form-label">Confirm
                                                         Password</label>
-                                                    <input type="password" th:field="*{passwordConfirm}" class="form-control" id="userPasswordConfirm1" placeholder="Password">
+                                                    <input type="password" th:field="*{passwordConfirm}"
+                                                           class="form-control" id="userPasswordConfirm1"
+                                                           placeholder="Password">
                                                     <label class="error" th:errors="*{passwordConfirm}"></label>
                                                 </div>
 
-                                                <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Edit</button>
+                                                <button class="btn btn-primary me-2 mb-2 mb-md-0 text-white"> Edit
+                                                </button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>

@@ -42,7 +42,7 @@
     <!-- partial -->
 
     <div class="page-wrapper">
-         partial:../../partials/_navbar.html
+        partial:../../partials/_navbar.html
         <nav class="navbar navbar-dark bg-primary"
              th:replace="${isAuthenticated} ? ~{UserPage.html :: navbar} : ~{HomeView.html :: navbarNotLogged}">
         </nav>
@@ -54,7 +54,8 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center">
-                                        <img class="img-xs rounded-circle" th:src="${post.getCreatedBy().getProfilePhoto()}"
+                                        <img class="img-xs rounded-circle"
+                                             th:src="${post.getCreatedBy().getProfilePhoto()}"
                                              alt="">
                                         <div class="ms-2">
                                             <p th:text="${post.getTitle()}">Title</p>
@@ -64,32 +65,43 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <div class="dropdown" th:if="${post.createdBy.equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
-                                        <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
-                                        </a>
+                                    <div th:if="isAuthenticated==true">
+                                        <div class="dropdown"
+                                             th:if="${post.createdBy.equals(loggedIn)==true || loggedIn.isAdmin() ==true}">
+                                            <a type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                                               aria-haspopup="true" aria-expanded="false">
+                                                <i class="icon-lg pb-3px" data-feather="more-horizontal"></i>
+                                            </a>
 
 
-                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
-                                            <form th:action="@{/posts/{postId}/update(postId=${post.getId()})}" method="get">
-                                                <button type="submit" class="d-flex align-items-center text-muted me-4"
-                                                        style="background: none; padding: 0; border: none">
-                                                    <a class="dropdown-item d-flex align-items-center" href="javascript:">
-                                                        <i data-feather="edit" class="icon-sm me-2"></i> <span class="">Edit</span></a>
-                                                </button>
-                                            </form>
+                                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                                <form th:action="@{/posts/{postId}/update(postId=${post.getId()})}"
+                                                      method="get">
+                                                    <button type="submit"
+                                                            class="d-flex align-items-center text-muted me-4"
+                                                            style="background: none; padding: 0; border: none">
+                                                        <a class="dropdown-item d-flex align-items-center"
+                                                           href="javascript:">
+                                                            <i data-feather="edit" class="icon-sm me-2"></i> <span
+                                                                class="">Edit</span></a>
+                                                    </button>
+                                                </form>
 
-                                            <form th:action="@{/posts/{postId}/delete(postId=${post.getId()})}" method="post">
-                                                <button type="submit" class="d-flex align-items-center text-muted me-4"
-                                                        style="background: none; padding: 0; border: none">
-                                                    <input type="hidden" value="" name="path">
-                                                    <a class="dropdown-item d-flex align-items-center" href="javascript:">
-                                                        <i data-feather="delete" class="icon-sm me-2"></i> <span class="">Remove</span></a>
-                                                </button>
-                                            </form>
+                                                <form th:action="@{/posts/{postId}/delete(postId=${post.getId()})}"
+                                                      method="post">
+                                                    <button type="submit"
+                                                            class="d-flex align-items-center text-muted me-4"
+                                                            style="background: none; padding: 0; border: none">
+                                                        <input type="hidden" value="" name="path">
+                                                        <a class="dropdown-item d-flex align-items-center"
+                                                           href="javascript:">
+                                                            <i data-feather="delete" class="icon-sm me-2"></i> <span
+                                                                class="">Remove</span></a>
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="card-body">
@@ -115,8 +127,6 @@
                                         </button>
                                     </form>
                                     <div class="text-muted">
-<!--                                        <i class="icon-md"-->
-<!--                                           th:attr="data-feather='thumbs-up'" data-feather="thumbs-up"></i>-->
                                         <p th:text="${post.getLikesCount()}"> 27 </p>
                                     </div>
                                 </div>
@@ -158,7 +168,7 @@
                                         <span class="from" style="font-size: medium"
                                               th:text="${comment.getUser().getUsername()}"><b>Brenden Wagner</b></span>
                                         <span class="date align-self-end"
-                                              th:text="${#temporals.format(post.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">Data</span>
+                                              th:text="${#temporals.format(comment.getCreatedAt(), 'dd-MM-yyyy HH:mm')}">Data</span>
                                     </div>
                                     <p class="msg" th:text="${comment.getContent()}">Hot dogs, Armour hot dogs. What
                                         kind of kids eat Armour hot dogs? Fat

@@ -22,4 +22,6 @@ public interface UserRepository {
     void updatePhoneNumber(AdminInfo adminInfo);
     User getById(int id);
     void deleteUser(User user);
+    User addProfilePhoto(User user);
+
 }

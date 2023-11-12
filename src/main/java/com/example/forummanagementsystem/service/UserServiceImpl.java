@@ -187,5 +187,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-
+    @Override
+    public User addProfilePhoto(User user, String url) {
+        user.setProfilePhoto(url);
+        return userRepository.addProfilePhoto(user);
+    }
 }
