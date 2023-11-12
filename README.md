@@ -10,12 +10,12 @@ Forum System where peoples can share their ideas and perspectives on the crypto 
 ## Project Description
 Design and implements a Forum System, where the users can create posts, add comments, add tags, and like and dislike posts.
 
-### Areas
-* **[Public part](#Public part)** - accessible without authentication.
-* **[Private part](#Private part)** - available for registered users only.
-* **[Administrative part](#Administrative part)** - accessible for users with administrative privileges.
+## Areas
+* **[Public part](#public-part)** - accessible without authentication.
+* **[Private part](#private-part)** - available for registered users only.
+* **[Administrative part](#administrative-part)** - accessible for users with administrative privileges.
 
-#### Public part
+### Public part
 * On the home page, anonymous users be able to see a list of the top 10 commented posts and a list of the 10 most recently
 created posts. They can see the core features of the platform as well how many people are using it and how many posts 
 have been created so far.
@@ -29,7 +29,7 @@ have been created so far.
 
 ![login.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2Flogin.png)
 
-#### Private part
+### Private part
 * Users be able to browse posts created by the other users with an option to sort and filter them.
 ![userPage.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2FuserPage.png)
 
@@ -44,7 +44,7 @@ have been created so far.
 
 ![deletePostByUser.png](src%2Fmain%2Fresources%2Fstatic%2Fimages%2FdeletePostByUser.png)
 
-#### Administrative part
+### Administrative part
 * Admins can search for a user by their username, email, first name.
 * Admins can block / unblock users.
 * Admins can delete any post.
