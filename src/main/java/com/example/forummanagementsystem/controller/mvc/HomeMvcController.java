@@ -63,11 +63,21 @@ public class HomeMvcController {
     }
 
     @GetMapping("/about")
-    public String showAboutPage() {
-        return "AboutUs";
+    public String showAboutPage(Model model, HttpSession httpSession) {
+        try {
+            model.addAttribute("loggedIn", authenticationHelper.tryGetCurrentUser(httpSession));
+            return "AboutUs";
+        }catch (AuthorizationException e){
+            return "AboutUs";
+        }
     }
     @GetMapping("/contact")
-    public String showContactPage() {
-        return "ContactUs";
+    public String showContactPage(Model model, HttpSession httpSession) {
+        try {
+            model.addAttribute("loggedIn", authenticationHelper.tryGetCurrentUser(httpSession));
+            return "ContactUs";
+        }catch (AuthorizationException e){
+            return "ContactUs";
+        }
     }
 }
