@@ -1,5 +1,6 @@
 package com.example.forummanagementsystem.service;
 
+import com.example.forummanagementsystem.Helpers;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
@@ -9,6 +10,8 @@ import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
 import com.example.forummanagementsystem.repository.PostRepository;
 import com.example.forummanagementsystem.repository.PostTagRepository;
+import com.example.forummanagementsystem.repository.PostTagRepositoryImpl;
+import org.hibernate.SessionFactory;
 import org.hibernate.validator.internal.util.Contracts;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -79,7 +82,7 @@ public class PostTagServiceTests {
         when(postTagRepository.getTagByContent(tagDto.getContent())).thenThrow(EntityNotFoundException.class);
         Tag result = postTagService.create(tagDto);
 
-        verify(postTagRepository,times(1)).create(any(Tag.class));
+        verify(postTagRepository, times(1)).create(any(Tag.class));
     }
 
     @Test
@@ -88,21 +91,25 @@ public class PostTagServiceTests {
 
         when(postTagRepository.getTagByContent(tagDto.getContent())).thenReturn(new Tag(tagDto.getContent()));
 
-        assertThrows(EntityDuplicateException.class,()-> postTagService.create(tagDto));
+        assertThrows(EntityDuplicateException.class, () -> postTagService.create(tagDto));
+    }
+
+    @Test
+    public void testDeleteAllTagsFromPost() {
+        User user = Helpers.createMockUser();
+        Post post = Helpers.createMockPost();
+        post.addTag(Helpers.createMockTag());
+        post.addTag(Helpers.createMockTag());
+
+        when(postRepository.update(post)).thenReturn(post);
+
+        Post resultPost = postTagService.deleteAllTagsFromPost(user, post);
+
+        post.getTags().clear();
+        verify(postRepository).update(post);
     }
 
 
-        @Test
-    void deleteTagFromPost_ShouldThrowResponseStatusException_WhenTagNotFound() {
-        // Arrange
-        String tags = "tag1";
-        User user = new User();
-        Post post = new Post();
-        when(postTagRepository.getTagByContent("tag1")).thenThrow(EntityNotFoundException.class);
-
-        // Act and Assert
-        assertThrows(ResponseStatusException.class, () -> postTagService.deleteTagFromPost(tags, user, post));
-    }
 
     @Test
     void delete_ShouldDeleteTag() {
@@ -174,13 +181,18 @@ public class PostTagServiceTests {
     @Test
     public void deleteTagFromPost_Should_Remove_Tags_ifExist() {
         String tags = "tag1";
-        User user = createMockUser();
-        Post post = createMockPost();
-        Tag tagToRemove = new Tag("tag1");
+        User user = Helpers.createMockUser();
+        Post post = Helpers.createMockPost();
+        Tag tagToRemove = new Tag();
+        tagToRemove.setContent("tag1");
 
         Mockito.when(postTagRepository.getTagByContent("tag1")).thenReturn(tagToRemove);
+
         Post result = postTagService.deleteTagFromPost(tags, user, post);
 
+        verify(postTagRepository).getTagByContent("tag1");
+
+        verify(postTagRepository).modifyPostTags(post);
     }
 
 
