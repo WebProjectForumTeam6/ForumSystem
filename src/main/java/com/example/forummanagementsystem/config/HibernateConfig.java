@@ -18,7 +18,6 @@ public class HibernateConfig {
     private final String dbUsername;
     private final String dbPassword;
 
-
     @Autowired
     public HibernateConfig(Environment env) {
         dbUrl = env.getProperty("database.url");
@@ -42,7 +41,6 @@ public class HibernateConfig {
         dataSource.setUrl(dbUrl);
         dataSource.setUsername(dbUsername);
         dataSource.setPassword(dbPassword);
-
         return dataSource;
     }
 

@@ -1,8 +1,6 @@
 package com.example.forummanagementsystem.models.dto;
 
 
-import java.util.Date;
-
 public class FilterDto {
     private String createdBy;
     private String title;

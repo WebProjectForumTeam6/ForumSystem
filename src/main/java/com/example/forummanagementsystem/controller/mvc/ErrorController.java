@@ -9,10 +9,10 @@ public class ErrorController implements org.springframework.boot.web.servlet.err
 
     @GetMapping("/error")
     public String handleError(HttpServletRequest request) {
+
         // Get the status code from the request
         Integer statusCode = (Integer) request.getAttribute("jakarta.servlet.error.status_code");
 
-        // Check if it's a 404 error
         if(statusCode != null && statusCode == 404) {
             return "Error404";
         }

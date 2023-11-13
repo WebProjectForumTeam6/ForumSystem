@@ -123,7 +123,8 @@ public class UserMvcController {
     }
 
     @PostMapping("/update")
-    public String updateProfilePage(@ModelAttribute("updateDto") UserDtoUpdate userDtoUpdate, Model model, HttpSession httpSession, BindingResult bindingResult) {
+    public String updateProfilePage(@ModelAttribute("updateDto") UserDtoUpdate userDtoUpdate, Model model,
+                                    HttpSession httpSession) {
         try {
             User user = authenticationHelper.tryGetCurrentUser(httpSession);
             model.addAttribute("userToUpdate", user);
@@ -154,7 +155,7 @@ public class UserMvcController {
     }
 
     @PostMapping("/{userId}/makeAdmin")
-    public String makeAdmin(@PathVariable int userId, HttpSession httpSession, Model model, UserFilterDto userFilterDto){
+    public String makeAdmin(@PathVariable int userId, HttpSession httpSession){
         try {
             User user=authenticationHelper.tryGetCurrentUser(httpSession);
             userService.makeAdmin(user, userService.getById(userId));
@@ -165,7 +166,7 @@ public class UserMvcController {
     }
 
     @PostMapping("/{userId}/block")
-    public String block(@PathVariable int userId, HttpSession httpSession, Model model, UserFilterDto userFilterDto){
+    public String block(@PathVariable int userId, HttpSession httpSession){
         try {
             User user=authenticationHelper.tryGetCurrentUser(httpSession);
             User userToBlock=userService.getById(userId);

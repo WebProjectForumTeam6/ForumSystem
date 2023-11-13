@@ -2,11 +2,12 @@ INSERT INTO forum.users (user_id, first_name, last_name, email, username, passwo
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (2, 'Alice', 'Smith', 'alicesmith@example.com', 'alicesmith', 'securepass', 0, 0, 'https://media.istockphoto.com/id/1453365227/photo/young-female-architect-standing-in-her-office-and-smiling.webp?b=1&s=170667a&w=0&k=20&c=DRcVODcvZo_fnvjdlX9n4lOk3BxiBd9KVY2gwE8gv0w=');
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (3, 'Maria', 'Sanchez', 'mariasanchez@example.com', 'mariasanchez', 'maria123', 0, 0, 'https://images.unsplash.com/photo-1664575602554-2087b04935a5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8d29tYW58ZW58MHx8MHx8fDA%3D');
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (4, 'Georgi', 'Stoyanov', 'georgistoyanov@example.com', 'georgist', 'georgi1234', 0, 0, 'https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFufGVufDB8fDB8fHww');
-INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (5, 'Berta', 'Morar', 'berta.morar@example.com', 'bertamorar', 'berta123456', 0, 1, 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg');
+INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (5, 'Berta', 'Morar', 'berta.morar@example.com', 'bertamorar', 'berta123456', 0, 0, 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg');
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (6, 'Serena', 'Hayes', 'serena.hayes@example.com', 'serenaHayes1', 'serena09876', 0, 0, 'http://res.cloudinary.com/dadyjdpd5/image/upload/v1699830392/profile-photos/w8nwqw13oyyweb9fnad3.jpg');
-INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (7, 'Zella', 'Kertzman', 'zella.kertzman@example.com', 'zella.kertzman', '1234zella', 0, 1, 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFufGVufDB8fDB8fHww');
+INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (7, 'Zella', 'Kertzman', 'zella.kertzman@example.com', 'zella.kertzman', '1234zella', 0, 0, 'https://images.unsplash.com/photo-1564564321837-a57b7070ac4f?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8bWFufGVufDB8fDB8fHww');
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (8, 'Petq', 'Todorova', 'petq.todorova@example.com', 'petqtd', 'petqtd123', 0, 0, 'http://res.cloudinary.com/dadyjdpd5/image/upload/v1699829327/profile-photos/m1fjqmnhkrivkkmrwnrl.jpg');
 INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (9, 'Mark', 'Zuckerberg', 'marko123@example.com', 'markZuki', 'mark123', 0, 0, 'http://res.cloudinary.com/dadyjdpd5/image/upload/v1699830036/profile-photos/hygk6hofpdsiiln9hjrw.jpg');
+INSERT INTO forum.users (user_id, first_name, last_name, email, username, password, is_blocked, is_admin, profile_picture_url) VALUES (10, 'Petar', 'Stoqnov', 'petar.stoqnov@example.com', 'petar.stoqnov', 'petar123', 0, 0, 'https://static.vecteezy.com/system/resources/previews/020/765/399/non_2x/default-profile-account-unknown-icon-black-silhouette-free-vector.jpg');
 
 INSERT INTO forum.admins_info (admin_id, user_id, phone_number) VALUES (1, 1, '1234567890');
 INSERT INTO forum.admins_info (admin_id, user_id, phone_number) VALUES (2, 5, '9876543210');
@@ -62,6 +63,9 @@ INSERT INTO forum.likes (id, post_id, user_id) VALUES (16, 38, 9);
 INSERT INTO forum.likes (id, post_id, user_id) VALUES (17, 28, 1);
 INSERT INTO forum.likes (id, post_id, user_id) VALUES (18, 40, 1);
 INSERT INTO forum.likes (id, post_id, user_id) VALUES (19, 39, 1);
+INSERT INTO forum.likes (id, post_id, user_id) VALUES (20, 30, 1);
+INSERT INTO forum.likes (id, post_id, user_id) VALUES (22, 35, 3);
+INSERT INTO forum.likes (id, post_id, user_id) VALUES (24, 2, 10);
 
 
 INSERT INTO forum.tags (tag_id, content) VALUES (14, 'cryptocommunity');
@@ -82,7 +86,6 @@ INSERT INTO forum.tags (tag_id, content) VALUES (28, 'kimchi');
 INSERT INTO forum.tags (tag_id, content) VALUES (29, 'korea');
 INSERT INTO forum.tags (tag_id, content) VALUES (30, 'earn');
 INSERT INTO forum.tags (tag_id, content) VALUES (31, 'trading');
-INSERT INTO forum.tags (tag_id, content) VALUES (32, '');
 INSERT INTO forum.tags (tag_id, content) VALUES (33, 'cryptomarket');
 INSERT INTO forum.tags (tag_id, content) VALUES (34, 'trader');
 INSERT INTO forum.tags (tag_id, content) VALUES (35, 'ai');
@@ -105,11 +108,11 @@ INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (24, 35, 26);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (25, 36, 27);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (26, 37, 28);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (27, 37, 29);
-INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (30, 39, 32);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (31, 40, 33);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (32, 40, 34);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (33, 41, 35);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (34, 41, 36);
+
 
 INSERT INTO forum.comments (comment_id, user_id, post_id, content, comment_timestamp) VALUES (1, 1, 1, 'Bitcoin is always safer than ALT coins so trading with bitcoins will have less chance of loss ', '2023-06-21 19:12:00');
 INSERT INTO forum.comments (comment_id, user_id, post_id, content, comment_timestamp) VALUES (2, 2, 1, 'Can someone who is a professional trader just go straight to the point pointing out what is needed to make a successful trader to a newbie to learn quickly?', '2023-10-20 19:12:06');

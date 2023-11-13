@@ -9,7 +9,6 @@ import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -203,7 +202,6 @@ public class UserServiceTests {
         Mockito.verify(userRepository,Mockito.times(1)).getByUsername(username);
     }
 
-    //todo
     @Test
     public void getByUsername_Should_ThrowEntityNotFoundException_When_UsernameDoesNotExist() {
         String username = "nonExistingUsername";
