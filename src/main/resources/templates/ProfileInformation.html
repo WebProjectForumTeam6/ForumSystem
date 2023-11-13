@@ -117,7 +117,7 @@
                                             <div class="d-flex align-items-center justify-content-between">
                                                 <div class="d-flex align-items-center">
                                                     <img class="img-xs rounded-circle"
-                                                         src="https://via.placeholder.com/37x37"
+                                                        th:src="${post.getCreatedBy().getProfilePhoto()}"
                                                          alt="">
                                                     <div class="ms-2">
                                                         <p th:text="${post.getTitle()}">Title</p>
