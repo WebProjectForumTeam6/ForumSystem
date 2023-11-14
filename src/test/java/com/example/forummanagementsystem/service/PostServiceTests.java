@@ -5,7 +5,7 @@ import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
-import com.example.forummanagementsystem.repository.PostRepository;
+import com.example.forummanagementsystem.repository.contracts.PostRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -110,8 +110,6 @@ INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (26, 37, 28);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (27, 37, 29);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (31, 40, 33);
 INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (32, 40, 34);
-INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (33, 41, 35);
-INSERT INTO forum.posts_tags (id, post_id, tag_id) VALUES (34, 41, 36);
 
 
 INSERT INTO forum.comments (comment_id, user_id, post_id, content, comment_timestamp) VALUES (1, 1, 1, 'Bitcoin is always safer than ALT coins so trading with bitcoins will have less chance of loss ', '2023-06-21 19:12:00');

@@ -7,7 +7,7 @@ import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
-import com.example.forummanagementsystem.repository.UserRepository;
+import com.example.forummanagementsystem.repository.contracts.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

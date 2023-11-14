@@ -1,4 +1,4 @@
-package com.example.forummanagementsystem.repository;
+package com.example.forummanagementsystem.repository.contracts;
 
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;

@@ -8,7 +8,7 @@ import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.UserDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
-import com.example.forummanagementsystem.service.UserService;
+import com.example.forummanagementsystem.service.contracts.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

@@ -2,6 +2,7 @@ package com.example.forummanagementsystem.repository;
 
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.Category;
+import com.example.forummanagementsystem.repository.contracts.CategoryRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;

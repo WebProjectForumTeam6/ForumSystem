@@ -1,33 +1,20 @@
 package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.Helpers;
-import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityDuplicateException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
-import com.example.forummanagementsystem.repository.PostRepository;
-import com.example.forummanagementsystem.repository.PostTagRepository;
-import com.example.forummanagementsystem.repository.PostTagRepositoryImpl;
-import org.hibernate.SessionFactory;
-import org.hibernate.validator.internal.util.Contracts;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.forummanagementsystem.repository.contracts.PostRepository;
+import com.example.forummanagementsystem.repository.contracts.PostTagRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
-
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import static com.example.forummanagementsystem.Helpers.*;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;

@@ -2,7 +2,7 @@ package com.example.forummanagementsystem.service;
 import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
-import com.example.forummanagementsystem.repository.CommentRepository;
+import com.example.forummanagementsystem.repository.contracts.CommentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

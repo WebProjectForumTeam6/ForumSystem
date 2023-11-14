@@ -3,7 +3,7 @@ package com.example.forummanagementsystem.helpers;
 import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.User;
-import com.example.forummanagementsystem.service.UserService;
+import com.example.forummanagementsystem.service.contracts.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;

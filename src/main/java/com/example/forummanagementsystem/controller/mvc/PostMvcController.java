@@ -7,17 +7,15 @@ import com.example.forummanagementsystem.helpers.CommentMapper;
 import com.example.forummanagementsystem.helpers.PostMapper;
 import com.example.forummanagementsystem.models.*;
 import com.example.forummanagementsystem.models.dto.CommentDto;
-import com.example.forummanagementsystem.models.dto.PathDto;
 import com.example.forummanagementsystem.models.dto.PostDto;
-import com.example.forummanagementsystem.service.CategoryService;
-import com.example.forummanagementsystem.service.CommentService;
-import com.example.forummanagementsystem.service.PostService;
-import com.example.forummanagementsystem.service.PostTagService;
+import com.example.forummanagementsystem.service.contracts.CategoryService;
+import com.example.forummanagementsystem.service.contracts.CommentService;
+import com.example.forummanagementsystem.service.contracts.PostService;
+import com.example.forummanagementsystem.service.contracts.PostTagService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,8 +24,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.path;
 
 @Controller
 @RequestMapping("/posts")

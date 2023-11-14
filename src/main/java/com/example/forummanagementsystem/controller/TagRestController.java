@@ -8,8 +8,8 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
-import com.example.forummanagementsystem.service.PostService;
-import com.example.forummanagementsystem.service.PostTagService;
+import com.example.forummanagementsystem.service.contracts.PostService;
+import com.example.forummanagementsystem.service.contracts.PostTagService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/api/tags")

@@ -12,13 +12,12 @@ import com.example.forummanagementsystem.models.dto.FilterDto;
 import com.example.forummanagementsystem.models.dto.PathDto;
 import com.example.forummanagementsystem.models.dto.UserDtoUpdate;
 import com.example.forummanagementsystem.models.dto.UserFilterDto;
-import com.example.forummanagementsystem.service.CategoryService;
-import com.example.forummanagementsystem.service.PostService;
-import com.example.forummanagementsystem.service.UserService;
+import com.example.forummanagementsystem.service.contracts.CategoryService;
+import com.example.forummanagementsystem.service.contracts.PostService;
+import com.example.forummanagementsystem.service.contracts.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

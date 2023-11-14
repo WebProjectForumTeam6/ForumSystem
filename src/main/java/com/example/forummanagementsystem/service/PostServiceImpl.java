@@ -5,7 +5,8 @@ import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
-import com.example.forummanagementsystem.repository.PostRepository;
+import com.example.forummanagementsystem.repository.contracts.PostRepository;
+import com.example.forummanagementsystem.service.contracts.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

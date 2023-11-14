@@ -4,7 +4,8 @@ import com.example.forummanagementsystem.exceptions.AuthorizationException;
 import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
-import com.example.forummanagementsystem.repository.CommentRepository;
+import com.example.forummanagementsystem.repository.contracts.CommentRepository;
+import com.example.forummanagementsystem.service.contracts.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,7 @@ import static com.example.forummanagementsystem.constants.Constants.CommentServi
 
 
 @Service
-public class CommentServiceImpl implements CommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final CommentRepository commentRepository;
     @Autowired

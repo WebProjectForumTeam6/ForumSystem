@@ -4,6 +4,7 @@ import com.example.forummanagementsystem.exceptions.EntityNotFoundException;
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.UserFilterOptions;
+import com.example.forummanagementsystem.repository.contracts.UserRepository;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -6,8 +6,9 @@ import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.Tag;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.TagDto;
-import com.example.forummanagementsystem.repository.PostRepository;
-import com.example.forummanagementsystem.repository.PostTagRepository;
+import com.example.forummanagementsystem.repository.contracts.PostRepository;
+import com.example.forummanagementsystem.repository.contracts.PostTagRepository;
+import com.example.forummanagementsystem.service.contracts.PostTagService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.example.forummanagementsystem.service;
+package com.example.forummanagementsystem.service.contracts;
 
 import com.example.forummanagementsystem.models.FilterOptions;
 import com.example.forummanagementsystem.models.Post;

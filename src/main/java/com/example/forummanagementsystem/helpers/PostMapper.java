@@ -1,13 +1,9 @@
 package com.example.forummanagementsystem.helpers;
 
-import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.PostDto;
-import com.example.forummanagementsystem.service.CategoryService;
-import com.example.forummanagementsystem.service.CommentService;
-import com.example.forummanagementsystem.service.PostService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.forummanagementsystem.service.contracts.CategoryService;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;

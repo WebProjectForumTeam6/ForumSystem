@@ -4,8 +4,7 @@ import com.example.forummanagementsystem.models.Comment;
 import com.example.forummanagementsystem.models.Post;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.CommentDto;
-import com.example.forummanagementsystem.service.CommentService;
-import com.example.forummanagementsystem.service.PostService;
+import com.example.forummanagementsystem.service.contracts.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

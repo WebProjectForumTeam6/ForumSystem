@@ -1,4 +1,4 @@
-package com.example.forummanagementsystem.service;
+package com.example.forummanagementsystem.service.contracts;
 
 import com.example.forummanagementsystem.models.AdminInfo;
 import com.example.forummanagementsystem.models.User;

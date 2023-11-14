@@ -2,7 +2,8 @@ package com.example.forummanagementsystem.service;
 
 import com.example.forummanagementsystem.Helpers;
 import com.example.forummanagementsystem.models.Category;
-import com.example.forummanagementsystem.repository.CategoryRepository;
+import com.example.forummanagementsystem.repository.contracts.CategoryRepository;
+import com.example.forummanagementsystem.service.contracts.CategoryService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;

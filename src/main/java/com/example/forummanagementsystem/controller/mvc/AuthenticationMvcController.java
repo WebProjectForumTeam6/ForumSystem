@@ -7,7 +7,7 @@ import com.example.forummanagementsystem.helpers.UserMapper;
 import com.example.forummanagementsystem.models.User;
 import com.example.forummanagementsystem.models.dto.LoginDto;
 import com.example.forummanagementsystem.models.dto.UserDto;
-import com.example.forummanagementsystem.service.UserService;
+import com.example.forummanagementsystem.service.contracts.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
